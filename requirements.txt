@@ -1,0 +1,14 @@
+# Core dependencies
+numpy>=1.21.0
+pandas>=1.3.0
+numba>=0.55.0
+
+# Optimization
+gurobipy>=10.0.0
+
+# Excel support
+openpyxl>=3.0.0
+
+# Visualization (optional)
+matplotlib>=3.4.0
+plotly>=5.0.0
