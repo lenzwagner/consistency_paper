@@ -184,12 +184,12 @@ def evaluate_naive_expost_nl(ls_x_naive, T, K, nl_spec, demand, I):
 def run_experiment():
     I_sizes = [100]
     scarcities = [('Medium', 1.0)]
-    seeds = range(1,2)
+    seeds = range(1,3)
     
     # Parameter Sets
     epsilon = 0.06
     matrices_dict = get_matrices(epsilon)
-    chis = [1, 3, 5, 7]
+    chis = [3, 5, 7]
     alphas = [0.02, 0.04, 0.08]
     
     steps_convex = [1.2, 1.5, 2.0]
@@ -300,14 +300,14 @@ def run_experiment():
                                     
                                     # 1. BAP
                                     bap_res = column_generation_behavior(
-                                        df_placeholder, demand, epsilon, 4, 6, 10, 100, 0, chi, 0.001, 10, I, T, K, 1.0,
+                                        df_placeholder, demand, epsilon, 4, 6, 5, 100, 0, chi, 0.001, 10, I, T, K, 1.0,
                                         sp_solver="labeling", nl_spec=nl_spec
                                     )
                                     bap_obj = bap_res[8]
                                     
                                     # 2. NPP
                                     npp_res = column_generation_behavior(
-                                        df_placeholder, demand, 0.0, 4, 6, 10, 100, 0, chi, 0.001, 10, I, T, K, 1.0,
+                                        df_placeholder, demand, 0.0, 4, 6, 5, 100, 0, chi, 0.001, 10, I, T, K, 1.0,
                                         sp_solver="labeling", nl_spec=None
                                     )
                                     npp_nom = npp_res[8]
