@@ -3,7 +3,7 @@ import math
 import time
 
 class Problem:
-    def __init__(self, dfData, DemandDF, eps, Min_WD_i, Max_WD_i, chi, worker_groups=None, nl_spec=None):
+    def __init__(self, dfData, DemandDF, eps, Min_WD_i, Max_WD_i, chi, worker_groups=None):
         self.I = dfData['I'].dropna().astype(int).unique().tolist()
         self.T = dfData['T'].dropna().astype(int).unique().tolist()
         self.K = dfData['K'].dropna().astype(int).unique().tolist()
@@ -34,6 +34,11 @@ class Problem:
             self.eps_by_worker = {}
             self.chi_by_worker = {}
             self.xi_by_worker = {}
+            self.gamma_C_by_worker = {}
+            self.gamma_R_by_worker = {}
+            self.alpha_R_by_worker = {}
+            self.e_max_by_worker = {}
+            self.delta_by_worker = {}
             for group in worker_groups.values():
                 omega_g = math.floor(1 / (group.epsilon + 1e-6))
                 xi_g = 1 - group.epsilon * omega_g
@@ -41,13 +46,23 @@ class Problem:
                     self.eps_by_worker[w] = group.epsilon
                     self.chi_by_worker[w] = group.chi
                     self.xi_by_worker[w] = xi_g
+                    self.gamma_C_by_worker[w] = group.gamma_C
+                    self.gamma_R_by_worker[w] = group.gamma_R
+                    self.alpha_R_by_worker[w] = group.alpha_R
+                    self.e_max_by_worker[w] = group.e_max
+                    self.delta_by_worker[w] = group.delta
         else:
             # Homogeneous: all workers use same parameters
+            from core.worker_groups import get_default_delta
+            default_delta = get_default_delta(eps)
             self.eps_by_worker = {i: eps for i in self.I}
             self.chi_by_worker = {i: chi for i in self.I}
             self.xi_by_worker = {i: self.xi for i in self.I}
-
-        self.nl_spec = nl_spec
+            self.gamma_C_by_worker = {i: 1.25 for i in self.I}
+            self.gamma_R_by_worker = {i: 0.5 for i in self.I}
+            self.alpha_R_by_worker = {i: 0.04 for i in self.I}
+            self.e_max_by_worker = {i: 0.5 for i in self.I}
+            self.delta_by_worker = {i: default_delta for i in self.I}
 
     def buildLinModel(self):
         self.t0 = time.time()
@@ -56,11 +71,7 @@ class Problem:
         self.genChangesCons()
         self.genRegCons()
         self.model.update()
-        if self.nl_spec is not None:
-            self.nlPerformance()
-        else:
-            self.Recovery()
-            self.linPerformance()
+        self.nlPerformance()
         self.generateObjective()
         self.updateModel()
 
@@ -217,124 +228,6 @@ class Problem:
                 self.model.addLConstr(self.e[i, t] >= self.sc[i, t] + self.h[i, t - 1] - 1)
         self.model.update()
 
-    def nlPerformance(self):
-        delta = self.nl_spec['delta']
-        gamma_R = self.nl_spec['gamma_R']
-        gamma_C = self.nl_spec['gamma_C']
-        alpha_R = self.nl_spec['alpha_R']
-        chi_global = self.nl_spec['chi']
-
-        max_d = len(self.T)
-        
-        # h_n lookup: h(n) = n^gamma_C - (n-1)^gamma_C
-        h_hat = {n: (n**gamma_C - (n-1)**gamma_C) for n in range(1, max_d + 1)}
-        h_hat[0] = 0.0
-
-        # r_k lookup
-        r_hat = {}
-        for i in self.I:
-            chi_i = self.chi_by_worker.get(i, chi_global)
-            r_hat[i] = {}
-            for k in range(0, max_d + 1):
-                if k <= chi_i:
-                    r_hat[i][k] = 0.0
-                else:
-                    r_hat[i][k] = alpha_R * ((k - chi_i)**gamma_R - (k - chi_i - 1)**gamma_R)
-        
-        M_nu = max_d + 1
-        M_rho = max_d + 1
-        max_delta = max([max(row) for row in delta])
-        max_h = max(h_hat.values()) if max_d > 0 else 0
-        max_r = max([max(r_hat[i].values()) for i in self.I]) if max_d > 0 else 0
-        M_phi = 1.0 + max(max_delta * max_h, max_r)
-
-        # Variables
-        w_nl = self.model.addVars(self.I, self.T, self.K, self.K, vtype=gu.GRB.BINARY, name="w_nl")
-        nu_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.INTEGER, lb=0, ub=max_d, name="nu_nl")
-        a_nl = self.model.addVars(self.I, self.T, self.K, self.K, range(1, max_d + 1), vtype=gu.GRB.BINARY, name="a_nl")
-        delta_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.CONTINUOUS, lb=0, name="delta_nl")
-        rho_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.INTEGER, lb=0, ub=max_d, name="rho_nl")
-        q_nl = self.model.addVars(self.I, self.T, range(0, max_d + 1), vtype=gu.GRB.BINARY, name="q_nl")
-        g_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.CONTINUOUS, lb=0, name="g_nl")
-        vartheta = self.model.addVars(self.I, self.T, vtype=gu.GRB.CONTINUOUS, lb=-gu.GRB.INFINITY, name="vartheta")
-        phi_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.CONTINUOUS, lb=0, ub=1, name="phi_nl")
-        b_minus = self.model.addVars(self.I, self.T, vtype=gu.GRB.BINARY, name="b_minus")
-        b_zero = self.model.addVars(self.I, self.T, vtype=gu.GRB.BINARY, name="b_zero")
-        b_plus = self.model.addVars(self.I, self.T, vtype=gu.GRB.BINARY, name="b_plus")
-
-        self.model.update()
-
-        for i in self.I:
-            # First day initializations
-            self.model.addConstr(nu_nl[i, 1] == self.sc[i, 1])
-            self.model.addConstr(rho_nl[i, 1] == 1 - self.sc[i, 1])
-            self.model.addConstr(phi_nl[i, 1] == 0)
-
-            for t in self.T:
-                # Transition Tracking (w_nl)
-                for s in self.K:
-                    for s_prime in self.K:
-                        if s != s_prime:
-                            self.model.addConstr(w_nl[i, t, s, s_prime] <= self.q[i, t, s])
-                            self.model.addConstr(w_nl[i, t, s, s_prime] <= self.x[i, t, s_prime])
-                            self.model.addConstr(w_nl[i, t, s, s_prime] <= 1 - self.gam[i, t])
-                            self.model.addConstr(w_nl[i, t, s, s_prime] >= self.q[i, t, s] + self.x[i, t, s_prime] - self.gam[i, t] - 1)
-                        else:
-                            self.model.addConstr(w_nl[i, t, s, s_prime] == 0)
-
-                # Link w_nl to sc
-                self.model.addConstr(self.sc[i, t] == gu.quicksum(w_nl[i, t, s, s_prime] for s in self.K for s_prime in self.K))
-
-                # Change-sequence tracking
-                self.model.addConstr(nu_nl[i, t] <= max_d * self.sc[i, t])
-                if t > 1:
-                    self.model.addConstr(nu_nl[i, t] <= nu_nl[i, t-1] + 1 + M_nu * (1 - self.sc[i, t]))
-                    self.model.addConstr(nu_nl[i, t] >= nu_nl[i, t-1] + 1 - M_nu * (1 - self.sc[i, t]))
-
-                # Lookup variables
-                for s in self.K:
-                    for s_prime in self.K:
-                        if s != s_prime:
-                            self.model.addConstr(gu.quicksum(a_nl[i, t, s, s_prime, n] for n in range(1, max_d + 1)) == w_nl[i, t, s, s_prime])
-                
-                self.model.addConstr(nu_nl[i, t] == gu.quicksum(n * a_nl[i, t, s, s_prime, n] for s in self.K for s_prime in self.K for n in range(1, max_d + 1)))
-
-                # Degradation Amount
-                self.model.addConstr(delta_nl[i, t] == gu.quicksum(delta[s, s_prime] * h_hat[n] * a_nl[i, t, s, s_prime, n] for s in self.K for s_prime in self.K for n in range(1, max_d + 1) if s != s_prime))
-
-                # Stable-sequence tracking
-                if t > 1:
-                    self.model.addConstr(rho_nl[i, t] <= rho_nl[i, t-1] + 1 + M_rho * self.sc[i, t])
-                    self.model.addConstr(rho_nl[i, t] >= rho_nl[i, t-1] + 1 - M_rho * self.sc[i, t])
-                self.model.addConstr(rho_nl[i, t] <= max_d * (1 - self.sc[i, t]))
-
-                # Recovery lookup
-                self.model.addConstr(gu.quicksum(q_nl[i, t, k] for k in range(0, max_d + 1)) == 1)
-                self.model.addConstr(rho_nl[i, t] == gu.quicksum(k * q_nl[i, t, k] for k in range(0, max_d + 1)))
-                self.model.addConstr(g_nl[i, t] == gu.quicksum(r_hat[i][k] * q_nl[i, t, k] for k in range(0, max_d + 1)))
-
-                # Nonlinear State Clipping
-                if t > 1:
-                    self.model.addConstr(b_minus[i, t] + b_zero[i, t] + b_plus[i, t] == 1)
-                    self.model.addConstr(vartheta[i, t] == phi_nl[i, t-1] + delta_nl[i, t] - g_nl[i, t])
-                    
-                    self.model.addConstr(vartheta[i, t] <= M_phi * (1 - b_minus[i, t]))
-                    self.model.addConstr(vartheta[i, t] >= -M_phi * b_minus[i, t])
-                    
-                    self.model.addConstr(vartheta[i, t] <= 1 + M_phi * b_plus[i, t])
-                    self.model.addConstr(vartheta[i, t] >= 1 - M_phi * (1 - b_plus[i, t]))
-                    
-                    self.model.addConstr(phi_nl[i, t] <= 1 - b_minus[i, t])
-                    self.model.addConstr(phi_nl[i, t] >= b_plus[i, t])
-                    
-                    self.model.addConstr(phi_nl[i, t] - vartheta[i, t] <= M_phi * (b_minus[i, t] + b_plus[i, t]))
-                    self.model.addConstr(vartheta[i, t] - phi_nl[i, t] <= M_phi * (b_minus[i, t] + b_plus[i, t]))
-
-                # Effective Performance
-                self.model.addConstr(self.p[i, t] == 1 - phi_nl[i, t])
-
-        self.model.update()
-
     def generateObjective(self):
         self.model.setObjective(gu.quicksum(self.u[t, k] for k in self.K for t in self.T), sense=gu.GRB.MINIMIZE)
 
@@ -366,3 +259,126 @@ class Problem:
 
     def getNewSchedule(self):
         return self.model.getAttr("X", self.perf)
+
+    def nlPerformance(self):
+        max_d = len(self.T)
+        
+        # h_hat and r_hat lookup tables per worker
+        h_hat = {}
+        r_hat = {}
+        for i in self.I:
+            gamma_C = self.gamma_C_by_worker[i]
+            gamma_R = self.gamma_R_by_worker[i]
+            alpha_R = self.alpha_R_by_worker[i]
+            chi_i = self.chi_by_worker[i]
+            
+            h_hat[i] = {n: (n**gamma_C - (n-1)**gamma_C) for n in range(1, max_d + 1)}
+            h_hat[i][0] = 0.0
+            
+            r_hat[i] = {}
+            for k in range(0, max_d + 1):
+                if k <= chi_i:
+                    r_hat[i][k] = 0.0
+                else:
+                    r_hat[i][k] = alpha_R * ((k - chi_i)**gamma_R - (k - chi_i - 1)**gamma_R)
+        
+        M_nu = max_d + 1
+        M_rho = max_d + 1
+        
+        M_phi = {}
+        for i in self.I:
+            delta = self.delta_by_worker[i]
+            max_delta = max([max(row) for row in delta])
+            max_h = max(h_hat[i].values()) if max_d > 0 else 0
+            max_r = max(r_hat[i].values()) if max_d > 0 else 0
+            M_phi[i] = 1.0 + max(max_delta * max_h, max_r)
+            
+        # Variables
+        w_nl = self.model.addVars(self.I, self.T, self.K, self.K, vtype=gu.GRB.BINARY, name="w_nl")
+        nu_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.INTEGER, lb=0, ub=max_d, name="nu_nl")
+        a_nl = self.model.addVars(self.I, self.T, self.K, self.K, range(1, max_d + 1), vtype=gu.GRB.BINARY, name="a_nl")
+        delta_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.CONTINUOUS, lb=0, name="delta_nl")
+        rho_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.INTEGER, lb=0, ub=max_d, name="rho_nl")
+        q_nl = self.model.addVars(self.I, self.T, range(0, max_d + 1), vtype=gu.GRB.BINARY, name="q_nl")
+        g_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.CONTINUOUS, lb=0, name="g_nl")
+        vartheta = self.model.addVars(self.I, self.T, vtype=gu.GRB.CONTINUOUS, lb=-gu.GRB.INFINITY, name="vartheta")
+        phi_nl = self.model.addVars(self.I, self.T, vtype=gu.GRB.CONTINUOUS, lb=0, ub=1, name="phi_nl")
+        b_minus = self.model.addVars(self.I, self.T, vtype=gu.GRB.BINARY, name="b_minus")
+        b_zero = self.model.addVars(self.I, self.T, vtype=gu.GRB.BINARY, name="b_zero")
+        b_plus = self.model.addVars(self.I, self.T, vtype=gu.GRB.BINARY, name="b_plus")
+
+        self.model.update()
+
+        for i in self.I:
+            # First day initializations
+            self.model.addConstr(nu_nl[i, 1] == self.sc[i, 1])
+            self.model.addConstr(rho_nl[i, 1] == 1 - self.sc[i, 1])
+            self.model.addConstr(phi_nl[i, 1] == 0)
+
+            delta = self.delta_by_worker[i]
+            e_max = self.e_max_by_worker[i]
+
+            for t in self.T:
+                # Transition Tracking (w_nl)
+                for s in self.K:
+                    for s_prime in self.K:
+                        if s != s_prime:
+                            self.model.addConstr(w_nl[i, t, s, s_prime] <= self.q[i, t, s])
+                            self.model.addConstr(w_nl[i, t, s, s_prime] <= self.x[i, t, s_prime])
+                            self.model.addConstr(w_nl[i, t, s, s_prime] <= 1 - self.gam[i, t])
+                            self.model.addConstr(w_nl[i, t, s, s_prime] >= self.q[i, t, s] + self.x[i, t, s_prime] - self.gam[i, t] - 1)
+                        else:
+                            self.model.addConstr(w_nl[i, t, s, s_prime] == 0)
+
+                # Link w_nl to sc
+                self.model.addConstr(self.sc[i, t] == gu.quicksum(w_nl[i, t, s, s_prime] for s in self.K for s_prime in self.K))
+
+                # Change-sequence tracking
+                self.model.addConstr(nu_nl[i, t] <= max_d * self.sc[i, t])
+                if t > 1:
+                    self.model.addConstr(nu_nl[i, t] <= nu_nl[i, t-1] + 1 + M_nu * (1 - self.sc[i, t]))
+                    self.model.addConstr(nu_nl[i, t] >= nu_nl[i, t-1] + 1 - M_nu * (1 - self.sc[i, t]))
+
+                # Lookup variables
+                for s in self.K:
+                    for s_prime in self.K:
+                        if s != s_prime:
+                            self.model.addConstr(gu.quicksum(a_nl[i, t, s, s_prime, n] for n in range(1, max_d + 1)) == w_nl[i, t, s, s_prime])
+                
+                self.model.addConstr(nu_nl[i, t] == gu.quicksum(n * a_nl[i, t, s, s_prime, n] for s in self.K for s_prime in self.K for n in range(1, max_d + 1)))
+
+                # Degradation Amount
+                self.model.addConstr(delta_nl[i, t] == gu.quicksum(delta[s, s_prime] * h_hat[i][n] * a_nl[i, t, s, s_prime, n] for s in self.K for s_prime in self.K for n in range(1, max_d + 1) if s != s_prime))
+
+                # Stable-sequence tracking
+                if t > 1:
+                    self.model.addConstr(rho_nl[i, t] <= rho_nl[i, t-1] + 1 + M_rho * self.sc[i, t])
+                    self.model.addConstr(rho_nl[i, t] >= rho_nl[i, t-1] + 1 - M_rho * self.sc[i, t])
+                self.model.addConstr(rho_nl[i, t] <= max_d * (1 - self.sc[i, t]))
+
+                # Recovery lookup
+                self.model.addConstr(gu.quicksum(q_nl[i, t, k] for k in range(0, max_d + 1)) == 1)
+                self.model.addConstr(rho_nl[i, t] == gu.quicksum(k * q_nl[i, t, k] for k in range(0, max_d + 1)))
+                self.model.addConstr(g_nl[i, t] == gu.quicksum(r_hat[i][k] * q_nl[i, t, k] for k in range(0, max_d + 1)))
+
+                # Nonlinear State Clipping
+                if t > 1:
+                    self.model.addConstr(b_minus[i, t] + b_zero[i, t] + b_plus[i, t] == 1)
+                    self.model.addConstr(vartheta[i, t] == phi_nl[i, t-1] + delta_nl[i, t] - g_nl[i, t])
+                    
+                    self.model.addConstr(vartheta[i, t] <= M_phi[i] * (1 - b_minus[i, t]))
+                    self.model.addConstr(vartheta[i, t] >= -M_phi[i] * b_minus[i, t])
+                    
+                    self.model.addConstr(vartheta[i, t] <= e_max + M_phi[i] * b_plus[i, t])
+                    self.model.addConstr(vartheta[i, t] >= e_max - M_phi[i] * (1 - b_plus[i, t]))
+                    
+                    self.model.addConstr(phi_nl[i, t] <= e_max - b_minus[i, t] * e_max)
+                    self.model.addConstr(phi_nl[i, t] >= e_max * b_plus[i, t])
+                    
+                    self.model.addConstr(phi_nl[i, t] - vartheta[i, t] <= M_phi[i] * (b_minus[i, t] + b_plus[i, t]))
+                    self.model.addConstr(vartheta[i, t] - phi_nl[i, t] <= M_phi[i] * (b_minus[i, t] + b_plus[i, t]))
+
+                # Effective Performance
+                self.model.addConstr(self.p[i, t] == 1 - phi_nl[i, t])
+
+        self.model.update()

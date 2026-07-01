@@ -1,11 +1,11 @@
 from Utils.setup import Min_WD_i, Max_WD_i
-from cg_behavior import *
-from cg_naive import column_generation_naive
+from core.cg_behavior import *
+from core.cg_naive import column_generation_naive
 from Utils.Plots.plots import *
 from Utils.aggundercover import *
 from datetime import *
 from Utils.demand import *
-from worker_groups import create_groups_from_fractions, create_homogeneous_group
+from core.worker_groups import create_groups_from_fractions, create_homogeneous_group
 from Utils.metrics import evaluate_inequality
 import time
 import os
@@ -23,7 +23,7 @@ results = pd.DataFrame(columns=['I', 'T', 'K', 'pattern', 'scenario', 'prob', 'e
                                 'gini_perf_naive', 'shift_blocks_behavior', 'shift_blocks_naive'])
 
 # Times and Parameter
-time_cg, time_cg_init = 7200, 5
+time_cg, time_cg_init = 7200, 10
 max_itr, threshold = 200, 6e-5
 
 start_time = time.time()
