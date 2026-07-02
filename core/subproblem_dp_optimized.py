@@ -15,6 +15,7 @@ import numpy as np
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from .nonlinear_transitions import h_func, r_func
+import gurobipy as gu
 
 
 try:
@@ -40,17 +41,15 @@ except ImportError:
 def pack_state(omega: int, rho: int, nu: int, e: float, last_worked: int, s_last: int, 
                first_flag: int) -> np.int64:
     """Pack state variables into single int64."""
-    # We discretize e for packing if needed, but here we might just pack it as an int if it's small or use a different approach.
-    # Actually, in the linear case e was an int. In NL it's a float.
-    # Let's pack e as int(e * 1000) to keep some precision, or just use a larger bit range.
-    e_int = int(round(e * 1000))
+    # Pack e with 5 decimal places of precision
+    e_int = int(round(e * 100000))
     return np.int64(((omega + 10) & 0x1F) |
                     ((rho & 0x3F) << 5) |
                     ((nu & 0x3F) << 11) |
-                    ((e_int & 0x3FF) << 17) | # Up to 1.023 with 0.001 precision
-                    ((last_worked & 0x7) << 27) |
-                    ((s_last & 0x7) << 30) |
-                    ((first_flag & 0x1) << 33))
+                    ((e_int & 0x1FFFF) << 17) | # Up to 1.31071 with 0.00001 precision
+                    ((last_worked & 0x7) << 34) |
+                    ((s_last & 0x7) << 37) |
+                    ((first_flag & 0x1) << 40))
 
 
 @njit(cache=True)
@@ -59,11 +58,11 @@ def unpack_state(state: np.int64) -> Tuple[int, int, int, float, int, int, int]:
     omega = (state & 0x1F) - 10
     rho = (state >> 5) & 0x3F
     nu = (state >> 11) & 0x3F
-    e_int = (state >> 17) & 0x3FF
-    e = e_int / 1000.0
-    last_worked = (state >> 27) & 0x7
-    s_last = (state >> 30) & 0x7
-    first_flag = (state >> 33) & 0x1
+    e_int = (state >> 17) & 0x1FFFF
+    e = e_int / 100000.0
+    last_worked = (state >> 34) & 0x7
+    s_last = (state >> 37) & 0x7
+    first_flag = (state >> 40) & 0x1
     return omega, rho, nu, e, last_worked, s_last, first_flag
 
 
@@ -496,7 +495,7 @@ def merge_bidir(
 # PYTHON WRAPPER CLASSES
 # =============================================================================
 
-from subproblem_dp import Label, SubproblemDP
+from .subproblem_dp import Label, SubproblemDP
 
 
 class SubproblemDPOptimized(SubproblemDP):
@@ -615,7 +614,7 @@ class SubproblemDPOptimized(SubproblemDP):
 class SubproblemDPNumba:
     """Pure Numba implementation for maximum speed."""
     
-    def __init__(self, duals_i, duals_ts, df, i, iteration, eps, Min_WD_i, Max_WD_i, chi):
+    def __init__(self, duals_i, duals_ts, df, i, iteration, eps, Min_WD_i, Max_WD_i, chi, model_type='nonlinear'):
         self.itr = iteration + 1
         self.days = df['T'].dropna().astype(int).unique().tolist()
         self.shifts = df['K'].dropna().astype(int).unique().tolist()
@@ -626,6 +625,14 @@ class SubproblemDPNumba:
         self.chi = chi
         self.omega_max = math.ceil(round(1 / self.epsilon, 6)) if self.epsilon > 1e-6 else 999
         self.xi = 1 - self.epsilon * self.omega_max
+        self.model_type = model_type
+        
+        # Non-linear parameters (can be set by factory)
+        self.gamma_C = 1.25
+        self.gamma_R = 0.5
+        self.alpha_R = 0.04
+        self.e_max = 1.0
+        self.delta = None
         
         self.Days_Off = 2
         self.Min_WD = 2
@@ -668,6 +675,31 @@ class SubproblemDPNumba:
         # No longer using non-linear transitions
         pass
 
+    def _prepare_jit_params(self):
+        # Prepare JIT non-linear parameters
+        if getattr(self, 'model_type', 'nonlinear') == 'linear':
+            gamma_C = 1.0
+            gamma_R = 1.0
+            alpha_R = self.epsilon
+            e_max = 1.0
+            delta_flat = np.zeros(16, dtype=np.float64)
+            for s in range(1, 4):
+                for s_prime in range(1, 4):
+                    if s != s_prime:
+                        delta_flat[s * 4 + s_prime] = self.epsilon
+        else:
+            gamma_C = getattr(self, 'gamma_C', 1.25)
+            gamma_R = getattr(self, 'gamma_R', 0.5)
+            alpha_R = getattr(self, 'alpha_R', 0.04)
+            e_max = getattr(self, 'e_max', 1.0)
+            delta_flat = np.zeros(16, dtype=np.float64)
+            if getattr(self, 'delta', None) is not None:
+                delta_flat = self.delta.flatten().astype(np.float64)
+            else:
+                from core.worker_groups import get_default_delta
+                delta_flat = get_default_delta(self.epsilon).flatten().astype(np.float64)
+        return gamma_C, gamma_R, alpha_R, delta_flat, e_max
+
     def buildModel(self):
         pass
 
@@ -688,13 +720,7 @@ class SubproblemDPNumba:
                 enc_pf = float(enc_pf) if enc_pf is not None else 0.0
 
                 # Prepare JIT non-linear parameters
-                gamma_C = getattr(self, 'gamma_C', 1.25)
-                gamma_R = getattr(self, 'gamma_R', 0.5)
-                alpha_R = getattr(self, 'alpha_R', 0.04)
-                e_max = getattr(self, 'e_max', 0.5)
-                delta_flat = np.zeros(16, dtype=np.float64)
-                if getattr(self, 'delta', None) is not None:
-                    delta_flat = self.delta.flatten().astype(np.float64)
+                gamma_C, gamma_R, alpha_R, delta_flat, e_max = self._prepare_jit_params()
 
                 # Forward pass 1: day 0 to mid_day
                 fwd_states, fwd_costs, fwd_paths, n_fwd = forward_pass_numba(
@@ -750,13 +776,7 @@ class SubproblemDPNumba:
         enc_pf = float(enc_pf) if enc_pf is not None else 0.0
         
         # Prepare JIT non-linear parameters
-        gamma_C = getattr(self, 'gamma_C', 1.25)
-        gamma_R = getattr(self, 'gamma_R', 0.5)
-        alpha_R = getattr(self, 'alpha_R', 0.04)
-        e_max = getattr(self, 'e_max', 0.5)
-        delta_flat = np.zeros(16, dtype=np.float64)
-        if getattr(self, 'delta', None) is not None:
-            delta_flat = self.delta.flatten().astype(np.float64)
+        gamma_C, gamma_R, alpha_R, delta_flat, e_max = self._prepare_jit_params()
 
         states, costs, paths, n_states = forward_pass_numba(
             n_days, n_shifts, self.duals_flat, self.duals_i,
@@ -863,7 +883,7 @@ class SubproblemDPNumba:
         gamma_C = getattr(self, 'gamma_C', 1.25)
         gamma_R = getattr(self, 'gamma_R', 0.5)
         alpha_R = getattr(self, 'alpha_R', 0.04)
-        e_max = getattr(self, 'e_max', 0.5)
+        e_max = getattr(self, 'e_max', 1.0)
         delta = getattr(self, 'delta', None)
         if delta is None:
             from core.worker_groups import get_default_delta
@@ -944,7 +964,7 @@ class SubproblemDPNumba:
         gamma_C = getattr(self, 'gamma_C', 1.25)
         gamma_R = getattr(self, 'gamma_R', 0.5)
         alpha_R = getattr(self, 'alpha_R', 0.04)
-        e_max = getattr(self, 'e_max', 0.5)
+        e_max = getattr(self, 'e_max', 1.0)
         delta = getattr(self, 'delta', None)
         if delta is None:
             from core.worker_groups import get_default_delta

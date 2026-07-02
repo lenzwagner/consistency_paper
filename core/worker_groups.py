@@ -37,7 +37,7 @@ class WorkerGroup:
     gamma_C: float = 1.25
     gamma_R: float = 0.5
     alpha_R: float = 0.04
-    e_max: float = 0.5
+    e_max: float = 1.0
     delta: np.ndarray = None
 
     def __post_init__(self):

@@ -428,7 +428,7 @@ class MasterProblem:
                 
             nl_spec = worker_specs.get(w_id, {
                 'epsilon': 0.06, 'chi': 3, 'gamma_R': 0.5, 'gamma_C': 1.25,
-                'alpha_R': 0.04, 'delta': np.zeros((4,4)), 'e_max': 0.5
+                'alpha_R': 0.04, 'delta': np.zeros((4,4)), 'e_max': 1.0
             })
             if isinstance(nl_spec['delta'], np.ndarray) and np.all(nl_spec['delta'] == 0):
                 from core.worker_groups import get_default_delta

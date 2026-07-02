@@ -1,6 +1,7 @@
 from Utils.setup import Min_WD_i, Max_WD_i
 from core.cg_behavior import *
 from core.cg_naive import column_generation_naive
+from core.cg_ecp import column_generation_ecp
 from Utils.Plots.plots import *
 from Utils.aggundercover import *
 from datetime import *

@@ -9,6 +9,8 @@ import math
 from typing import Dict, List, Tuple, Optional, Set
 from dataclasses import dataclass
 import gurobipy as gu
+from .nonlinear_transitions import h_func, r_func
+
 
 
 @dataclass
@@ -20,26 +22,30 @@ class Label:
         day: Current day index
         s_last: Last worked shift type (None if no shift worked yet or on day off)
         last_worked_shift: Most recently worked shift (persists through off days)
-        e: Current performance level (0 to floor(1/epsilon))
+        e: Current performance level (float for continuous, or int/float)
         rho: Recovery counter (consecutive days without shift change)
         omega: Consecutive workdays counter
         cost: Accumulated reduced cost
         path: List of decisions [(day, shift)] for reconstruction
+        total_workdays: Total workdays counter
+        sc_history: Shift change history
+        r_history: Recovery history
+        p_history: Performance history
+        nu: Consecutive shift change counter
     """
     day: int
     s_last: Optional[int]  # None means no shift worked yet (or day off)
     last_worked_shift: Optional[int]  # Most recently worked shift (for SC on resume)
-    e: int  # Performance level (discretized)
+    e: float  # Performance level (continuous or discretized)
     rho: int  # Recovery counter
     omega: int  # Consecutive workdays
     cost: float
     path: List[Tuple[int, Optional[int]]]  # (day, shift) - None means day off
     total_workdays: int  # Total number of workdays so far
-
-    # Additional tracking for solution reconstruction
     sc_history: List[int]  # Shift change history
     r_history: List[int]   # Recovery history
     p_history: List[float]  # Performance history
+    nu: int = 0  # Consecutive shift change counter
 
     def copy(self):
         """Create a deep copy of this label."""
@@ -55,7 +61,8 @@ class Label:
             total_workdays=self.total_workdays,
             sc_history=self.sc_history.copy(),
             r_history=self.r_history.copy(),
-            p_history=self.p_history.copy()
+            p_history=self.p_history.copy(),
+            nu=self.nu
         )
 
     def dominates(self, other: 'Label', is_final_day: bool = False, min_wd: int = 1) -> bool:
@@ -89,11 +96,13 @@ class Label:
                 return False
             if self.last_worked_shift != other.last_worked_shift:
                 return False
-            if self.e != other.e:
+            if round(self.e, 3) != round(other.e, 3):
                 return False
             if self.rho != other.rho:
                 return False
             if self.omega != other.omega:
+                return False
+            if self.nu != other.nu:
                 return False
             
             # All state variables match - dominate if cost is strictly better
@@ -108,7 +117,7 @@ class SubproblemDP:
     but uses a label-setting algorithm for improved efficiency.
     """
 
-    def __init__(self, duals_i, duals_ts, df, i, iteration, eps, Min_WD_i, Max_WD_i, chi):
+    def __init__(self, duals_i, duals_ts, df, i, iteration, eps, Min_WD_i, Max_WD_i, chi, model_type='nonlinear'):
         """
         Initialize the DP subproblem solver.
 
@@ -122,6 +131,7 @@ class SubproblemDP:
             Min_WD_i: Minimum workdays constraint
             Max_WD_i: Maximum workdays constraint
             chi: Recovery threshold (days without shift change)
+            model_type: 'linear' or 'nonlinear'
         """
         self.itr = iteration + 1
         self.days = df['T'].dropna().astype(int).unique().tolist()
@@ -133,9 +143,15 @@ class SubproblemDP:
         self.chi = chi
         self.omega_max = math.ceil(round(1 / self.epsilon, 6)) if self.epsilon > 1e-6 else 999
         self.xi = 1 - self.epsilon * self.omega_max
+        self.model_type = model_type
+        
+        # Non-linear default parameters (can be set by factory)
+        self.gamma_C = 1.25
+        self.gamma_R = 0.5
+        self.alpha_R = 0.04
+        self.e_max = 1.0
+        self.delta = None
 
-        # Regulatory constraints
-        self.Days_Off = 2
         # Regulatory constraints
         self.Days_Off = 2
         # Global constraints (Hardcoded in both solvers)
@@ -200,7 +216,7 @@ class SubproblemDP:
             day=0,
             s_last=None,  # No work history yet
             last_worked_shift=None,  # No shift worked yet
-            e=0,  # Performance level 0 means p = 1.0
+            e=0.0,  # Performance level 0 means p = 1.0
             rho=0,
             omega=0,
             cost=-self.duals_i,  # Initial cost is just the dual of lambda constraint
@@ -208,7 +224,8 @@ class SubproblemDP:
             total_workdays=0,  # Maintained for info, but not constrained
             sc_history=[],
             r_history=[],
-            p_history=[]
+            p_history=[],
+            nu=0
         )
 
         labels_by_day[0] = [initial_label]
@@ -417,6 +434,10 @@ class SubproblemDP:
         # Let's fix this too if it wasn't clear.
         # But main task is Omega.
         
+    def _create_day_off_label(self, label: Label, next_day: int) -> Optional[Label]:
+        """Create a new label for taking a day off."""
+        new_label = label.copy()
+        new_label.day = next_day
         new_label.s_last = None  # Explicitly set to None for Day Off
         
         # Update omega (Signed: Negative for consecutive off)
@@ -426,23 +447,25 @@ class SubproblemDP:
             new_label.omega = label.omega - 1 # Extending Off block (e.g. 0 -> -1, -1 -> -2)
             
         # total_workdays unchanged (day off)
-
-        # No shift change (no work)
         c_new = 0
 
-        # Update recovery counter
-        rho_temp = new_label.rho + 1 if c_new == 0 else 0
-        r_new = 1 if rho_temp >= self.chi + 1 else 0
-        new_label.rho = rho_temp # Do not reset rho, allow continuous recovery
-
-        # Update performance level
-        e_new = max(0, min(new_label.e + c_new - r_new, self.omega_max))
-        new_label.e = e_new
-
-        # Calculate performance value
-        kappa = 1 if new_label.e >= self.omega_max else 0
-        p_new = 1.0 - self.epsilon * new_label.e - self.xi * kappa
-        
+        if self.model_type == 'linear':
+            new_label.nu = 0
+            rho_temp = label.rho + 1
+            r_new = 1 if rho_temp >= self.chi + 1 else 0
+            new_label.rho = rho_temp
+            e_new = max(0.0, min(float(label.e + c_new - r_new), float(self.omega_max)))
+            new_label.e = e_new
+            kappa = 1 if new_label.e >= self.omega_max else 0
+            p_new = 1.0 - self.epsilon * new_label.e - self.xi * kappa
+        else:
+            new_label.nu = 0
+            new_label.rho = label.rho + 1
+            recov = r_func(new_label.rho, self.chi, self.gamma_R, self.alpha_R)
+            new_label.e = max(0.0, label.e - recov)
+            p_new = 1.0 - new_label.e
+            r_new = 1.0 if (new_label.rho > self.chi) else 0.0
+            
         pf = getattr(self, 'enforce_performance_floor', None)
         if pf is not None and p_new < pf:
             return None
@@ -453,7 +476,7 @@ class SubproblemDP:
         # Update path
         new_label.path.append((next_day, None))
         new_label.sc_history.append(c_new)
-        new_label.r_history.append(r_new)
+        new_label.r_history.append(int(r_new))
         new_label.p_history.append(p_new)
 
         return new_label
@@ -482,20 +505,36 @@ class SubproblemDP:
             new_label.omega = 1  # Switching from Off to Work
         else:
             new_label.omega = label.omega + 1 # Extending Work block
-            # Note: label.omega could be 0 (initial), becomes 1.
 
-        # Update recovery counter
-        rho_temp = label.rho + 1 if c_new == 0 else 0
-        r_new = 1 if rho_temp >= self.chi + 1 else 0
-        new_label.rho = rho_temp # Do not reset rho, allow continuous recovery
-
-        # Update performance level
-        e_new = max(0, min(label.e + c_new - r_new, self.omega_max))
-        new_label.e = e_new
-
-        # Calculate performance value
-        kappa = 1 if new_label.e >= self.omega_max else 0
-        p_new = 1.0 - self.epsilon * new_label.e - self.xi * kappa
+        if self.model_type == 'linear':
+            new_label.nu = 0
+            rho_temp = label.rho + 1 if c_new == 0 else 0
+            r_new = 1 if rho_temp >= self.chi + 1 else 0
+            new_label.rho = rho_temp
+            e_new = max(0.0, min(float(label.e + c_new - r_new), float(self.omega_max)))
+            new_label.e = e_new
+            kappa = 1 if new_label.e >= self.omega_max else 0
+            p_new = 1.0 - self.epsilon * new_label.e - self.xi * kappa
+        else:
+            delta = self.delta
+            if delta is None:
+                from core.worker_groups import get_default_delta
+                delta = get_default_delta(self.epsilon)
+            
+            if c_new == 1:
+                new_label.nu = label.nu + 1
+                new_label.rho = 0
+                degrad = delta[label.last_worked_shift, shift] * h_func(new_label.nu, self.gamma_C)
+                new_label.e = min(self.e_max, label.e + degrad)
+                r_new = 0.0
+            else:
+                new_label.nu = 0
+                new_label.rho = label.rho + 1
+                recov = r_func(new_label.rho, self.chi, self.gamma_R, self.alpha_R)
+                new_label.e = max(0.0, label.e - recov)
+                r_new = 1.0 if (new_label.rho > self.chi) else 0.0
+                
+            p_new = 1.0 - new_label.e
 
         pf = getattr(self, 'enforce_performance_floor', None)
         if pf is not None and p_new < pf:
@@ -510,7 +549,7 @@ class SubproblemDP:
         # Update path
         new_label.path.append((next_day, shift))
         new_label.sc_history.append(c_new)
-        new_label.r_history.append(r_new)
+        new_label.r_history.append(int(r_new))
         new_label.p_history.append(p_new)
 
         return new_label

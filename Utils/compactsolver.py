@@ -3,7 +3,7 @@ import math
 import time
 
 class Problem:
-    def __init__(self, dfData, DemandDF, eps, Min_WD_i, Max_WD_i, chi, worker_groups=None):
+    def __init__(self, dfData, DemandDF, eps, Min_WD_i, Max_WD_i, chi, worker_groups=None, model_type='nonlinear'):
         self.I = dfData['I'].dropna().astype(int).unique().tolist()
         self.T = dfData['T'].dropna().astype(int).unique().tolist()
         self.K = dfData['K'].dropna().astype(int).unique().tolist()
@@ -28,6 +28,7 @@ class Problem:
         self.demand_values = [self.demand[key] for key in self.demand.keys()]
         self.Min_WD_i = Min_WD_i
         self.Max_WD_i = Max_WD_i
+        self.model_type = model_type
         
         # Per-worker parameters for heterogeneous groups
         if worker_groups is not None:
@@ -61,7 +62,7 @@ class Problem:
             self.gamma_C_by_worker = {i: 1.25 for i in self.I}
             self.gamma_R_by_worker = {i: 0.5 for i in self.I}
             self.alpha_R_by_worker = {i: 0.04 for i in self.I}
-            self.e_max_by_worker = {i: 0.5 for i in self.I}
+            self.e_max_by_worker = {i: 0.5 for i in self.I} # Wait, note: default e_max was 0.5 or 1.0? We keep same
             self.delta_by_worker = {i: default_delta for i in self.I}
 
     def buildLinModel(self):
@@ -71,7 +72,10 @@ class Problem:
         self.genChangesCons()
         self.genRegCons()
         self.model.update()
-        self.nlPerformance()
+        if self.model_type == 'linear':
+            self.linPerformance()
+        else:
+            self.nlPerformance()
         self.generateObjective()
         self.updateModel()
 
@@ -154,6 +158,9 @@ class Problem:
                 self.model.addLConstr(
                     gu.quicksum(self.y[i, u] for u in range(t + 1, t + self.Min_WD_i[i] + 1)) >= self.Min_WD_i[i] * (
                                 self.y[i, t + 1] - self.y[i, t]))
+            if len(self.T) >= self.Min_WD_i[i]:
+                self.model.addLConstr(
+                    gu.quicksum(self.y[i, u] for u in range(1, 1 + self.Min_WD_i[i])) >= self.Min_WD_i[i] * self.y[i, 1])
         for i in self.I:
             for t in range(2, len(self.T) - self.Days_Off + 2):
                 for s in range(t + 1, t + self.Days_Off):
@@ -173,6 +180,9 @@ class Problem:
                 self.model.addLConstr(
                     gu.quicksum(self.y[i, u] for u in range(t + 1, t + self.Min_WD + 1)) >= self.Min_WD * (
                                 self.y[i, t + 1] - self.y[i, t]))
+            if len(self.T) >= self.Min_WD:
+                self.model.addLConstr(
+                    gu.quicksum(self.y[i, u] for u in range(1, 1 + self.Min_WD)) >= self.Min_WD * self.y[i, 1])
         for i in self.I:
             for t in range(2, len(self.T) - self.Days_Off + 2):
                 for s in range(t + 1, t + self.Days_Off):
@@ -345,7 +355,7 @@ class Problem:
                         if s != s_prime:
                             self.model.addConstr(gu.quicksum(a_nl[i, t, s, s_prime, n] for n in range(1, max_d + 1)) == w_nl[i, t, s, s_prime])
                 
-                self.model.addConstr(nu_nl[i, t] == gu.quicksum(n * a_nl[i, t, s, s_prime, n] for s in self.K for s_prime in self.K for n in range(1, max_d + 1)))
+                self.model.addConstr(nu_nl[i, t] == gu.quicksum(n * a_nl[i, t, s, s_prime, n] for s in self.K for s_prime in self.K for n in range(1, max_d + 1) if s != s_prime))
 
                 # Degradation Amount
                 self.model.addConstr(delta_nl[i, t] == gu.quicksum(delta[s, s_prime] * h_hat[i][n] * a_nl[i, t, s, s_prime, n] for s in self.K for s_prime in self.K for n in range(1, max_d + 1) if s != s_prime))

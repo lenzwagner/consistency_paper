@@ -36,7 +36,7 @@ def get_default_nl_spec(epsilon, chi):
         'gamma_C': 1.25,   # Convex change effects
         'alpha_R': 0.04,   # Scaling for first recovery step
         'delta': delta,
-        'e_max': 0.5       # Maximum admissible degradation (min perf = 0.5)
+        'e_max': 1.0       # Maximum admissible degradation (min perf = 0.0)
     }
 
 @njit

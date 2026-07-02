@@ -20,7 +20,8 @@ except ImportError:
 def create_subproblem(solver_type: str, duals_i, duals_ts, df, i, iteration,
                      eps, Min_WD_i, Max_WD_i, chi, use_bidir=False,
                      enforce_no_change=False, enforce_performance_floor=None,
-                     gamma_C=1.25, gamma_R=0.5, alpha_R=0.04, e_max=0.5, delta=None):
+                     gamma_C=1.25, gamma_R=0.5, alpha_R=0.04, e_max=1.0, delta=None,
+                     model_type='nonlinear'):
     """
     Factory function to create a subproblem solver.
 
@@ -40,6 +41,7 @@ def create_subproblem(solver_type: str, duals_i, duals_ts, df, i, iteration,
         Max_WD_i: Maximum workdays constraint
         chi: Recovery threshold (days without shift change)
         use_bidir: Force bidirectional mode (only for 'labeling' type)
+        model_type: 'linear' or 'nonlinear' (default)
 
     Returns:
         Subproblem solver instance
@@ -58,6 +60,7 @@ def create_subproblem(solver_type: str, duals_i, duals_ts, df, i, iteration,
         sp.alpha_R = alpha_R
         sp.e_max = e_max
         sp.delta = delta
+        sp.model_type = model_type
 
         return sp
     
@@ -70,6 +73,7 @@ def create_subproblem(solver_type: str, duals_i, duals_ts, df, i, iteration,
         sp.alpha_R = alpha_R
         sp.e_max = e_max
         sp.delta = delta
+        sp.model_type = model_type
 
         return sp
     
@@ -84,6 +88,7 @@ def create_subproblem(solver_type: str, duals_i, duals_ts, df, i, iteration,
             sp.alpha_R = alpha_R
             sp.e_max = e_max
             sp.delta = delta
+            sp.model_type = model_type
 
             return sp
         sp = SubproblemDPNumba(duals_i, duals_ts, df, i, iteration, eps, Min_WD_i, Max_WD_i, chi)
@@ -95,6 +100,7 @@ def create_subproblem(solver_type: str, duals_i, duals_ts, df, i, iteration,
         sp.alpha_R = alpha_R
         sp.e_max = e_max
         sp.delta = delta
+        sp.model_type = model_type
 
         return sp
     
@@ -109,6 +115,7 @@ def create_subproblem(solver_type: str, duals_i, duals_ts, df, i, iteration,
             sp.alpha_R = alpha_R
             sp.e_max = e_max
             sp.delta = delta
+            sp.model_type = model_type
 
             return sp
         sp = SubproblemDPNumba(duals_i, duals_ts, df, i, iteration, eps, Min_WD_i, Max_WD_i, chi)
@@ -120,6 +127,7 @@ def create_subproblem(solver_type: str, duals_i, duals_ts, df, i, iteration,
         sp.alpha_R = alpha_R
         sp.e_max = e_max
         sp.delta = delta
+        sp.model_type = model_type
 
         return sp
     

@@ -74,7 +74,7 @@ def generate_feasible_schedule_heuristic(T, K, eps=0.06):
         'elow': elow
     }
 
-def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_init, max_itr, output_len, chi, threshold, time_cg, I, T, K, scale, sp_solver='mip', start_values=None, save_lp=False, worker_groups=None, use_heuristic_start=True, use_null_column=False, enforce_no_change=False, enforce_performance_floor=None):
+def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_init, max_itr, output_len, chi, threshold, time_cg, I, T, K, scale, sp_solver='mip', start_values=None, save_lp=False, worker_groups=None, use_heuristic_start=True, use_null_column=False, enforce_no_change=False, enforce_performance_floor=None, model_type='nonlinear'):
     # **** Column Generation ****
     # Prerequisites
     modelImprovable = True
@@ -123,7 +123,7 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
             print(f"  Heuristic: {work_days} work days, pattern: 4 on / 2 off")
         else:
             # Use compact solver
-            problem_start = Problem(data, demand_dict, eps, Min_WD_i, Max_WD_i, chi, worker_groups=worker_groups)
+            problem_start = Problem(data, demand_dict, eps, Min_WD_i, Max_WD_i, chi, worker_groups=worker_groups, model_type=model_type)
             problem_start.buildLinModel()
             problem_start.model.Params.MIPFocus = 1
             problem_start.model.Params.Heuristics = 1
@@ -142,13 +142,13 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
             for group_name, group in worker_groups.items():
                 rep_worker = group.worker_ids[0]  # Representative worker for this group
                 start_values_by_group[group_name] = {
-                    'perf': {(t, s): problem_start.perf[rep_worker, t, s].x for t in T for s in K},
-                    'p': {t: problem_start.p[rep_worker, t].x for t in T},
-                    'x': {(t, s): problem_start.x[rep_worker, t, s].x for t in T for s in K},
-                    'c': {t: problem_start.sc[rep_worker, t].x for t in T},
-                    'r': {t: problem_start.r[rep_worker, t].x for t in T},
-                    'eup': {t: problem_start.e[rep_worker, t].x for t in T},
-                    'elow': {t: problem_start.b[rep_worker, t].x for t in T},
+                    'perf': {(t, s): problem_start.perf[rep_worker, t, s].X for t in T for s in K},
+                    'p': {t: problem_start.p[rep_worker, t].X for t in T},
+                    'x': {(t, s): problem_start.x[rep_worker, t, s].X for t in T for s in K},
+                    'c': {t: problem_start.sc[rep_worker, t].X for t in T},
+                    'r': {t: problem_start.r[rep_worker, t].X for t in T},
+                    'eup': {t: problem_start.e[rep_worker, t].X for t in T},
+                    'elow': {t: problem_start.b[rep_worker, t].X for t in T},
                     'worker_ids': group.worker_ids
                 }
         
@@ -266,7 +266,8 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
                 gamma_R=group.gamma_R,
                 alpha_R=group.alpha_R,
                 e_max=group.e_max,
-                delta=group.delta
+                delta=group.delta,
+                model_type=model_type
             )
             subproblem.buildModel()
 
