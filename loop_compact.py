@@ -1,119 +1,86 @@
-from Utils.setup import Min_WD_i, Max_WD_i
-from Utils.compactsolver import Problem
+from Utils.compactsolver_exact import ProblemExact
+from core.base_case import get_base_case_groups, get_wd_constraints, LEN_I_RANGE, SCENARIO_RANGE, PATTERN
+from core.solver_base import TIME_LIMIT_COMPACT_PROD
 from datetime import datetime
 from Utils.gcutil import *
 import pandas as pd
 import numpy as np
 import time
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+os.makedirs("results", exist_ok=True)
 
 # DataFrame for results
-results = pd.DataFrame(columns=['I', 'T', 'K', 'pattern', 'scenario', 'prob', 'epsilon', 'chi',
-                                'incumbent', 'lower_bound', 'total_time', 'undercoverage'])
+results = pd.DataFrame(columns=['I', 'T', 'K', 'pattern', 'scenario', 'prob',
+                                'incumbent', 'lower_bound', 'gap', 'total_time', 'undercoverage', 'status'])
 
 # Times and Parameters
-time_Limit = 3600
+time_Limit = TIME_LIMIT_COMPACT_PROD
 
 start_time = time.time()
 
-# Loop - same instance configuration as in loop.py
-for epsilon in [0.06]:
-    for chi in [3]:
-        for len_I in [50]:
-            for pattern in ['Medium']:
-                for scenario in range(1, 3):
-                    if pattern == 'Medium':
-                        prob = 1.0
-                    elif pattern == 'High':
-                        prob = 1.1
-                    elif pattern == 'Low':
-                        prob = 0.9
+for len_I in LEN_I_RANGE:
+    for scenario in SCENARIO_RANGE:
+        prob = {'Medium': 1.0, 'High': 1.1, 'Low': 0.9}.get(PATTERN)
 
-                    # Data - same as in loop.py
-                    T = list(range(1, 29))
-                    I = list(range(1, len_I + 1))
-                    K = [1, 2, 3]
+        T = list(range(1, 29))
+        I = list(range(1, len_I + 1))
+        K = [1, 2, 3]
 
-                    data = pd.DataFrame({
-                        'I': I + [np.nan] * (max(len(I), len(T), len(K)) - len(I)),
-                        'T': T + [np.nan] * (max(len(I), len(T), len(K)) - len(T)),
-                        'K': K + [np.nan] * (max(len(I), len(T), len(K)) - len(K))
-                    })
+        data = pd.DataFrame({
+            'I': I + [np.nan] * (max(len(I), len(T), len(K)) - len(I)),
+            'T': T + [np.nan] * (max(len(I), len(T), len(K)) - len(T)),
+            'K': K + [np.nan] * (max(len(I), len(T), len(K)) - len(K))
+        })
 
-                    demand_dict = generate_dict_from_excel('data/demand_data.xlsx', len(I), pattern, scenario)
-                    eps = epsilon
-                    print('demand_dict', demand_dict)
+        demand_dict = read_demand('data/demand_data.xlsx', len(I), PATTERN, scenario)
 
+        print(f"")
+        print(f"Iteration: I: {len(I)} - Pattern: {PATTERN} - Scenario: {scenario}")
+        print(f"")
 
-                    print(f"")
-                    print(f"Iteration: Eps: {epsilon} - Chi: {chi} - I: {len(I)} - Pattern: {pattern} - Scenario: {scenario}")
-                    print(f"")
+        Min_WD_i, Max_WD_i = get_wd_constraints(I)
+        worker_groups = get_base_case_groups(I)
+        compact_model = ProblemExact(data, demand_dict, Min_WD_i, Max_WD_i, worker_groups)
+        compact_model.buildModel()
+        compact_model.model.setParam('OutputFlag', 1)
+        compact_model.model.setParam('TimeLimit', time_Limit)
 
-                    # Solve with Compact Model
-                    print('Solving with compact model...')
+        solve_start = time.time()
+        compact_model.solveModel()
+        solve_time = time.time() - solve_start
 
-                    # Create and build the compact model
-                    compact_model = Problem(data, demand_dict, eps, Min_WD_i, Max_WD_i, chi)
-                    compact_model.buildLinModel()
-                    compact_model.ModelParams()
+        try:
+            lower_bound = compact_model.model.ObjBound
+            incumbent = compact_model.model.ObjVal
+            gap = compact_model.model.MIPGap
+            undercoverage = sum(compact_model.u[t, k].X for t in T for k in K)
+            status = compact_model.model.Status
+            print(f"Lower Bound: {lower_bound:.3f}, Incumbent: {incumbent:.3f}, Gap: {gap:.3%}, Time: {solve_time:.2f}s")
+        except Exception as e:
+            print(f"Error retrieving solution: {e}")
+            lower_bound = incumbent = gap = undercoverage = status = None
 
-                    # Set time limit
-                    compact_model.model.setParam('TimeLimit', time_Limit)
+        result = pd.DataFrame([{
+            'I': len(I),
+            'T': len(T),
+            'K': len(K),
+            'pattern': PATTERN,
+            'scenario': scenario,
+            'prob': prob,
+            'incumbent': round(incumbent, 3) if incumbent is not None else None,
+            'lower_bound': round(lower_bound, 3) if lower_bound is not None else None,
+            'gap': round(gap, 3) if gap is not None else None,
+            'total_time': round(solve_time, 3),
+            'undercoverage': round(undercoverage, 3) if undercoverage is not None else None,
+            'status': status
+        }])
 
-                    # Solve the model
-                    solve_start = time.time()
-                    compact_model.solveModel()
-                    solve_time = time.time() - solve_start
-
-                    # Get results
-                    try:
-                        lower_bound = compact_model.model.ObjBound
-                        incumbent = compact_model.model.ObjVal
-                        gap = compact_model.model.MIPGap
-
-                        # Calculate undercoverage from u variables
-                        undercoverage = sum(compact_model.u[t, k].X for t in T for k in K)
-
-                        status = compact_model.model.Status
-
-                        print(f"Lower Bound: {lower_bound:.3f}")
-                        print(f"Incumbent: {incumbent:.3f}")
-                        print(f"MIP Gap: {gap:.3%}")
-                        print(f"Solve Time: {solve_time:.2f}s")
-                        print(f"Status: {status}")
-
-                    except Exception as e:
-                        print(f"Error retrieving solution: {e}")
-                        lower_bound = None
-                        incumbent = None
-                        gap = None
-                        undercoverage = None
-                        status = None
-
-                    # Store results
-                    result = pd.DataFrame([{
-                        'I': len(I),
-                        'T': len(T),
-                        'K': len(K),
-                        'pattern': pattern,
-                        'scenario': scenario,
-                        'prob': prob,
-                        'epsilon': eps,
-                        'chi': chi,
-                        'incumbent': round(incumbent, 3) if incumbent is not None else None,
-                        'lower_bound': round(lower_bound, 3) if lower_bound is not None else None,
-                        'gap': round(gap, 3) if gap is not None else None,
-                        'total_time': round(solve_time, 3),
-                        'undercoverage': round(undercoverage, 3) if undercoverage is not None else None,
-                        'status': status
-                    }])
-
-                    results = pd.concat([results, result], ignore_index=True)
+        results = pd.concat([results, result], ignore_index=True)
 
 print(results)
 
-# Save results
 results.to_csv('results/Results_Compact.csv', index=False)
-results.to_excel(f'results/Results_Compact_50_low_1-5.xlsx', index=False)
+results.to_excel(f'results/Results_Compact_{datetime.now().strftime("%d_%m_%Y_%H-%M")}.xlsx', index=False)
 
 print(f"\nTotal execution time: {time.time() - start_time:.2f} seconds")
-print(f"Results saved to results/Results_Compact.csv")

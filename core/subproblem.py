@@ -1,5 +1,6 @@
 import gurobipy as gu
 import math
+from .base_case import DAYS_OFF, F_S, MIN_WD, MAX_WD
 
 class Subproblem:
     def __init__(self, duals_i, duals_ts, df, i, iteration, eps, Min_WD_i, Max_WD_i, chi, model_type='nonlinear'):
@@ -19,10 +20,10 @@ class Subproblem:
         self.omega = math.ceil(round(1 / self.epsilon, 6)) if self.epsilon > 1e-6 else 999
         self.M = len(self.days) + self.omega
         self.xi = 1 - self.epsilon * self.omega
-        self.Days_Off = 2
-        self.Min_WD = 2
-        self.Max_WD = 5
-        self.F_S = [(3, 1), (3, 2), (2, 1)]
+        self.Days_Off = DAYS_OFF
+        self.Min_WD = MIN_WD
+        self.Max_WD = MAX_WD
+        self.F_S = F_S
         self.Days = len(self.days)
         self.Min_WD_i = Min_WD_i
         self.Max_WD_i = Max_WD_i
@@ -106,12 +107,13 @@ class Subproblem:
         
         # Performance Constraints
         if self.model_type == 'linear':
-            for t in range(1 + self.chi, len(self.days) + 1):
+            # Window {t-chi+1,...,t} (chi days), matching Model.tex model:r1/model:r2.
+            for t in range(self.chi, len(self.days) + 1):
                 self.model.addLConstr(1 <= gu.quicksum(
-                    self.sc[j] for j in range(t - self.chi, t+1)) + self.r[t])
-                for k in range(t - self.chi, t + 1):
+                    self.sc[j] for j in range(t - self.chi + 1, t + 1)) + self.r[t])
+                for k in range(t - self.chi + 1, t + 1):
                     self.model.addLConstr(self.sc[k] + self.r[t] <= 1)
-            for t in range(1, 1 + self.chi):
+            for t in range(1, self.chi):
                 self.model.addLConstr(0 == self.r[t])
             self.model.update()
             self.model.addLConstr(0 == self.n[1])
@@ -171,12 +173,14 @@ class Subproblem:
         h_hat = {n: (n**gamma_C - (n-1)**gamma_C) for n in range(1, max_d + 1)}
         h_hat[0] = 0.0
         
+        # R(rho;gamma_R) = alpha_R[(rho-chi+1)^g - (rho-chi)^g], first eligible day rho=chi
+        # (matches Model.tex model:phi and core/nonlinear_transitions.py::r_func).
         r_hat = {}
         for k in range(0, max_d + 1):
-            if k <= self.chi:
+            if k < self.chi:
                 r_hat[k] = 0.0
             else:
-                r_hat[k] = alpha_R * ((k - self.chi)**gamma_R - (k - self.chi - 1)**gamma_R)
+                r_hat[k] = alpha_R * ((k - self.chi + 1)**gamma_R - (k - self.chi)**gamma_R)
         
         M_nu = max_d + 1
         M_rho = max_d + 1

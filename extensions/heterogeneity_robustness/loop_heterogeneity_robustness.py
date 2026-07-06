@@ -19,12 +19,12 @@ from datetime import datetime
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 # Import definitions from your existing modules
-from Utils.setup import Min_WD_i, Max_WD_i
+from core.base_case import get_wd_constraints
 from core.cg_behavior import column_generation_behavior
 from core.cg_naive import column_generation_naive
 from Utils.aggundercover import *
 from Utils.demand import *
-from Utils.gcutil import generate_dict_from_excel
+from Utils.gcutil import read_demand
 from core.worker_groups import create_groups_from_fractions, create_homogeneous_group
 from Utils.metrics import calculate_group_metrics
 from extensions.heterogeneity_analysis.loop_heterogeneity_analysis import save_detailed_stats_csv
@@ -135,8 +135,8 @@ ROBUSTNESS_SCENARIOS = {
 # ============================================================================
 # RUN PARAMETERS
 # ============================================================================
-time_cg, time_cg_init = 7200, 10
-max_itr, threshold = 2000, 6e-5
+time_cg, time_cg_init = TIME_CG, TIME_CG_INIT
+max_itr, threshold = 2000, THRESHOLD  # max_itr=2000: production override
 N_SEEDS = 25
 
 def run_single_robustness_scenario(scenario_key, scenario_config, seeds=range(1, 26), run_naive=True):
@@ -153,7 +153,8 @@ def run_single_robustness_scenario(scenario_key, scenario_config, seeds=range(1,
     T = list(range(1, n_days + 1))
     K = [1, 2, 3]
     I = list(range(1, n_workers + 1))
-    
+    Min_WD_i, Max_WD_i = get_wd_constraints(I)
+
     # Base dataset padding
     data = pd.DataFrame({
         'I': I + [np.nan] * (max(len(I), len(T), len(K)) - len(I)),
@@ -178,14 +179,14 @@ def run_single_robustness_scenario(scenario_key, scenario_config, seeds=range(1,
         # Pull generated demand dictionary
         try:
             project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-            demand_data_path = os.path.join(project_root, 'data', 'demand_data.xlsx')
-            full_demand_dict = generate_dict_from_excel(
+            demand_data_path = os.path.join(project_root, 'data', 'demand_data_old.xlsx')
+            full_demand_dict = read_demand(
                 demand_data_path, n_workers, 'Medium', scenario=seed
             )
             # Filter demand dictionary for given T horizon
             demand_dict = {k: v for k, v in full_demand_dict.items() if k[0] <= n_days}
         except Exception as e:
-            print(f"Failed to pull demand data for N={n_workers}, Seed={seed}. Please ensure demand_data.xlsx contains entries for I={n_workers}! Error: {e}")
+            print(f"Failed to pull demand data for N={n_workers}, Seed={seed}. Please ensure demand_data_old.xlsx contains entries for I={n_workers}! Error: {e}")
             continue
             
         eps = scenario_config['group_params'][0][0]

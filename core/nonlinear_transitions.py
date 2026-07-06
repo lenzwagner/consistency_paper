@@ -1,57 +1,28 @@
 import numpy as np
 import math
-try:
-    from numba import njit
-except ImportError:
+import os
+if os.environ.get("DISABLE_NUMBA") == "1":
     njit = lambda x: x
-
-def get_default_nl_spec(epsilon, chi):
-    """
-    Returns the non-linear specification as described in the paper.
-    """
-    # Table 7: Degradation Matrix Delta(s, s')
-    # Indices: 0=Off, 1=Early, 2=Late, 3=Night
-    # We use 1-based indexing for shifts E=1, L=2, N=3 to match the codebase.
-    delta = np.zeros((4, 4))
-    
-    # E -> ...
-    delta[1, 1] = 1.0 * epsilon
-    delta[1, 2] = 1.2 * epsilon
-    delta[1, 3] = 1.5 * epsilon
-    
-    # L -> ...
-    delta[2, 1] = 2.5 * epsilon
-    delta[2, 2] = 1.0 * epsilon
-    delta[2, 3] = 1.2 * epsilon
-    
-    # N -> ...
-    delta[3, 1] = 1.2 * epsilon
-    delta[3, 2] = 1.5 * epsilon
-    delta[3, 3] = 1.0 * epsilon
-    
-    return {
-        'epsilon': epsilon,
-        'chi': chi,
-        'gamma_R': 0.5,    # Concave recovery
-        'gamma_C': 1.25,   # Convex change effects
-        'alpha_R': 0.04,   # Scaling for first recovery step
-        'delta': delta,
-        'e_max': 1.0       # Maximum admissible degradation (min perf = 0.0)
-    }
+else:
+    try:
+        from numba import njit
+    except ImportError:
+        njit = lambda x: x
 
 @njit
 def h_func(nu, gamma_C):
-    """Non-linear shift change multiplier."""
+    """Degradation multiplier C(nu;gamma_C) = nu^g - (nu-1)^g, matching Model.tex model:phi."""
     if nu < 1:
         return 0.0
     return nu**gamma_C - (nu - 1)**gamma_C
 
 @njit
 def r_func(rho, chi, gamma_R, alpha_R):
-    """Non-linear recovery amount."""
-    if rho <= chi:
+    """Recovery increment R(rho;gamma_R) = alpha_R[(rho-chi+1)^g - (rho-chi)^g],
+    matching Model.tex model:phi. First eligible recovery day is rho = chi."""
+    if rho < chi:
         return 0.0
-    return alpha_R * ((rho - chi)**gamma_R - (rho - chi - 1)**gamma_R)
+    return alpha_R * ((rho - chi + 1)**gamma_R - (rho - chi)**gamma_R)
 
 def evaluate_schedule_nl(x_dict, days, shifts, nl_spec):
     """
@@ -76,6 +47,8 @@ def evaluate_schedule_nl(x_dict, days, shifts, nl_spec):
     sc_history = {}
     r_history = {}
     e_history = {}
+    rho_history = {}
+    nu_history = {}
     
     for d_idx, day in enumerate(days):
         # Identify current shift
@@ -117,9 +90,11 @@ def evaluate_schedule_nl(x_dict, days, shifts, nl_spec):
         p = 1.0 - e
         perf_history[day] = p
         e_history[day] = e
-        r_history[day] = 1.0 if (rho > chi and c_new == 0) else 0.0
-        
-    return perf_history, sc_history, r_history, e_history
+        r_history[day] = 1.0 if (rho >= chi and c_new == 0) else 0.0
+        rho_history[day] = rho
+        nu_history[day] = nu
+
+    return perf_history, sc_history, r_history, e_history, rho_history, nu_history
 
 def generate_transitions_nl(epsilon, chi, omega_max, nl_spec):
     """

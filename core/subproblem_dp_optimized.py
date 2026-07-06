@@ -15,19 +15,29 @@ import numpy as np
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from .nonlinear_transitions import h_func, r_func
+from .base_case import DAYS_OFF, MIN_WD, MAX_WD
 import gurobipy as gu
 
 
-try:
-    from numba import njit, prange
-    NUMBA_AVAILABLE = True
-except ImportError:
+import os
+if os.environ.get("DISABLE_NUMBA") == "1":
     NUMBA_AVAILABLE = False
     def njit(*args, **kwargs):
         def decorator(func):
             return func
         return decorator if not args else decorator(args[0])
     prange = range
+else:
+    try:
+        from numba import njit, prange
+        NUMBA_AVAILABLE = True
+    except ImportError:
+        NUMBA_AVAILABLE = False
+        def njit(*args, **kwargs):
+            def decorator(func):
+                return func
+            return decorator if not args else decorator(args[0])
+        prange = range
 
 
 # =============================================================================
@@ -38,9 +48,22 @@ except ImportError:
 
 
 @njit(cache=True)
-def pack_state(omega: int, rho: int, nu: int, e: float, last_worked: int, s_last: int, 
-               first_flag: int) -> np.int64:
-    """Pack state variables into single int64."""
+def popcount6(x: int) -> int:
+    """Number of set bits in the low 6 bits (rolling change-window count)."""
+    c = 0
+    for _ in range(6):
+        c += x & 1
+        x >>= 1
+    return c
+
+
+@njit(cache=True)
+def pack_state(omega: int, rho: int, nu: int, e: float, last_worked: int, s_last: int,
+               first_flag: int, cw: int) -> np.int64:
+    """Pack state variables into single int64.
+
+    ``cw`` is a 6-bit mask of the shift-change indicators of the last 6 days,
+    used to enforce the ECP rolling-window cap (bit 0 = most recent day)."""
     # Pack e with 5 decimal places of precision
     e_int = int(round(e * 100000))
     return np.int64(((omega + 10) & 0x1F) |
@@ -49,11 +72,12 @@ def pack_state(omega: int, rho: int, nu: int, e: float, last_worked: int, s_last
                     ((e_int & 0x1FFFF) << 17) | # Up to 1.31071 with 0.00001 precision
                     ((last_worked & 0x7) << 34) |
                     ((s_last & 0x7) << 37) |
-                    ((first_flag & 0x1) << 40))
+                    ((first_flag & 0x1) << 40) |
+                    ((cw & 0x3F) << 41))
 
 
 @njit(cache=True)
-def unpack_state(state: np.int64) -> Tuple[int, int, int, float, int, int, int]:
+def unpack_state(state: np.int64) -> Tuple[int, int, int, float, int, int, int, int]:
     """Unpack state from int64."""
     omega = (state & 0x1F) - 10
     rho = (state >> 5) & 0x3F
@@ -63,7 +87,8 @@ def unpack_state(state: np.int64) -> Tuple[int, int, int, float, int, int, int]:
     last_worked = (state >> 34) & 0x7
     s_last = (state >> 37) & 0x7
     first_flag = (state >> 40) & 0x1
-    return omega, rho, nu, e, last_worked, s_last, first_flag
+    cw = (state >> 41) & 0x3F
+    return omega, rho, nu, e, last_worked, s_last, first_flag, cw
 
 
 @njit(cache=True)
@@ -87,10 +112,14 @@ def forward_pass_numba(
     gamma_C: float,
     alpha_R: float,
     delta_flat: np.ndarray,
-    e_max: float
+    e_max: float,
+    ecp_k: int
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, int]:
     """
     Forward DP pass with support for Linear and Non-linear Dynamics.
+
+    ``ecp_k`` > 0 enforces the ECP rolling-window cap: at most ``ecp_k`` shift
+    changes within any 7-day window (the current day plus the six preceding days).
     """
 
     MAX_STATES = 200000
@@ -104,8 +133,8 @@ def forward_pass_numba(
     next_paths = np.zeros((MAX_STATES, n_days + 1), dtype=np.int8)
     
     # Initial state
-    # pack_state(omega, rho, nu, e, last_worked, s_last, first_flag)
-    curr_states[0] = pack_state(0, 0, 0, 0.0, 0, 0, 1)
+    # pack_state(omega, rho, nu, e, last_worked, s_last, first_flag, cw)
+    curr_states[0] = pack_state(0, 0, 0, 0.0, 0, 0, 1, 0)
     curr_costs[0] = -duals_i
     n_curr = 1
     
@@ -127,30 +156,32 @@ def forward_pass_numba(
             if cost - suffix_bounds[next_day - 1] >= best_cost - 1e-9:
                 continue
             
-            omega, rho, nu, e, last_worked, s_last, first_flag = unpack_state(state)
+            omega, rho, nu, e, last_worked, s_last, first_flag, cw = unpack_state(state)
             has_worked = last_worked > 0
-            
+
             # Option 1: Day off
             can_off = True
             if omega > 0 and omega < min_wd:
                 if days_remaining >= min_wd or first_flag == 1:
                     can_off = False
-            
+
             if can_off and n_next < MAX_STATES:
                 # State transition
                 new_rho = rho + 1
                 new_nu = 0
-                
+                # Off-day is a no-change day: shift a 0 into the rolling change window.
+                new_cw_off = (cw << 1) & 0x3F
+
                 recov = r_func(new_rho, chi, gamma_R, alpha_R)
                 new_e = max(0.0, e - recov)
-                
+
                 # Check performance floor if needed
                 p_new_off = 1.0 - new_e
                 if enforce_performance_floor > 0.0 and p_new_off < enforce_performance_floor:
                     can_off = False
-                
+
                 if can_off:
-                    next_states[n_next] = pack_state(-1 if omega > 0 else omega - 1, new_rho, new_nu, new_e, last_worked, 0, first_flag)
+                    next_states[n_next] = pack_state(-1 if omega > 0 else omega - 1, new_rho, new_nu, new_e, last_worked, 0, first_flag, new_cw_off)
                     next_costs[n_next] = cost
                     next_paths[n_next, :] = curr_paths[i, :]
                     next_paths[n_next, next_day] = -1  # Day off
@@ -178,9 +209,16 @@ def forward_pass_numba(
                 
                 # State transition
                 c_new = 1 if (last_worked > 0 and last_worked != shift) else 0
+
+                # ECP rolling-window cap: at most ecp_k changes in the 7-day window
+                # (current day + previous six). cw holds the previous six days' changes.
+                if ecp_k > 0 and (popcount6(cw) + c_new) > ecp_k:
+                    continue
+                new_cw = ((cw << 1) | c_new) & 0x3F
+
                 new_rho = rho + 1 if c_new == 0 else 0
                 new_nu = nu + 1 if c_new == 1 else 0
-                
+
                 if c_new == 1:
                     degrad = delta_flat[last_worked * 4 + shift] * h_func(new_nu, gamma_C)
                     new_e = min(e_max, e + degrad)
@@ -200,12 +238,12 @@ def forward_pass_numba(
                     new_first = 1
                 
                 if n_next < MAX_STATES:
-                    next_states[n_next] = pack_state(1 if omega <= 0 else omega + 1, new_rho, new_nu, new_e, shift, shift, new_first)
+                    next_states[n_next] = pack_state(1 if omega <= 0 else omega + 1, new_rho, new_nu, new_e, shift, shift, new_first, new_cw)
                     next_costs[n_next] = new_cost
                     next_paths[n_next, :] = curr_paths[i, :]
                     next_paths[n_next, next_day] = shift
                     n_next += 1
-                
+
                 if next_day == n_days and new_cost < best_cost:
                     best_cost = new_cost
         
@@ -262,7 +300,8 @@ def forward_pass_from_states(
     gamma_C: float,
     alpha_R: float,
     delta_flat: np.ndarray,
-    e_max: float
+    e_max: float,
+    ecp_k: int
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, int]:
     """
     Forward DP pass from start_day to end, starting from given states (Linear version).
@@ -298,28 +337,29 @@ def forward_pass_from_states(
             cost = curr_costs[i]
             init_idx = curr_init_idx[i]
             
-            omega, rho, nu, e, last_worked, s_last, first_flag = unpack_state(state)
+            omega, rho, nu, e, last_worked, s_last, first_flag, cw = unpack_state(state)
             has_worked = last_worked > 0
-            
+
             # Option 1: Day off
             can_off = True
             if omega > 0 and omega < min_wd:
                 if days_remaining >= min_wd or first_flag == 1:
                     can_off = False
-            
+
             if can_off and n_next < MAX_STATES:
                 # Non-linear recovery
                 new_rho = rho + 1
                 new_nu = 0
+                new_cw_off = (cw << 1) & 0x3F
                 recov = r_func(new_rho, chi, gamma_R, alpha_R)
                 new_e = max(0.0, e - recov)
-                
+
                 p_new_off = 1.0 - new_e
                 if enforce_performance_floor > 0.0 and p_new_off < enforce_performance_floor:
                     can_off = False
-                
+
                 if can_off:
-                    next_states[n_next] = pack_state(-1 if omega > 0 else omega - 1, new_rho, new_nu, new_e, last_worked, 0, first_flag)
+                    next_states[n_next] = pack_state(-1 if omega > 0 else omega - 1, new_rho, new_nu, new_e, last_worked, 0, first_flag, new_cw_off)
                     next_costs[n_next] = cost
                     next_init_idx[n_next] = init_idx
                     next_paths[n_next, :] = curr_paths[i, :]
@@ -347,9 +387,18 @@ def forward_pass_from_states(
                     
                 # Non-linear transition
                 c_new = 1 if (last_worked > 0 and last_worked != shift) else 0
+
+                # ECP rolling-window cap (same as forward_pass_numba): at most ecp_k
+                # shift changes in any 7-day window (current day + previous six). Must be
+                # enforced here too, otherwise the second half of the bidirectional pass
+                # would be uncapped and generate cap-violating columns near the seam/end.
+                if ecp_k > 0 and (popcount6(cw) + c_new) > ecp_k:
+                    continue
+
+                new_cw = ((cw << 1) | c_new) & 0x3F
                 new_rho = rho + 1 if c_new == 0 else 0
                 new_nu = nu + 1 if c_new == 1 else 0
-                
+
                 if c_new == 1:
                     degrad = delta_flat[last_worked * 4 + shift] * h_func(new_nu, gamma_C)
                     new_e = min(e_max, e + degrad)
@@ -370,7 +419,7 @@ def forward_pass_from_states(
                     new_first = 1
                 
                 if n_next < MAX_STATES:
-                    next_states[n_next] = pack_state(1 if omega <= 0 else omega + 1, new_rho, new_nu, new_e, shift, shift, new_first)
+                    next_states[n_next] = pack_state(1 if omega <= 0 else omega + 1, new_rho, new_nu, new_e, shift, shift, new_first, new_cw)
                     next_costs[n_next] = new_cost
                     next_init_idx[n_next] = init_idx
                     next_paths[n_next, :] = curr_paths[i, :]
@@ -634,9 +683,9 @@ class SubproblemDPNumba:
         self.e_max = 1.0
         self.delta = None
         
-        self.Days_Off = 2
-        self.Min_WD = 2
-        self.Max_WD = 5
+        self.Days_Off = DAYS_OFF
+        self.Min_WD = MIN_WD
+        self.Max_WD = MAX_WD
         
         self.status = None
         self.objval = None
@@ -721,6 +770,7 @@ class SubproblemDPNumba:
 
                 # Prepare JIT non-linear parameters
                 gamma_C, gamma_R, alpha_R, delta_flat, e_max = self._prepare_jit_params()
+                ecp_k = int(getattr(self, 'ecp_k', 0))
 
                 # Forward pass 1: day 0 to mid_day
                 fwd_states, fwd_costs, fwd_paths, n_fwd = forward_pass_numba(
@@ -728,7 +778,7 @@ class SubproblemDPNumba:
                     self.epsilon, self.chi, self.omega_max, self.xi,
                     self.Min_WD, self.Max_WD, self.Days_Off,
                     self.suffix_bounds, mid_day, enc_nc, enc_pf,
-                    gamma_R, gamma_C, alpha_R, delta_flat, e_max
+                    gamma_R, gamma_C, alpha_R, delta_flat, e_max, ecp_k
                 )
                 
                 if n_fwd > 0:
@@ -738,7 +788,7 @@ class SubproblemDPNumba:
                         self.epsilon, self.chi, self.omega_max, self.xi,
                         self.Min_WD, self.Max_WD, self.Days_Off,
                         mid_day, fwd_states, fwd_costs, n_fwd, enc_nc, enc_pf,
-                        gamma_R, gamma_C, alpha_R, delta_flat, e_max
+                        gamma_R, gamma_C, alpha_R, delta_flat, e_max, ecp_k
                     )
                     
                     if n_second > 0:
@@ -777,13 +827,14 @@ class SubproblemDPNumba:
         
         # Prepare JIT non-linear parameters
         gamma_C, gamma_R, alpha_R, delta_flat, e_max = self._prepare_jit_params()
+        ecp_k = int(getattr(self, 'ecp_k', 0))
 
         states, costs, paths, n_states = forward_pass_numba(
             n_days, n_shifts, self.duals_flat, self.duals_i,
             self.epsilon, self.chi, self.omega_max, self.xi,
             self.Min_WD, self.Max_WD, self.Days_Off,
             self.suffix_bounds, n_days, enc_nc, enc_pf,
-            gamma_R, gamma_C, alpha_R, delta_flat, e_max
+            gamma_R, gamma_C, alpha_R, delta_flat, e_max, ecp_k
         )
         
         if n_states > 0:
@@ -984,12 +1035,13 @@ class SubproblemDPNumba:
         r_history = []
         for d_idx in range(n_days):
             day = d_idx + 1  # 1-indexed
-            if day <= chi + 1:
+            # model:firstrec: r_id=0 for d < chi. model:r1/r2: for d>=chi, r_id=1 iff no
+            # change in the chi-day window {d-chi+1,...,d} (0-indexed c_history[day-chi:day]).
+            if day < chi:
                 r = 0
             else:
-                # Sum of c from d-χ to d (inclusive)
-                start = d_idx - chi
-                sum_c = sum(c_history[start:d_idx + 1])
+                start = day - chi
+                sum_c = sum(c_history[start:day])
                 r = 1 if sum_c == 0 else 0
             r_history.append(r)
 

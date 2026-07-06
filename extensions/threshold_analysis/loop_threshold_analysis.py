@@ -8,9 +8,10 @@ from datetime import datetime
 # Add the project root directory to the python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-from Utils.setup import Min_WD_i, Max_WD_i
+from core.base_case import get_wd_constraints
 from core.cg_behavior import column_generation_behavior
-from Utils.gcutil import generate_dict_from_excel
+from core.solver_base import TIME_CG_INIT, THRESHOLD, SCALE
+from Utils.gcutil import read_demand
 
 def run_threshold_analysis():
     print("="*80)
@@ -25,7 +26,8 @@ def run_threshold_analysis():
     T = list(range(1, n_days + 1))
     K = [1, 2, 3]
     I = list(range(1, n_workers + 1))
-    
+    Min_WD_i, Max_WD_i = get_wd_constraints(I)
+
     data = pd.DataFrame({
         'I': I + [np.nan] * (max(len(I), len(T), len(K)) - len(I)),
         'T': T + [np.nan] * (max(len(I), len(T), len(K)) - len(T)),
@@ -62,8 +64,8 @@ def run_threshold_analysis():
             print(f"\n  >> Seed {seed}/25")
             try:
                 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-                demand_data_path = os.path.join(project_root, 'data', 'demand_data.xlsx')
-                base_demand_dict = generate_dict_from_excel(
+                demand_data_path = os.path.join(project_root, 'data', 'demand_data_old.xlsx')
+                base_demand_dict = read_demand(
                     demand_data_path, n_workers, 'Medium', scenario=seed
                 )
                 base_demand_dict = {k: v for k, v in base_demand_dict.items() if k[0] <= n_days}
@@ -77,8 +79,8 @@ def run_threshold_analysis():
             # 1. No-Change Feasibility Run (Independent of tau)
             try:
                 res_nc = column_generation_behavior(
-                    data, scaled_demand_dict, eps, Min_WD_i, Max_WD_i, 10, 2000, 
-                    100, chi, 6e-5, 600, I, T, K, 1.0,
+                    data, scaled_demand_dict, eps, Min_WD_i, Max_WD_i, TIME_CG_INIT, 2000,
+                    100, chi, THRESHOLD, 600, I, T, K, 1.0,
                     sp_solver='labeling_bidir', use_null_column=False,
                     enforce_no_change=True, enforce_performance_floor=None
                 )
@@ -91,8 +93,8 @@ def run_threshold_analysis():
             # 3. Unrestricted BAP (Baseline, Independent of tau except for proxies)
             try:
                 res_unr = column_generation_behavior(
-                    data, scaled_demand_dict, eps, Min_WD_i, Max_WD_i, 10, 2000, 
-                    100, chi, 6e-5, 600, I, T, K, 1.0,
+                    data, scaled_demand_dict, eps, Min_WD_i, Max_WD_i, TIME_CG_INIT, 2000,
+                    100, chi, THRESHOLD, 600, I, T, K, 1.0,
                     sp_solver='labeling_bidir', use_null_column=False,
                     enforce_no_change=False, enforce_performance_floor=None
                 )
@@ -143,8 +145,8 @@ def run_threshold_analysis():
                 print(f"    -> Low-Fatigue with tau = {tau}")
                 try:
                     res_lf = column_generation_behavior(
-                        data, scaled_demand_dict, eps, Min_WD_i, Max_WD_i, 10, 2000, 
-                        100, chi, 6e-5, 600, I, T, K, 1.0,
+                        data, scaled_demand_dict, eps, Min_WD_i, Max_WD_i, TIME_CG_INIT, 2000,
+                    100, chi, THRESHOLD, 600, I, T, K, 1.0,
                         sp_solver='labeling_bidir', use_null_column=False,
                         enforce_no_change=False, enforce_performance_floor=tau
                     )

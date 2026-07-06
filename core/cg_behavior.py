@@ -74,7 +74,7 @@ def generate_feasible_schedule_heuristic(T, K, eps=0.06):
         'elow': elow
     }
 
-def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_init, max_itr, output_len, chi, threshold, time_cg, I, T, K, scale, sp_solver='mip', start_values=None, save_lp=False, worker_groups=None, use_heuristic_start=True, use_null_column=False, enforce_no_change=False, enforce_performance_floor=None, model_type='nonlinear'):
+def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_init, max_itr, output_len, chi, threshold, time_cg, I, T, K, scale, sp_solver='labeling_bidir', start_values=None, save_lp=False, worker_groups=None, use_heuristic_start=True, use_null_column=False, enforce_no_change=False, enforce_performance_floor=None, model_type='nonlinear'):
     # **** Column Generation ****
     # Prerequisites
     modelImprovable = True
@@ -205,6 +205,39 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
     P_schedules = create_schedule_dict(start_values_p, 1, T)
     X1_schedules = create_schedule_dict(start_values_x, 1, T, K)
 
+    # Per-group schedule storage (roster_idx -> schedule dict) for correct,
+    # group-aware reconstruction of the final per-worker lists. The legacy
+    # Physician_1 lists collapse all groups and are only correct for |G|=1.
+    _group_names = list(worker_groups.keys())
+    perf_by_group = {g: {} for g in _group_names}
+    cons_by_group = {g: {} for g in _group_names}
+    x_by_group = {g: {} for g in _group_names}
+    p_by_group = {g: {} for g in _group_names}
+    rec_by_group = {g: {} for g in _group_names}
+
+    # Seed roster index 1 (the INITIAL heuristic column set via setStartSolution)
+    # into the per-group stores. Roster 1 is never added through the CG loop, so
+    # without this the final reconstruction (_expand) treats every worker that the
+    # final IP assigns to roster 1 as an EMPTY schedule -- which both blanks their
+    # displayed roster and inflates the post-hoc undercoverage_ab metric. The
+    # per-(t,s)/(t,) key order here matches the CG columns and the demand order.
+    if start_values_by_group is not None:
+        for _gname, _sv in start_values_by_group.items():
+            perf_by_group[_gname][1] = dict(_sv['perf'])
+            cons_by_group[_gname][1] = dict(_sv['c'])
+            p_by_group[_gname][1]    = dict(_sv['p'])
+            rec_by_group[_gname][1]  = dict(_sv['r'])
+            x_by_group[_gname][1]    = dict(_sv['x'])
+    else:
+        # No per-group start (flat start_values path): reuse the same initial
+        # column for every group so roster 1 still reconstructs non-empty.
+        for _gname in _group_names:
+            perf_by_group[_gname][1] = dict(start_values_perf)
+            cons_by_group[_gname][1] = dict(start_values_c)
+            p_by_group[_gname][1]    = dict(start_values_p)
+            rec_by_group[_gname][1]  = dict(start_values_r)
+            x_by_group[_gname][1]    = dict(start_values_x)
+
     master = MasterProblem(data, demand_dict, max_itr, itr, last_itr, output_len, start_values_perf, 
                            start_by_group=start_values_by_group, worker_groups=worker_groups)
     master.buildModel()
@@ -313,6 +346,14 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
                 for key, method, schedule in zip(keys, methods, schedules):
                     value = getattr(subproblem, method)()
                     schedule[f"Physician_{index}"].append(value)
+
+                # Group-aware storage keyed by roster index (= itr + 1, see addLambda).
+                _r = itr + 1
+                perf_by_group[group_name][_r] = subproblem.getOptPerf()
+                cons_by_group[group_name][_r] = subproblem.getOptC()
+                x_by_group[group_name][_r] = subproblem.getOptX()
+                p_by_group[group_name][_r] = subproblem.getOptP()
+                rec_by_group[group_name][_r] = subproblem.getOptR()
         
         sub_end_time = time.time()
         sp_time_hist.append(sub_end_time - sub_start_time)
@@ -379,13 +420,30 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
     time_in_ip = time_ip2
 
     objValHistRMP.append(master.model.objval)
-    lagranigan_bound = round((objValHistRMP[-2] + sum_rc_hist[-1]), 3)
+    lagranigan_bound = round((objValHistRMP[-2] + sum_rc_hist[-1]), 5)
 
-    ls_p = [round(x, 2) for x in plotPerformanceList(P_schedules, master.printLambdas())]
-    ls_sc = [1.0 if x > 0.5 else 0.0 for x in plotPerformanceList(Cons_schedules, master.printLambdas())]
-    ls_perf = [round(x, 2) for x in plotPerformanceList(Perf_schedules, master.printLambdas())]
+    # Group-aware reconstruction: expand each group's rosters with ITS OWN schedules,
+    # ordered by the group's worker blocks. Roster 1 is the null column (empty schedule).
+    def _expand(sched_by_group, flat_len):
+        out = []
+        for _gi, _gname in enumerate(_group_names, start=1):
+            for _r in master.active_roster_by_group.get(_gi, []):
+                _cnt = round(master.lmbda[(_gi, _r)].X) if (_gi, _r) in master.lmbda else 0
+                if _cnt <= 0:
+                    continue
+                _sched = sched_by_group[_gname].get(_r)
+                _vals = list(_sched.values()) if _sched is not None else [0.0] * flat_len
+                for _ in range(_cnt):
+                    out.extend(_vals)
+        return out
+
+    _n_ts = len(T) * len(K)
+    _n_t = len(T)
+    ls_p = [round(x, 5) for x in _expand(p_by_group, _n_t)]
+    ls_sc = [1.0 if x > 0.5 else 0.0 for x in _expand(cons_by_group, _n_t)]
+    ls_perf = [round(x, 5) for x in _expand(perf_by_group, _n_ts)]
     ls_x = [1.0 if x > 0 else 0.0 for x in ls_perf]
-    ls_rec = [1.0 if x > 0.5 else 0.0 for x in plotPerformanceList(Recovery_schedules, master.printLambdas())]
+    ls_rec = [1.0 if x > 0.5 else 0.0 for x in _expand(rec_by_group, _n_t)]
 
     # Inequality
     L_perf = [x * (1 - p) for x, p in zip(ls_x, ls_perf)]
@@ -397,4 +455,4 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
 
     undercoverage_ab, understaffing_ab, perfloss_ab, consistency_ab, consistency_norm_ab, undercoverage_norm_ab, understaffing_norm_ab, perfloss_norm_ab = master.calc_behavior(ls_perf, ls_sc, scale)
 
-    return round(undercoverage_ab, 5), round(understaffing_ab, 5), round(perfloss_ab, 5), round(consistency_ab, 5), round(consistency_norm_ab, 5), round(undercoverage_norm_ab, 5), round(understaffing_norm_ab, 5), round(perfloss_norm_ab, 5),  round(final_obj, 5), round(final_lb, 5), itr, lagranigan_bound, integrality_gap_pct, time_in_sps, time_in_rmp, time_in_ip, ls_p, ls_sc, ls_perf, ls_x, ls_rec, [0.0 if abs(round(x, 3)) == 0 else round(x, 2) for x in master.getUndercoverage()], results_ineq_sc, spread_sc, load_share_sc, gini_sc, results_ineq_perf, spread_perf, load_share_perf, gini_perf, shift_blocks
+    return round(undercoverage_ab, 5), round(understaffing_ab, 5), round(perfloss_ab, 5), round(consistency_ab, 5), round(consistency_norm_ab, 5), round(undercoverage_norm_ab, 5), round(understaffing_norm_ab, 5), round(perfloss_norm_ab, 5),  round(final_obj, 5), round(final_lb, 5), itr, lagranigan_bound, integrality_gap_pct, time_in_sps, time_in_rmp, time_in_ip, ls_p, ls_sc, ls_perf, ls_x, ls_rec, [0.0 if abs(round(x, 5)) == 0 else round(x, 5) for x in master.getUndercoverage()], results_ineq_sc, spread_sc, load_share_sc, gini_sc, results_ineq_perf, spread_perf, load_share_perf, gini_perf, shift_blocks, objValHistRMP, objValHistSP, rmp_time_hist, sp_time_hist, lagrange_hist

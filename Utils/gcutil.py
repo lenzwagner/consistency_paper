@@ -4,7 +4,7 @@ import math
 import numpy as np
 import pandas as pd
 
-def generate_dict_from_excel(file_path, value_I, pattern, scenario):
+def read_demand(file_path, value_I, pattern, scenario):
 
     data = pd.read_excel(file_path)
 
@@ -192,90 +192,6 @@ def remove_vars(master, I_list, T_list, K_list, last_itr, max_itr):
                     master.model.remove(var)
                     master.model.update()
 
-def create_demand_dict(num_days, total_demand):
-    demand_dict = {}
-
-    for day in range(1, num_days + 1):
-        remaining_demand = total_demand
-        shifts = [0, 0, 0]
-
-        while remaining_demand > 0:
-            shift_idx = random.randint(0, 2)
-            shift_demand = min(remaining_demand, random.randint(0, remaining_demand))
-            shifts[shift_idx] += shift_demand
-            remaining_demand -= shift_demand
-
-        for i in range(3):
-            shifts[i] = round(shifts[i])
-            demand_dict[(day, i + 1)] = shifts[i]
-
-    return demand_dict
-
-def demand_dict_fifty(num_days, prob, demand):
-    total_demand = int(prob * demand)
-    demand_dict = {}
-
-    for day in range(1, num_days + 1):
-        middle_shift_ratio = random.random()
-        middle_shift_demand = round(total_demand * middle_shift_ratio)
-        remaining_demand = total_demand - middle_shift_demand
-        early_shift_ratio = random.random()
-        early_shift_demand = round(remaining_demand * early_shift_ratio)
-        late_shift_demand = remaining_demand - early_shift_demand
-
-        demand_dict[(day, 1)] = early_shift_demand
-        demand_dict[(day, 2)] = middle_shift_demand
-        demand_dict[(day, 3)] = late_shift_demand
-
-    return demand_dict
-
-def demand_dict_third(num_days, prob, demand):
-    total_demand = int(prob * demand)
-    demand_dict = {}
-
-    for day in range(1, num_days + 1):
-        z1 = random.random()
-        z2 = random.random()
-        z3 = random.random()
-
-        summe = z1 + z2 + z3
-
-        demand1 = (z1 / summe) * total_demand
-        demand2 = (z2 / summe) * total_demand
-        demand3 = (z3 / summe) * total_demand
-
-        demand1_rounded = round(demand1)
-        demand2_rounded = round(demand2)
-        demand3_rounded = round(demand3)
-
-        rounded_total = demand1_rounded + demand2_rounded + demand3_rounded
-        rounding_difference = total_demand - rounded_total
-
-        if rounding_difference != 0:
-            shift_indices = [1, 2, 3]
-            random.shuffle(shift_indices)
-            for i in range(abs(rounding_difference)):
-                if rounding_difference > 0:
-                    if shift_indices[i] == 1:
-                        demand1_rounded += 1
-                    elif shift_indices[i] == 2:
-                        demand2_rounded += 1
-                    else:
-                        demand3_rounded += 1
-                else:
-                    if shift_indices[i] == 1:
-                        demand1_rounded -= 1
-                    elif shift_indices[i] == 2:
-                        demand2_rounded -= 1
-                    else:
-                        demand3_rounded -= 1
-
-        demand_dict[(day, 1)] = demand1_rounded
-        demand_dict[(day, 2)] = demand2_rounded
-        demand_dict[(day, 3)] = demand3_rounded
-
-    return demand_dict
-
 # **** Generate random pattern ****
 def generate_cost(num_days, phys, K):
     cost = {}
@@ -373,6 +289,27 @@ def create_schedule_dict(start_values, physician_indices, time_indices, shift_in
         schedule_dict[f"Physician_{index}"] = [{(t, s): start_values[(t, s)] for t in time_indices for s in shift_indices}]
     return schedule_dict
 
+def compute_consistency_from_ls_x(ls_x, n_workers, n_days, n_shifts=3):
+    """Count total shift changes across all workers, counting across days off.
+    ls_x: flat list of length n_workers * n_days * n_shifts (worker-major layout).
+    """
+    total = 0
+    for w in range(n_workers):
+        base = w * n_days * n_shifts
+        last_s = None
+        for d in range(n_days):
+            curr_s = 0
+            for s in range(n_shifts):
+                if ls_x[base + d * n_shifts + s] > 0.5:
+                    curr_s = s + 1
+                    break
+            if curr_s != 0:
+                if last_s is not None and curr_s != last_s:
+                    total += 1
+                last_s = curr_s
+    return float(total)
+
+
 def plotPerformanceList(dict_a, dict_b):
     result_list = []
 
@@ -440,14 +377,18 @@ def format_LSR_stats(LSR, n=100):
     return formatted_stats
 
 def process_recovery(input_list, chi, length):
+    """Recovery indicator r_id per Model.tex model:r1/model:r2/model:firstrec:
+    r_id=0 for the first chi-1 days; for day i+1>=chi (0-indexed i>=chi-1), r_id=1
+    iff the chi-day window ending at day i+1 contains no shift change."""
     sublists = [input_list[i:i + length] for i in range(0, len(input_list), length)]
 
     result = []
     for sublist in sublists:
-        new_sublist = [0.0] * chi
+        new_sublist = [0.0] * (chi - 1)
 
-        for i in range(chi, len(sublist)):
-            if any(sublist[max(0, i - chi):i+1]):
+        for i in range(chi - 1, len(sublist)):
+            window = sublist[i - chi + 1:i + 1]
+            if any(window):
                 new_sublist.append(0.0)
             else:
                 new_sublist.append(1.0)

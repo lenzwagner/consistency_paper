@@ -14,7 +14,7 @@ import sys
 # Add the project root directory to the python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-from Utils.setup import Min_WD_i, Max_WD_i
+from core.base_case import get_wd_constraints
 from core.cg_behavior import *
 from core.cg_naive import column_generation_naive
 from Utils.Plots.plots import *
@@ -102,8 +102,8 @@ SCENARIOS = {
 # PARAMETERS
 # ============================================================================
 
-time_cg, time_cg_init = 7200, 10
-max_itr, threshold = 2000, 6e-5
+time_cg, time_cg_init = TIME_CG, TIME_CG_INIT
+max_itr, threshold = 2000, THRESHOLD  # max_itr=2000: production override
 N_SEEDS = 25
 
 # Which analysis to run
@@ -214,7 +214,8 @@ def run_single_scenario(scenario_key, scenario_config, seeds=range(1, 26), run_n
     K = [1, 2, 3]
     n_workers = scenario_config['n_workers']
     I = list(range(1, n_workers + 1))
-    
+    Min_WD_i, Max_WD_i = get_wd_constraints(I)
+
     data = pd.DataFrame({
         'I': I + [np.nan] * (max(len(I), len(T), len(K)) - len(I)),
         'T': T + [np.nan] * (max(len(I), len(T), len(K)) - len(T)),
@@ -236,8 +237,8 @@ def run_single_scenario(scenario_key, scenario_config, seeds=range(1, 26), run_n
         print(f"\n--- Seed {seed}/{max(seeds)} ---")
         
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-        demand_data_path = os.path.join(project_root, 'data', 'demand_data.xlsx')
-        demand_dict = generate_dict_from_excel(
+        demand_data_path = os.path.join(project_root, 'data', 'demand_data_old.xlsx')
+        demand_dict = read_demand(
             demand_data_path, len(I), 'Medium', scenario=seed
         )
         

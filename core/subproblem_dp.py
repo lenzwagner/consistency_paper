@@ -10,6 +10,7 @@ from typing import Dict, List, Tuple, Optional, Set
 from dataclasses import dataclass
 import gurobipy as gu
 from .nonlinear_transitions import h_func, r_func
+from .base_case import DAYS_OFF, F_S, K_ECP
 
 
 
@@ -153,18 +154,12 @@ class SubproblemDP:
         self.delta = None
 
         # Regulatory constraints
-        self.Days_Off = 2
-        # Global constraints (Hardcoded in both solvers)
-        self.Min_WD = 2
-        self.Max_WD = 5
-        
-        # Note: MIP ignores Min_WD_i and Max_WD_i passed in __init__
-        # and uses the hardcoded global values above. 
-        # To match MIP behavior, DP must also ignore the individual parameters.
-        # self.Min_WD = max(2, Min_WD_i) # Disabled to match MIP
-        # self.Max_WD = min(5, Max_WD_i) # Disabled to match MIP
-        
-        self.F_S = [(3, 1), (3, 2), (2, 1)]  # Forbidden shift sequences
+        self.Days_Off = DAYS_OFF
+        # Per-worker Min/Max consecutive working days (mirrors subproblem.py lines 280-285)
+        self.Min_WD = Min_WD_i[i] if isinstance(Min_WD_i, dict) else Min_WD_i
+        self.Max_WD = Max_WD_i[i] if isinstance(Max_WD_i, dict) else Max_WD_i
+        self.F_S = F_S
+        self.k_ecp = None  # activate via addECPConstraint(K_ECP) where K_ECP from base_case
 
         # Solution storage
         self.best_label: Optional[Label] = None
@@ -186,6 +181,18 @@ class SubproblemDP:
     def buildModel(self):
         """Build model (no-op for DP, kept for interface compatibility)."""
         pass
+
+    def addECPConstraint(self, k):
+        """Imposes an upper bound of k shift changes per rolling 7-day window
+        (mirrors core/subproblem.py's MIP addECPConstraint, model:ecp)."""
+        self.k_ecp = k
+
+    def _violates_ecp(self, label: 'Label', c_new: int) -> bool:
+        """True if appending c_new to the rolling 7-day sc-window would exceed k_ecp."""
+        if self.k_ecp is None:
+            return False
+        window = label.sc_history[-6:] + [c_new]
+        return sum(window) > self.k_ecp
 
     def solveModelOpt(self, timeLimit):
         """Solve with tight optimality (main solve method)."""
@@ -452,7 +459,7 @@ class SubproblemDP:
         if self.model_type == 'linear':
             new_label.nu = 0
             rho_temp = label.rho + 1
-            r_new = 1 if rho_temp >= self.chi + 1 else 0
+            r_new = 1 if rho_temp >= self.chi else 0
             new_label.rho = rho_temp
             e_new = max(0.0, min(float(label.e + c_new - r_new), float(self.omega_max)))
             new_label.e = e_new
@@ -464,7 +471,7 @@ class SubproblemDP:
             recov = r_func(new_label.rho, self.chi, self.gamma_R, self.alpha_R)
             new_label.e = max(0.0, label.e - recov)
             p_new = 1.0 - new_label.e
-            r_new = 1.0 if (new_label.rho > self.chi) else 0.0
+            r_new = 1.0 if (new_label.rho >= self.chi) else 0.0
             
         pf = getattr(self, 'enforce_performance_floor', None)
         if pf is not None and p_new < pf:
@@ -496,6 +503,9 @@ class SubproblemDP:
         if getattr(self, 'enforce_no_change', False) and c_new > 0:
             return None
 
+        if self._violates_ecp(label, c_new):
+            return None
+
         # Update shift tracking
         new_label.s_last = shift
         new_label.last_worked_shift = shift  # Update last worked shift
@@ -509,7 +519,7 @@ class SubproblemDP:
         if self.model_type == 'linear':
             new_label.nu = 0
             rho_temp = label.rho + 1 if c_new == 0 else 0
-            r_new = 1 if rho_temp >= self.chi + 1 else 0
+            r_new = 1 if rho_temp >= self.chi else 0
             new_label.rho = rho_temp
             e_new = max(0.0, min(float(label.e + c_new - r_new), float(self.omega_max)))
             new_label.e = e_new
@@ -532,8 +542,8 @@ class SubproblemDP:
                 new_label.rho = label.rho + 1
                 recov = r_func(new_label.rho, self.chi, self.gamma_R, self.alpha_R)
                 new_label.e = max(0.0, label.e - recov)
-                r_new = 1.0 if (new_label.rho > self.chi) else 0.0
-                
+                r_new = 1.0 if (new_label.rho >= self.chi) else 0.0
+
             p_new = 1.0 - new_label.e
 
         pf = getattr(self, 'enforce_performance_floor', None)
@@ -568,28 +578,29 @@ class SubproblemDP:
         if not labels:
             return []
 
-        # Group labels by (day, s_last) for efficient dominance checking
-        label_groups: Dict[Tuple[int, Optional[int]], List[Label]] = {}
-        for label in labels:
-            key = (label.day, label.s_last)
-            if key not in label_groups:
-                label_groups[key] = []
-            label_groups[key].append(label)
+        # Group by the FULL dominance-relevant state (not just day, s_last):
+        # within such a group every label is state-identical by construction,
+        # so the lowest-cost member is trivially the sole non-dominated
+        # survivor -- O(n) instead of the O(n^2) pairwise dominates() scan
+        # this replaces, which becomes the bottleneck once label counts grow
+        # (e.g. multi-day beta_g jumps in the off-day extension).
+        if is_final_day:
+            # For the final day only accumulated cost matters (base dominates()),
+            # so a single global min suffices.
+            return [min(labels, key=lambda l: l.cost)]
 
-        # Prune within each group
+        label_groups: Dict[tuple, List[Label]] = {}
+        for label in labels:
+            key = (label.day, label.s_last, label.last_worked_shift,
+                   round(label.e, 3), label.rho, label.omega, label.nu)
+            label_groups.setdefault(key, []).append(label)
+
         non_dominated = []
         for group_labels in label_groups.values():
-            group_non_dominated = []
-            for label in group_labels:
-                dominated = False
-                # Check if any other label dominates this one
-                for other in group_labels:
-                    if other is not label and other.dominates(label, is_final_day=is_final_day):
-                        dominated = True
-                        break
-                if not dominated:
-                    group_non_dominated.append(label)
-            non_dominated.extend(group_non_dominated)
+            if len(group_labels) == 1:
+                non_dominated.append(group_labels[0])
+            else:
+                non_dominated.append(min(group_labels, key=lambda l: l.cost))
 
         return non_dominated
 

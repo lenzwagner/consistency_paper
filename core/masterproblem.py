@@ -170,23 +170,27 @@ class MasterProblem:
         
         self.model.update()
 
-    def addLambda(self, itr, group_idx=None):
+    def addLambda(self, itr, group_idx=None, extra_cost=0.0):
         """
         Add a new lambda variable for the given iteration.
-        
+
         Args:
             itr: Iteration number (roster index will be itr + 1)
             group_idx: Group index for this lambda. If None, creates for all groups.
+            extra_cost: Fixed per-column objective coefficient (e.g. the fairness
+                penalty lambda*|F_v-Fbar| or preference penalty lambda_P*sum(y_id)
+                of this specific schedule). Must match the pricing SP's reduced-cost
+                formula so master and subproblem optimize the same combined objective.
         """
         roster_idx = itr + 1
-        
+
         # Determine which groups this lambda applies to
         groups = [group_idx] if group_idx is not None else list(self.group_info.keys())
-        
+
         for g in groups:
             # Create new lambda variable
             self.lmbda[g, roster_idx] = self.model.addVar(
-                vtype=gu.GRB.CONTINUOUS, lb=0, name=f'lmbda[{g},{roster_idx}]'
+                vtype=gu.GRB.CONTINUOUS, lb=0, obj=extra_cost, name=f'lmbda[{g},{roster_idx}]'
             )
             
             # Track active roster for this group
@@ -215,6 +219,19 @@ class MasterProblem:
             for g in self.group_info:
                 if (g, r) in self.lmbda:
                     roster_sum += round(self.lmbda[g, r].X)
+            if roster_sum > 0:
+                vals[r] = roster_sum
+        return vals
+
+    def printLambdasPool(self):
+        """Like printLambdas, but reads the currently selected pool solution (.Xn)
+        instead of the incumbent (.X). Set model.Params.SolutionNumber first."""
+        vals = {}
+        for r in self.active_roster:
+            roster_sum = 0
+            for g in self.group_info:
+                if (g, r) in self.lmbda:
+                    roster_sum += round(self.lmbda[g, r].Xn)
             if roster_sum > 0:
                 vals[r] = roster_sum
         return vals
@@ -312,14 +329,14 @@ class MasterProblem:
         """Unified return structure for both calc methods."""
         n = len(self.nurses)
         return (
-            round(uc, 5), 
-            round(us, 5), 
-            round(pl, 5), 
-            round(co, 5), 
-            round(co / (n * scale), 5),
-            round(uc / (n * scale), 5),
-            round(us / (n * scale), 5),
-            round(pl / (n * scale), 5)
+            round(uc, 6),
+            round(us, 6),
+            round(pl, 6),
+            round(co, 6),
+            round(co / (n * scale), 6),
+            round(uc / (n * scale), 6),
+            round(us / (n * scale), 6),
+            round(pl / (n * scale), 6)
         )
 
     def calc_behavior(self, ls_perf, ls_sc, scale):
@@ -336,16 +353,32 @@ class MasterProblem:
             else:
                 ls_perf = ls_perf[:expected_length]
         
-        perfloss = round(sum(1.0 - p for p in ls_perf if p > 0), 5)
-        undercoverage = round(sum(self.u[t, k].X for t in self.days for k in self.shifts), 3)
-        understaffing = round(max(0, undercoverage - perfloss), 5)
+        # Paper-consistent decomposition (matches U^Inherent / U^Perf and the NPP/ECP path).
+        # Per shift-day cell:  u^0_ds = max(0, Q_ds - sum_i x_ids)   (nominal headcount)
+        #                      u_ds   = max(0, Q_ds - sum_i p_ids)   (effective performance)
+        # U^Inherent = sum u^0_ds ;  U^Perf = sum (u_ds - u^0_ds) ;  U = U^Inherent + U^Perf.
+        n_days = len(self.days)
+        n_shifts = len(self.shifts)
+        n_cells = n_days * n_shifts
+        nominal_supply = [0.0] * n_cells
+        effective_supply = [0.0] * n_cells
+        for w in range(len(self.nurses)):
+            base = w * n_cells
+            for c in range(n_cells):
+                p = ls_perf[base + c]
+                if p > 0:
+                    nominal_supply[c] += 1.0
+                    effective_supply[c] += p
+        understaffing = sum(max(0.0, self.demand_values[c] - nominal_supply[c]) for c in range(n_cells))
+        undercoverage = sum(max(0.0, self.demand_values[c] - effective_supply[c]) for c in range(n_cells))
+        perfloss = undercoverage - understaffing
 
         return self._final_metrics_package(undercoverage, understaffing, perfloss, consistency, scale)
 
-    def calc_naive(self, lst, ls_sc, ls_r, mue, scale, worker_groups=None):
+    def calc_naive(self, lst, ls_sc, ls_r, scale, worker_groups=None):
         """Calculate metrics using naive (post-hoc) performance degradation."""
         if worker_groups is not None:
-            return self._calc_naive_nl(lst, ls_sc, mue, scale, worker_groups)
+            return self._calc_naive_nl(lst, ls_sc, scale, worker_groups)
         
         consistency = sum(ls_sc)
         perf_ls = []
@@ -392,7 +425,7 @@ class MasterProblem:
         metrics = self._final_metrics_package(u_results + sum_all_doctors, u_results, sum_all_doctors, consistency, scale)
         return (*metrics, perf_ls, cumulative_total)
 
-    def _calc_naive_nl(self, lst, ls_sc, mue, scale, worker_groups):
+    def _calc_naive_nl(self, lst, ls_sc, scale, worker_groups):
         """Internal method for non-linear post-hoc evaluation using worker groups."""
         consistency = sum(ls_sc)
         perf_ls = []
@@ -443,7 +476,7 @@ class MasterProblem:
                     if worker_x[d_idx * len(self.shifts) + s_idx] > 0.5:
                         x_dict[(day, shift)] = 1.0
             
-            perf_hist, _, _, _ = evaluate_schedule_nl(x_dict, self.days, self.shifts, nl_spec)
+            perf_hist, _, _, _, _, _ = evaluate_schedule_nl(x_dict, self.days, self.shifts, nl_spec)
             
             worker_perf_ls = []
             for d_idx, day in enumerate(self.days):

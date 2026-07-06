@@ -10,39 +10,57 @@ from dataclasses import dataclass
 from typing import List, Dict, Tuple
 from fractions import Fraction
 
-def get_default_delta(epsilon: float) -> np.ndarray:
-    """Build the directed baseline shift change cost matrix Delta(s, s')."""
+def get_calibrated_delta() -> np.ndarray:
+    """Directed baseline degradation matrix Delta(s, s'), calibrated to circadian
+    phase-shift severity (shift indices 1=E, 2=L, 3=N); zero on the diagonal.
+    Backward rotations (e.g. N->E) exceed forward rotations of equal magnitude.
+    Shared across all worker groups."""
     delta = np.zeros((4, 4))
-    # E -> ...
-    delta[1, 1] = 1.0 * epsilon
-    delta[1, 2] = 1.2 * epsilon
-    delta[1, 3] = 1.5 * epsilon
-    # L -> ...
-    delta[2, 1] = 2.5 * epsilon
-    delta[2, 2] = 1.0 * epsilon
-    delta[2, 3] = 1.2 * epsilon
-    # N -> ...
-    delta[3, 1] = 1.2 * epsilon
-    delta[3, 2] = 1.5 * epsilon
-    delta[3, 3] = 1.0 * epsilon
+    delta[1, 2] = 0.06  # E -> L (mildest forward rotation)
+    delta[1, 3] = 0.13  # E -> N (forward into night)
+    delta[2, 1] = 0.11  # L -> E (moderate backward rotation)
+    delta[2, 3] = 0.08  # L -> N (forward into night)
+    delta[3, 1] = 0.20  # N -> E (strongest backward rotation)
+    delta[3, 2] = 0.10  # N -> L (mild backward rotation)
     return delta
+
+
+def get_default_delta(epsilon: float = None) -> np.ndarray:
+    """Backward-compatible alias returning the calibrated directed matrix.
+    The epsilon argument is retained for signature compatibility and ignored."""
+    return get_calibrated_delta()
+
+
+def compute_alpha_R(T_R: int, gamma_R: float) -> float:
+    """Recovery scale alpha_R derived from the full-recovery horizon T_R, so that a
+    worker at maximum loss recovers to phi=0 after exactly T_R eligible stable days.
+    By the telescoping identity sum_{t=1}^{T_R}[t^g-(t-1)^g]=(T_R)^g, alpha_R=(T_R)^{-g}."""
+    return float(T_R) ** (-float(gamma_R))
 
 @dataclass
 class WorkerGroup:
-    """A group of workers with shared performance parameters."""
+    """A group of workers with shared performance parameters.
+
+    Degradation is governed by the shared directed matrix ``delta`` scaled by the
+    consecutive-change curvature ``gamma_C``; recovery by ``gamma_R`` with scale
+    ``alpha_R`` derived from the full-recovery horizon ``T_R``. Defaults correspond
+    to the neutral, linear benchmark (gamma_C = gamma_R = 1)."""
     name: str
     epsilon: float
     chi: int
     worker_ids: List[int]
-    gamma_C: float = 1.25
-    gamma_R: float = 0.5
-    alpha_R: float = 0.04
+    gamma_C: float = 1.0
+    gamma_R: float = 1.0
+    T_R: int = 14
+    alpha_R: float = None
     e_max: float = 1.0
     delta: np.ndarray = None
 
     def __post_init__(self):
         if self.delta is None:
-            self.delta = get_default_delta(self.epsilon)
+            self.delta = get_calibrated_delta()
+        if self.alpha_R is None:
+            self.alpha_R = compute_alpha_R(self.T_R, self.gamma_R)
 
 
 def parse_fractions(fraction_str: str) -> List[float]:
@@ -66,62 +84,73 @@ def parse_fractions(fraction_str: str) -> List[float]:
 def create_groups_from_fractions(
     I: List[int],
     fraction_str: str,
-    group_params: List[Tuple[float, int]]
+    group_params: List[Tuple[float, float, int, int]]
 ) -> Dict[str, WorkerGroup]:
     """
     Split workers into groups by fractions. Remainder goes to first group.
-    
+
     Args:
         I: List of worker IDs, e.g. [1, 2, 3, ..., 50]
-        fraction_str: Proportional split, e.g. "1/3,1/3,1/3"
-        group_params: List of (epsilon, chi) tuples for each group
-        
+        fraction_str: Proportional split, e.g. "1/2,1/2"
+        group_params: List of (gamma_C, gamma_R, chi, T_R) tuples, one per group.
+            The directed cost matrix Delta is shared (calibrated) across groups;
+            alpha_R is derived from (T_R, gamma_R).
+
     Returns:
         Dictionary mapping group name to WorkerGroup
-        
+
     Example:
-        I = [1..50], fraction_str = "1/3,1/3,1/3"
-        -> Group 1: 18 workers (gets remainder), Group 2: 16, Group 3: 16
+        I = [1..100], fraction_str = "1/2,1/2",
+        group_params = [(0.5, 0.5, 2, 7), (1.5, 1.5, 4, 21)]
+        -> group_1: 50 resilient workers, group_2: 50 sensitive workers
     """
     fractions = parse_fractions(fraction_str)
-    
+
     if len(fractions) != len(group_params):
         raise ValueError(f"Number of fractions ({len(fractions)}) must match "
                         f"number of group_params ({len(group_params)})")
-    
+
     n = len(I)
     sizes = [int(f * n) for f in fractions]
     remainder = n - sum(sizes)
     sizes[0] += remainder  # Remainder to first group
-    
+
     groups = {}
     start = 0
-    for i, (size, (eps, chi)) in enumerate(zip(sizes, group_params)):
+    for i, (size, (gamma_C, gamma_R, chi, T_R)) in enumerate(zip(sizes, group_params)):
         name = f"group_{i+1}"
         groups[name] = WorkerGroup(
             name=name,
-            epsilon=eps,
+            epsilon=0.06,  # vestigial; degradation is governed by the shared directed Delta
             chi=chi,
-            worker_ids=I[start:start+size]
+            worker_ids=I[start:start+size],
+            gamma_C=gamma_C,
+            gamma_R=gamma_R,
+            T_R=T_R,
         )
         start += size
-    
+
     return groups
 
 
-def create_homogeneous_group(I: List[int], eps: float, chi: int) -> Dict[str, WorkerGroup]:
+def create_homogeneous_group(I: List[int], eps: float, chi: int,
+                             gamma_C: float = 1.0, gamma_R: float = 1.0,
+                             T_R: int = 14) -> Dict[str, WorkerGroup]:
     """
-    Create a single group containing all workers (for backward compatibility).
-    
+    Create a single group containing all workers (the homogeneous benchmark).
+
     Args:
         I: List of worker IDs
-        eps: Epsilon parameter for all workers
-        chi: Chi parameter for all workers
-        
+        eps: Epsilon parameter (vestigial; degradation uses the shared directed Delta)
+        chi: Recovery threshold for all workers
+        gamma_C, gamma_R, T_R: curvature and horizon parameters
+            (default to the neutral, linear benchmark)
+
     Returns:
         Dictionary with single 'all' group
     """
-    return {'all': WorkerGroup('all', eps, chi, I)}
+    return {'all': WorkerGroup('all', eps, chi, I,
+                               gamma_C=gamma_C, gamma_R=gamma_R, T_R=T_R)}
 
 
 def get_worker_params(worker_groups: Dict[str, WorkerGroup]) -> Dict[int, Tuple[float, int]]:
