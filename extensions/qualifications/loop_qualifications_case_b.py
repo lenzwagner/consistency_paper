@@ -32,6 +32,7 @@ from core.base_case import get_wd_constraints
 from core.masterproblem import MasterProblem
 from core.worker_groups import get_calibrated_delta, compute_alpha_R, WorkerGroup
 from core.subproblem_dp_extensions import SubproblemQualificationsOverlapDP
+from core.subproblem_dp_extensions_numba import SubproblemQualificationsOverlapNumba
 from core.nonlinear_transitions import evaluate_schedule_nl
 from Utils.demand import generate_demand
 
@@ -135,9 +136,12 @@ def make_workers_case_b(I, pi):
 
 
 def run_cg(data_sp, data_master, demand_vshift, workers_case_b, mode, max_itr=MAX_ITR,
-           threshold=THRESHOLD, time_cg_init=TIME_CG_INIT, time_cg=TIME_CG_SP):
+           threshold=THRESHOLD, time_cg_init=TIME_CG_INIT, time_cg=TIME_CG_SP, solver='dp'):
     """Column generation with individual worker pricing and qualification-
     indexed master demand rows (Case B).
+
+    solver: 'dp' (exact Python label-setting, default) or 'numba' (JIT-compiled,
+    same recursion -- see core.subproblem_dp_extensions_numba.SubproblemQualificationsOverlapNumba).
 
     Args:
         data_sp: DataFrame with real shifts (K=[1,2,3]) for pricing subproblems.
@@ -150,6 +154,7 @@ def run_cg(data_sp, data_master, demand_vshift, workers_case_b, mode, max_itr=MA
         over all (day, shift, qualification) demand rows; consistency counts
         REAL shift changes (qualification choice is irrelevant to it).
     """
+    SubproblemCls = SubproblemQualificationsOverlapNumba if solver == 'numba' else SubproblemQualificationsOverlapDP
     T = data_sp['T'].dropna().astype(int).unique().tolist()
     K = data_sp['K'].dropna().astype(int).unique().tolist()  # real shifts, for ex-post nl evaluation
     I = data_sp['I'].dropna().astype(int).unique().tolist()
@@ -195,7 +200,7 @@ def run_cg(data_sp, data_master, demand_vshift, workers_case_b, mode, max_itr=MA
             w = workers_case_b[wid]
             eps_sp = w.epsilon if mode == 'bap' else 0.0
 
-            sp = SubproblemQualificationsOverlapDP(
+            sp = SubproblemCls(
                 duals_i.get(g_idx, 0.0), duals_ts_q, SHIFT_TO_QUALIFICATIONS,
                 data_sp, wid, itr, eps_sp, Min_WD_i, Max_WD_i, w.chi,
                 w.eligible_qualifications

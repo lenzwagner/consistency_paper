@@ -14,6 +14,7 @@ from core.base_case import get_wd_constraints
 from core.masterproblem import MasterProblem
 from core.worker_groups import create_groups_from_fractions
 from core.subproblem_dp_extensions import SubproblemPreferencesDP
+from core.subproblem_dp_extensions_numba import SubproblemPreferencesNumba
 from Utils.demand import generate_demand
 from extensions.preferences.loop_preferences import make_singleton_groups, LAMBDAS_P
 from core.nonlinear_transitions import evaluate_schedule_nl
@@ -23,7 +24,10 @@ from core.solver_base import MAX_ITR, THRESHOLD, TIME_CG_INIT, TIME_CG_SP
 
 
 def run_cg(data, demand_dict, singleton_groups, pref_by_worker, lam_pref, mode,
-           max_itr=MAX_ITR, threshold=THRESHOLD, time_cg=TIME_CG_SP):
+           max_itr=MAX_ITR, threshold=THRESHOLD, time_cg=TIME_CG_SP, solver='dp'):
+    """solver: 'dp' (exact Python label-setting, default) or 'numba' (JIT-compiled,
+    same recursion -- see core.subproblem_dp_extensions_numba.SubproblemPreferencesNumba)."""
+    SubproblemCls = SubproblemPreferencesNumba if solver == 'numba' else SubproblemPreferencesDP
     T = data['T'].dropna().astype(int).unique().tolist()
     K = data['K'].dropna().astype(int).unique().tolist()
     I = data['I'].dropna().astype(int).unique().tolist()
@@ -46,9 +50,9 @@ def run_cg(data, demand_dict, singleton_groups, pref_by_worker, lam_pref, mode,
         for g_idx, (gname, group) in enumerate(singleton_groups.items(), start=1):
             wid = group.worker_ids[0]
             eps_sp = group.epsilon if mode == 'bap' else 0.0
-            sp = SubproblemPreferencesDP(duals_i.get(g_idx, 0.0), duals_ts, data, wid, itr,
-                                          eps_sp, Min_WD_i, Max_WD_i, group.chi,
-                                          pref_by_worker.get(wid, []), lam_pref)
+            sp = SubproblemCls(duals_i.get(g_idx, 0.0), duals_ts, data, wid, itr,
+                               eps_sp, Min_WD_i, Max_WD_i, group.chi,
+                               pref_by_worker.get(wid, []), lam_pref)
             if mode == 'bap':
                 sp.gamma_C, sp.gamma_R, sp.alpha_R, sp.delta, sp.e_max = (
                     group.gamma_C, group.gamma_R, group.alpha_R, group.delta, group.e_max)

@@ -397,14 +397,17 @@ class MasterProblem:
         
         sum_all_doctors = 0
         cumulative_total = [0] * (len(self.days) * len(self.shifts))
-        
+        # Cell-wise (per worker, per day-shift-cell) performance, matching ls_x's layout
+        # (see _calc_naive_nl for the same fix in the nonlinear/group-aware path).
+        perf_cellwise = []
+
         comp_result = [0 if self.demand_values[i] < sum_xWerte[i] else 1 for i in range(len(self.demand_values))]
-        
+
         for idx in range(n_nurses):
             doctor_values = sc_values2[idx]
             r_values = r_values2[idx]
             x_i_values = x_values[idx]
-            
+
             cumulative_sum = [0]
             for i in range(1, len(doctor_values)):
                 if r_values[i] == 1 and cumulative_sum[-1] > 0:
@@ -412,18 +415,25 @@ class MasterProblem:
                     cumulative_sum.append(max(0, cumulative_sum[-1] - reduction))
                 else:
                     cumulative_sum.append(cumulative_sum[-1] + doctor_values[i])
-            
+
             perf_vals = [round(1 - (val * mue), 2) for val in cumulative_sum]
             perf_ls.extend(perf_vals)
-            
-            multiplied = [ (val * mue) * x_i_values[j * len(self.shifts) + s] * comp_result[j * len(self.shifts) + s] 
+            for p in perf_vals:
+                perf_cellwise.extend([p] * len(self.shifts))
+
+            multiplied = [ (val * mue) * x_i_values[j * len(self.shifts) + s] * comp_result[j * len(self.shifts) + s]
                           for j, val in enumerate(cumulative_sum) for s in range(len(self.shifts))]
-            
+
             sum_all_doctors += sum(multiplied)
             cumulative_total = [cumulative_total[j] + multiplied[j] for j in range(len(cumulative_total))]
-        
+
         metrics = self._final_metrics_package(u_results + sum_all_doctors, u_results, sum_all_doctors, consistency, scale)
-        return (*metrics, perf_ls, cumulative_total)
+        # NOTE: this linear (non-group) fallback path is currently never exercised by
+        # loop_cg.py (worker_groups is always passed), so an exact cell-wise reconstruction
+        # is not implemented here; the RMP's own nominal per-cell values are used as a
+        # reasonable approximation should this path ever be invoked without worker_groups.
+        undercover_cellwise = self.getUndercoverage()
+        return (*metrics, perf_ls, cumulative_total, perf_cellwise, undercover_cellwise)
 
     def _calc_naive_nl(self, lst, ls_sc, scale, worker_groups):
         """Internal method for non-linear post-hoc evaluation using worker groups."""
@@ -502,7 +512,12 @@ class MasterProblem:
         
         comp_result = [0 if self.demand_values[i] < nominal_supply[i] else 1 for i in range(len(self.demand_values))]
         cumulative_total = [0.0] * len(self.demand_values)
-        
+        # Cell-wise (per worker, per day-shift-cell) real nonlinear performance, matching
+        # the layout of ls_x/ls_perf_ so downstream code (spread/gini/disutility on L_perf)
+        # can zip it 1:1 instead of the day-level perf_ls (which is only n_days long per worker
+        # and silently misaligns with the n_days*n_shifts-long ls_x when zipped).
+        perf_cellwise = []
+
         for idx in range(n_nurses):
             worker_x = all_workers_x[idx]
             worker_perf = all_workers_perf[idx]
@@ -513,10 +528,16 @@ class MasterProblem:
                     cell_idx = d_idx * len(self.shifts) + s_idx
                     val = phi * worker_x[cell_idx] * comp_result[cell_idx]
                     multiplied.append(val)
+                    perf_cellwise.append(p)
             cumulative_total = [cumulative_total[j] + multiplied[j] for j in range(len(cumulative_total))]
-            
+
         metrics = self._final_metrics_package(total_undercoverage, understaffing, perfloss, consistency, scale)
-        return (*metrics, perf_ls, cumulative_total)
+        # u_results is the cell-wise effective undercoverage (max(0, demand - real_supply)),
+        # i.e. exactly what sums to total_undercoverage. Returning it directly avoids
+        # reconstructing it downstream from cumulative_total + master.getUndercoverage(),
+        # which mixes the performance-loss component of one schedule with the nominal
+        # RMP-incumbent component of a possibly different (pool) schedule.
+        return (*metrics, perf_ls, cumulative_total, perf_cellwise, u_results)
 
 
 

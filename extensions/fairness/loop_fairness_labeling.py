@@ -13,6 +13,7 @@ from core.base_case import get_wd_constraints
 from core.masterproblem import MasterProblem
 from core.worker_groups import create_groups_from_fractions
 from core.subproblem_dp_extensions import SubproblemFairnessDP
+from core.subproblem_dp_extensions_numba import SubproblemFairnessNumba
 from Utils.demand import generate_demand
 from extensions.fairness.loop_fairness import MU, LAMBDAS, gini, _shift_of
 from core.nonlinear_transitions import evaluate_schedule_nl
@@ -22,7 +23,12 @@ from core.solver_base import MAX_ITR, THRESHOLD, TIME_CG_INIT, TIME_CG_SP
 
 
 def run_cg(data, demand_dict, worker_groups, chi, prob, lam, F_bar, mode,
-           max_itr=MAX_ITR, threshold=THRESHOLD, time_cg=TIME_CG_SP):
+           max_itr=MAX_ITR, threshold=THRESHOLD, time_cg=TIME_CG_SP, solver='dp'):
+    """solver: 'dp' (exact Python label-setting, default) or 'numba' (JIT-compiled,
+    same recursion -- see core.subproblem_dp_extensions_numba.SubproblemFairnessNumba;
+    Numba's final-day dominance is not collapsed by f_bin alone like DP's, so it can
+    find a strictly better -- never worse -- effective cost, see that module's docstring)."""
+    SubproblemCls = SubproblemFairnessNumba if solver == 'numba' else SubproblemFairnessDP
     T = data['T'].dropna().astype(int).unique().tolist()
     K = data['K'].dropna().astype(int).unique().tolist()
     I = data['I'].dropna().astype(int).unique().tolist()
@@ -45,8 +51,8 @@ def run_cg(data, demand_dict, worker_groups, chi, prob, lam, F_bar, mode,
         improvable = False
         for g_idx, (gname, group) in enumerate(worker_groups.items(), start=1):
             eps_sp = group.epsilon if mode == 'bap' else 0.0
-            sp = SubproblemFairnessDP(duals_i.get(g_idx, 0.0), duals_ts, data, group.worker_ids[0], itr,
-                                       eps_sp, Min_WD_i, Max_WD_i, group.chi, MU, lam, F_bar)
+            sp = SubproblemCls(duals_i.get(g_idx, 0.0), duals_ts, data, group.worker_ids[0], itr,
+                               eps_sp, Min_WD_i, Max_WD_i, group.chi, MU, lam, F_bar)
             if mode == 'bap':
                 sp.gamma_C, sp.gamma_R, sp.alpha_R, sp.delta, sp.e_max = (
                     group.gamma_C, group.gamma_R, group.alpha_R, group.delta, group.e_max)

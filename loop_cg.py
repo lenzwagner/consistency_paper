@@ -5,9 +5,9 @@ from Utils.Plots.plots import *
 from Utils.aggundercover import *
 from datetime import *
 from Utils.demand import *
-from core.base_case import get_base_case_groups, get_wd_constraints, LEN_I_RANGE, SCENARIO_RANGE, PATTERN, CHI
+from core.base_case import get_base_case_groups, get_wd_constraints, LEN_I_RANGE, SCENARIO_RANGE, PATTERN, CHI, K_ECP
 from core.solver_base import MAX_ITR, THRESHOLD, TIME_CG_INIT, TIME_CG, OUTPUT_LEN, SCALE
-from Utils.metrics import evaluate_inequality
+from Utils.metrics import evaluate_inequality, compute_horizon_stability_metrics
 import time
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -15,16 +15,43 @@ os.makedirs("results/csv", exist_ok=True)
 os.makedirs("results/xlsx", exist_ok=True)
 os.makedirs("results/pkl", exist_ok=True)
 
+
+def _worker_total_stats(lst, T_len, n_workers):
+    """Non-group-specific (pooled across the whole workforce) mean/min/max/std
+    of per-worker totals. Reuses evaluate_inequality's own worker_totals --
+    every existing call site discards it via `_` and only keeps
+    spread/load_share/gini/disutility/top10, so this is a free by-product,
+    not a second aggregation pass."""
+    worker_totals, *_ = evaluate_inequality(lst, T_len, n_workers)
+    vals = list(worker_totals.values())
+    if not vals:
+        return 0.0, 0.0, 0.0, 0.0
+    arr = np.array(vals, dtype=np.float64)
+    return float(arr.mean()), float(arr.min()), float(arr.max()), float(arr.std())
+
+
+def _perf_loss_worker_stats(ls_x, ls_perf, n_shifts, T_len, n_workers):
+    """Same as _worker_total_stats, but for performance-loss totals -- mirrors
+    the L_perf = x*(1-p) / per-day-sum-over-shifts transform that
+    core/cg_behavior.py applies before its own evaluate_inequality(perf) call."""
+    L_perf = [x * (1.0 - p) for x, p in zip(ls_x, ls_perf)]
+    daily = [sum(L_perf[i:i + n_shifts]) for i in range(0, len(L_perf), n_shifts)]
+    return _worker_total_stats(daily, T_len, n_workers)
+
+
 # DataFrame
 results = pd.DataFrame(columns=['I', 'T', 'K', 'pattern', 'scenario', 'prob', 'epsilon', 'chi', 'gap', 'lagrange', 'objval', 'lbound', 'iteration', 'time_sp', 'time_rmp',
                                 'time_ip', 'undercover_behavior', 'undercover_norm_behavior', 'cons_behavior', 'cons_norm_behavior', 'perf_behavior',
                                 'perf_norm_behavior', 'understaffing_behavior', 'understaffing_norm_behavior', 'undercover_naive', 'undercover_norm_naive', 'cons_naive',
                                 'cons_norm_naive', 'perf_naive', 'perf_norm_naive', 'understaffing_naive', 'understaffing_norm_naive', 'shift_undercover_naive',
-                                'shift_undercover_behavior', 'perf_list_behavior', 'perf_list_naive', 'cons_list_behavior', 'cons_list_naive', 'p_list_behavior', 'p_list_naive',
-                                'x_list_behavior', 'x_list_naive', 'r_list_behavior', 'r_list_naive', 'daily_undercover_behavior', 'daily_undercover_naive', 'results_ineq_sc_behavior', 'results_ineq_sc_naive', 'spread_sc_behavior',
-                                'spread_sc_naive', 'load_share_sc_behavior', 'load_share_sc_naive', 'gini_sc_behavior', 'gini_sc_naive', 'results_ineq_perf_behavior',
-                                'results_ineq_perf_naive', 'spread_perf_behavior', 'spread_perf_naive', 'load_share_perf_behavior', 'load_share_perf_naive', 'gini_perf_behavior',
-                                'gini_perf_naive', 'shift_blocks_behavior', 'shift_blocks_naive'])
+                                'shift_undercover_behavior', 'cons_list_behavior', 'cons_list_naive', 'p_list_behavior', 'p_list_naive',
+                                'x_list_behavior', 'x_list_naive', 'r_list_behavior', 'r_list_naive', 'daily_undercover_behavior', 'daily_undercover_naive', 'spread_sc_behavior',
+                                'spread_sc_naive', 'load_share_sc_behavior', 'load_share_sc_naive', 'gini_sc_behavior', 'gini_sc_naive', 'disutility_sc_behavior', 'disutility_sc_naive',
+                                'top10_sc_behavior', 'top10_sc_naive',
+                                'spread_perf_behavior', 'spread_perf_naive', 'load_share_perf_behavior', 'load_share_perf_naive', 'gini_perf_behavior',
+                                'gini_perf_naive', 'disutility_perf_behavior', 'disutility_perf_naive', 'top10_perf_behavior', 'top10_perf_naive',
+                                'shift_blocks_behavior', 'shift_blocks_naive',
+                                'num_blocks_behavior', 'num_blocks_naive', 'mean_block_len_behavior', 'mean_block_len_naive', 'reduction_naive', 'reduction_ecp'])
 
 # Times and Parameter
 time_cg, time_cg_init = TIME_CG, TIME_CG_INIT
@@ -65,10 +92,13 @@ for len_I in LEN_I_RANGE:
          consistency_norm_behavior, undercoverage_norm_behavior, understaffing_norm_behavior,
          perfloss_norm_behavior, final_obj_behavior, final_lb, itr, lagrangeB, gap, time_sps, time_rmp,
          time_ip, ls_p_behavior, ls_sc_behavior, ls_perf_behavior, ls_x_behavior,
-         ls_r_behavior, undercoverage_per_shift_behavior, results_ineq_sc_behavior, spread_sc_behavior,
-         load_share_sc_behavior, gini_sc_behavior, results_ineq_perf_behavior,
-         spread_perf_behavior, load_share_perf_behavior, gini_perf_behavior,
+         ls_r_behavior, undercoverage_per_shift_behavior, spread_sc_behavior,
+         load_share_sc_behavior, gini_sc_behavior, disutility_sc_behavior, top10_sc_behavior,
+         spread_perf_behavior, load_share_perf_behavior, gini_perf_behavior, disutility_perf_behavior, top10_perf_behavior,
          shift_blocks_behavior, rmp_obj_hist_behavior, sp_obj_hist_behavior,
+         # sp_obj_hist_behavior/sp_time_hist_behavior: dict keyed by worker-group
+         # name -> per-iteration list (reduced cost / solve time), plus a 'mean'
+         # key across groups when there is more than one (see cg_behavior.py).
          rmp_time_hist_behavior, sp_time_hist_behavior,
          lagrange_hist_behavior) = column_generation_behavior(
             data, demand_dict, 0.0, Min_WD_i, Max_WD_i, time_cg_init, max_itr, 100, CHI,
@@ -87,9 +117,9 @@ for len_I in LEN_I_RANGE:
         undercoverage_naive, understaffing_naive, perfloss_naive, consistency_naive, consistency_norm_naive,
         undercoverage_norm_naive, understaffing_norm_naive,
         perfloss_norm_naive, final_obj_naive, ls_p_naive, ls_sc_naive, ls_perf_naive, ls_x_naive,
-        ls_r_naive, undercoverage_per_shift_naive, results_ineq_sc_naive, spread_sc_naive,
-        load_share_sc_naive, gini_sc_naive, results_ineq_perf_naive,
-        spread_perf_naive, load_share_perf_naive, gini_perf_naive, shift_blocks_naive) = column_generation_naive(
+        ls_r_naive, undercoverage_per_shift_naive, spread_sc_naive,
+        load_share_sc_naive, gini_sc_naive, disutility_sc_naive, top10_sc_naive,
+        spread_perf_naive, load_share_perf_naive, gini_perf_naive, disutility_perf_naive, top10_perf_naive, shift_blocks_naive) = column_generation_naive(
             data, demand_dict, 0, Min_WD_i, Max_WD_i, time_cg_init, max_itr, 100, CHI,
             threshold, time_cg, I, T, K, prob, sp_solver='labeling_bidir',
             worker_groups=worker_groups, use_null_column=True)
@@ -97,16 +127,16 @@ for len_I in LEN_I_RANGE:
         # ECP: identical to NPP (100% performance in the labeling, same nonlinear ex-post
         # via worker_groups), but with the additional rolling shift-change cap k<=2 per
         # 7-day window enforced directly in the forward labeling.
-        print('Doing ECP with labeling (k<=2)')
+        print(f'Doing ECP with labeling (k<={K_ECP})')
         (
         undercoverage_ecp, understaffing_ecp, perfloss_ecp, consistency_ecp, consistency_norm_ecp,
         undercoverage_norm_ecp, understaffing_norm_ecp,
         perfloss_norm_ecp, final_obj_ecp, ls_p_ecp, ls_sc_ecp, ls_perf_ecp, ls_x_ecp,
-        ls_r_ecp, undercoverage_per_shift_ecp, results_ineq_sc_ecp, spread_sc_ecp,
-        load_share_sc_ecp, gini_sc_ecp, results_ineq_perf_ecp,
-        spread_perf_ecp, load_share_perf_ecp, gini_perf_ecp, shift_blocks_ecp) = column_generation_ecp(
+        ls_r_ecp, undercoverage_per_shift_ecp, spread_sc_ecp,
+        load_share_sc_ecp, gini_sc_ecp, disutility_sc_ecp, top10_sc_ecp,
+        spread_perf_ecp, load_share_perf_ecp, gini_perf_ecp, disutility_perf_ecp, top10_perf_ecp, shift_blocks_ecp) = column_generation_ecp(
             data, demand_dict, 0, Min_WD_i, Max_WD_i, time_cg_init, max_itr, 100, CHI,
-            threshold, time_cg, I, T, K, prob, k=2, sp_solver='labeling_bidir',
+            threshold, time_cg, I, T, K, prob, k=K_ECP, sp_solver='labeling_bidir',
             worker_groups=worker_groups, use_null_column=True)
 
         shift_undercover_behavior = create_dict_from_list(undercoverage_per_shift_behavior, len(T), len(K))
@@ -117,105 +147,240 @@ for len_I in LEN_I_RANGE:
         daily_undercover_behavior = dict_reducer(shift_undercover_behavior)
         daily_undercover_ecp = dict_reducer(shift_undercover_ecp)
 
-        # Data frame
+        # Fragmentation of shift-consistency blocks: sum(shift_blocks) = total worked
+        # (worker, day) cells (identical across paradigms, since coverage need is fixed),
+        # while the number/mean length of blocks differs by how the workload is chunked.
+        num_blocks_behavior = len(shift_blocks_behavior)
+        num_blocks_naive = len(shift_blocks_naive)
+        num_blocks_ecp = len(shift_blocks_ecp)
+        mean_block_len_behavior = float(np.mean(shift_blocks_behavior)) if shift_blocks_behavior else 0.0
+        mean_block_len_naive = float(np.mean(shift_blocks_naive)) if shift_blocks_naive else 0.0
+        mean_block_len_ecp = float(np.mean(shift_blocks_ecp)) if shift_blocks_ecp else 0.0
+        min_block_len_behavior = float(np.min(shift_blocks_behavior)) if shift_blocks_behavior else 0.0
+        max_block_len_behavior = float(np.max(shift_blocks_behavior)) if shift_blocks_behavior else 0.0
+        std_block_len_behavior = float(np.std(shift_blocks_behavior)) if shift_blocks_behavior else 0.0
+        min_block_len_naive = float(np.min(shift_blocks_naive)) if shift_blocks_naive else 0.0
+        max_block_len_naive = float(np.max(shift_blocks_naive)) if shift_blocks_naive else 0.0
+        std_block_len_naive = float(np.std(shift_blocks_naive)) if shift_blocks_naive else 0.0
+        min_block_len_ecp = float(np.min(shift_blocks_ecp)) if shift_blocks_ecp else 0.0
+        max_block_len_ecp = float(np.max(shift_blocks_ecp)) if shift_blocks_ecp else 0.0
+        std_block_len_ecp = float(np.std(shift_blocks_ecp)) if shift_blocks_ecp else 0.0
+
+        # Non-group-specific (pooled across the whole workforce) descriptive
+        # stats for shift changes and performance loss -- complements the
+        # existing gini/spread/disutility/top10 inequality metrics (which
+        # already pool across all workers) with the plain mean/min/max/std
+        # one would report first.
+        mean_sc_behavior, min_sc_behavior, max_sc_behavior, std_sc_behavior = _worker_total_stats(ls_sc_behavior, len(T), len(I))
+        mean_sc_naive, min_sc_naive, max_sc_naive, std_sc_naive = _worker_total_stats(ls_sc_naive, len(T), len(I))
+        mean_sc_ecp, min_sc_ecp, max_sc_ecp, std_sc_ecp = _worker_total_stats(ls_sc_ecp, len(T), len(I))
+        mean_perf_behavior, min_perf_behavior, max_perf_behavior, std_perf_behavior = _perf_loss_worker_stats(
+            ls_x_behavior, ls_perf_behavior, len(K), len(T), len(I))
+        mean_perf_naive, min_perf_naive, max_perf_naive, std_perf_naive = _perf_loss_worker_stats(
+            ls_x_naive, ls_perf_naive, len(K), len(T), len(I))
+        mean_perf_ecp, min_perf_ecp, max_perf_ecp, std_perf_ecp = _perf_loss_worker_stats(
+            ls_x_ecp, ls_perf_ecp, len(K), len(T), len(I))
+
+        # Relative reduction in total undercoverage achieved by the BAP vs. the NPP / ECP (%).
+        reduction_naive = ((undercoverage_naive - undercoverage_behavior) / undercoverage_naive * 100
+                            if undercoverage_naive else 0.0)
+        reduction_ecp = ((undercoverage_ecp - undercoverage_behavior) / undercoverage_ecp * 100
+                          if undercoverage_ecp else 0.0)
+
+        # End-of-horizon performance stability (demand-regime / exhaustion analysis):
+        # mean daily performance trajectory, end-of-horizon performance, share of
+        # workers below a floor at the end, and low-performance days in the final window.
+        # BAP: ls_p_behavior is the genuine performance trajectory (BAP optimizes with
+        # real degradation, so P_schedules already reflects it).
+        # NPP/ECP: ls_p_naive/ls_p_ecp would be wrong here -- during pricing NPP/ECP force
+        # zero degradation (delta=0/e_max=0), so P_schedules is trivially 1.0 always. The
+        # correctly recomputed ex-post per-day performance is ls_perf_naive/ls_perf_ecp
+        # (from calc_naive/_calc_naive_nl's evaluate_schedule_nl reconstruction), not ls_p_*.
+        horizon_stats_behavior = compute_horizon_stability_metrics(ls_p_behavior, len(I), len(T), tau=0.9, k=7)
+        horizon_stats_naive = compute_horizon_stability_metrics(ls_perf_naive, len(I), len(T), tau=0.9, k=7)
+        horizon_stats_ecp = compute_horizon_stability_metrics(ls_perf_ecp, len(I), len(T), tau=0.9, k=7)
+
+        # Data frame -- every metric that exists for all three paradigms is
+        # grouped as a behavior/naive/ecp triple, in the same order as
+        # ordered_cols below (which just reindexes this, so the two should
+        # never drift apart).
         result = pd.DataFrame([{
+                        # Metadata
                         'I': len(I),
                         'T': len(T),
                         'K': len(K),
                         'pattern': PATTERN,
                         'scenario': scenario,
                         'prob': prob,
-                        'gap': round(gap, 3),
-                        'lagrange': round(lagrangeB, 3),
-                        'objval': round(final_obj_behavior, 3),
-                        'lbound': round(final_lb, 3),
+
+                        # BAP-specific optimization metrics
+                        'gap': gap,
+                        'lagrange': lagrangeB,
+                        'lbound': final_lb,
                         'iteration': itr,
-                        'time_sp': round(time_sps, 3),
-                        'time_rmp': round(time_rmp, 3),
-                        'time_ip': round(time_ip, 3),
-                        'time_total': round(time_bidir, 3),
-                        'undercover_behavior': undercoverage_behavior,
-                        'undercover_norm_behavior': undercoverage_norm_behavior,
-                        'cons_behavior': consistency_behavior,
-                        'cons_norm_behavior': consistency_norm_behavior,
-                        'perf_behavior': perfloss_behavior,
-                        'perf_norm_behavior': perfloss_norm_behavior,
-                        'understaffing_behavior': understaffing_behavior,
-                        'understaffing_norm_behavior': understaffing_norm_behavior,
+                        'time_sp': time_sps,
+                        'time_rmp': time_rmp,
+                        'time_ip': time_ip,
+                        'time_total': time_bidir,
+
+                        # Metrics (behavior, naive, ecp sequentially)
+                        'reduction_naive': reduction_naive,
+                        'reduction_ecp': reduction_ecp,
+                        'p_end_behavior': horizon_stats_behavior['p_end'],
+                        'p_end_naive': horizon_stats_naive['p_end'],
+                        'p_end_ecp': horizon_stats_ecp['p_end'],
+                        'b_end_tau_behavior': horizon_stats_behavior['b_end_tau'],
+                        'b_end_tau_naive': horizon_stats_naive['b_end_tau'],
+                        'b_end_tau_ecp': horizon_stats_ecp['b_end_tau'],
+                        'l_tail_tau_behavior': horizon_stats_behavior['l_tail_tau'],
+                        'l_tail_tau_naive': horizon_stats_naive['l_tail_tau'],
+                        'l_tail_tau_ecp': horizon_stats_ecp['l_tail_tau'],
+                        'p_bar_d_behavior': horizon_stats_behavior['p_bar_d'],
+                        'p_bar_d_naive': horizon_stats_naive['p_bar_d'],
+                        'p_bar_d_ecp': horizon_stats_ecp['p_bar_d'],
+                        'objval': final_obj_behavior,
                         'objval_naive': final_obj_naive,
+                        'objval_ecp': final_obj_ecp,
+                        'undercover_behavior': undercoverage_behavior,
                         'undercover_naive': undercoverage_naive,
+                        'undercover_ecp': undercoverage_ecp,
+                        'undercover_norm_behavior': undercoverage_norm_behavior,
                         'undercover_norm_naive': undercoverage_norm_naive,
+                        'undercover_norm_ecp': undercoverage_norm_ecp,
+                        'cons_behavior': consistency_behavior,
                         'cons_naive': consistency_naive,
+                        'cons_ecp': consistency_ecp,
+                        'cons_norm_behavior': consistency_norm_behavior,
                         'cons_norm_naive': consistency_norm_naive,
+                        'cons_norm_ecp': consistency_norm_ecp,
+                        'perf_behavior': perfloss_behavior,
                         'perf_naive': perfloss_naive,
+                        'perf_ecp': perfloss_ecp,
+                        'perf_norm_behavior': perfloss_norm_behavior,
                         'perf_norm_naive': perfloss_norm_naive,
+                        'perf_norm_ecp': perfloss_norm_ecp,
+                        'understaffing_behavior': understaffing_behavior,
                         'understaffing_naive': understaffing_naive,
+                        'understaffing_ecp': understaffing_ecp,
+                        'understaffing_norm_behavior': understaffing_norm_behavior,
                         'understaffing_norm_naive': understaffing_norm_naive,
-                        'shift_undercover_naive': shift_undercover_naive,
-                        'shift_undercover_behavior': shift_undercover_behavior,
-                        'perf_list_behavior': ls_perf_behavior,
-                        'perf_list_naive': ls_perf_naive,
-                        'cons_list_behavior': ls_sc_behavior,
-                        'cons_list_naive': ls_sc_naive,
-                        'x_list_behavior': ls_x_behavior,
-                        'x_list_naive': ls_x_naive,
-                        'r_list_behavior': ls_r_behavior,
-                        'r_list_naive': ls_r_naive,
-                        'p_list_behavior': ls_p_behavior,
-                        'p_list_naive': ls_p_naive,
-                        'daily_behavior': daily_undercover_behavior,
-                        'daily_naive': daily_undercover_naive,
-                        'results_ineq_sc_behavior': results_ineq_sc_behavior,
-                        'results_ineq_sc_naive': results_ineq_sc_naive,
+                        'understaffing_norm_ecp': understaffing_norm_ecp,
+
+                        # Inequality / Fairness metrics (consistency)
                         'spread_sc_behavior': spread_sc_behavior,
                         'spread_sc_naive': spread_sc_naive,
+                        'spread_sc_ecp': spread_sc_ecp,
                         'load_share_sc_behavior': load_share_sc_behavior,
                         'load_share_sc_naive': load_share_sc_naive,
+                        'load_share_sc_ecp': load_share_sc_ecp,
                         'gini_sc_behavior': gini_sc_behavior,
                         'gini_sc_naive': gini_sc_naive,
-                        'results_ineq_perf_behavior': results_ineq_perf_behavior,
-                        'results_ineq_perf_naive': results_ineq_perf_naive,
+                        'gini_sc_ecp': gini_sc_ecp,
+                        'disutility_sc_behavior': disutility_sc_behavior,
+                        'disutility_sc_naive': disutility_sc_naive,
+                        'disutility_sc_ecp': disutility_sc_ecp,
+                        'top10_sc_behavior': top10_sc_behavior,
+                        'top10_sc_naive': top10_sc_naive,
+                        'top10_sc_ecp': top10_sc_ecp,
+
+                        # Non-group-specific (pooled) descriptive stats for shift changes
+                        'mean_sc_behavior': mean_sc_behavior,
+                        'mean_sc_naive': mean_sc_naive,
+                        'mean_sc_ecp': mean_sc_ecp,
+                        'min_sc_behavior': min_sc_behavior,
+                        'min_sc_naive': min_sc_naive,
+                        'min_sc_ecp': min_sc_ecp,
+                        'max_sc_behavior': max_sc_behavior,
+                        'max_sc_naive': max_sc_naive,
+                        'max_sc_ecp': max_sc_ecp,
+                        'std_sc_behavior': std_sc_behavior,
+                        'std_sc_naive': std_sc_naive,
+                        'std_sc_ecp':  std_sc_ecp,
+
+                        # Inequality / Fairness metrics (performance)
                         'spread_perf_behavior': spread_perf_behavior,
                         'spread_perf_naive': spread_perf_naive,
+                        'spread_perf_ecp': spread_perf_ecp,
                         'load_share_perf_behavior': load_share_perf_behavior,
                         'load_share_perf_naive': load_share_perf_naive,
+                        'load_share_perf_ecp': load_share_perf_ecp,
                         'gini_perf_behavior': gini_perf_behavior,
                         'gini_perf_naive': gini_perf_naive,
-                        'shift_blocks_behavior': shift_blocks_behavior,
-                        'rmp_obj_hist_behavior': rmp_obj_hist_behavior,
-                        'sp_obj_hist_behavior': sp_obj_hist_behavior,
-                        'rmp_time_hist_behavior': rmp_time_hist_behavior,
-                        'sp_time_hist_behavior': sp_time_hist_behavior,
-                        'lagrange_hist_behavior': lagrange_hist_behavior,
-                        'shift_blocks_naive': shift_blocks_naive,
-                        'undercover_ecp': undercoverage_ecp,
-                        'undercover_norm_ecp': undercoverage_norm_ecp,
-                        'cons_ecp': consistency_ecp,
-                        'cons_norm_ecp': consistency_norm_ecp,
-                        'perf_ecp': perfloss_ecp,
-                        'perf_norm_ecp': perfloss_norm_ecp,
-                        'understaffing_ecp': understaffing_ecp,
-                        'understaffing_norm_ecp': understaffing_norm_ecp,
-                        'objval_ecp': final_obj_ecp,
-                        'shift_undercover_ecp': shift_undercover_ecp,
-                        'perf_list_ecp': ls_perf_ecp,
-                        'cons_list_ecp': ls_sc_ecp,
-                        'x_list_ecp': ls_x_ecp,
-                        'r_list_ecp': ls_r_ecp,
-                        'p_list_ecp': ls_p_ecp,
-                        'daily_ecp': daily_undercover_ecp,
-                        'results_ineq_sc_ecp': results_ineq_sc_ecp,
-                        'spread_sc_ecp': spread_sc_ecp,
-                        'load_share_sc_ecp': load_share_sc_ecp,
-                        'gini_sc_ecp': gini_sc_ecp,
-                        'results_ineq_perf_ecp': results_ineq_perf_ecp,
-                        'spread_perf_ecp': spread_perf_ecp,
-                        'load_share_perf_ecp': load_share_perf_ecp,
                         'gini_perf_ecp': gini_perf_ecp,
+                        'disutility_perf_behavior': disutility_perf_behavior,
+                        'disutility_perf_naive': disutility_perf_naive,
+                        'disutility_perf_ecp': disutility_perf_ecp,
+                        'top10_perf_behavior': top10_perf_behavior,
+                        'top10_perf_naive': top10_perf_naive,
+                        'top10_perf_ecp': top10_perf_ecp,
+
+                        # Non-group-specific (pooled) descriptive stats for performance loss
+                        'mean_perf_behavior': mean_perf_behavior,
+                        'mean_perf_naive': mean_perf_naive,
+                        'mean_perf_ecp': mean_perf_ecp,
+                        'min_perf_behavior': min_perf_behavior,
+                        'min_perf_naive': min_perf_naive,
+                        'min_perf_ecp': min_perf_ecp,
+                        'max_perf_behavior': max_perf_behavior,
+                        'max_perf_naive': max_perf_naive,
+                        'max_perf_ecp': max_perf_ecp,
+                        'std_perf_behavior': std_perf_behavior,
+                        'std_perf_naive': std_perf_naive,
+                        'std_perf_ecp': std_perf_ecp,
+
+                        # Number of shift blocks
+                        'shift_blocks_behavior': shift_blocks_behavior,
+                        'shift_blocks_naive': shift_blocks_naive,
                         'shift_blocks_ecp': shift_blocks_ecp,
+                        'num_blocks_behavior': num_blocks_behavior,
+                        'num_blocks_naive': num_blocks_naive,
+                        'num_blocks_ecp': num_blocks_ecp,
+                        'mean_block_len_behavior': mean_block_len_behavior,
+                        'mean_block_len_naive': mean_block_len_naive,
+                        'mean_block_len_ecp': mean_block_len_ecp,
+                        'min_block_len_behavior': min_block_len_behavior,
+                        'min_block_len_naive': min_block_len_naive,
+                        'min_block_len_ecp': min_block_len_ecp,
+                        'max_block_len_behavior': max_block_len_behavior,
+                        'max_block_len_naive': max_block_len_naive,
+                        'max_block_len_ecp': max_block_len_ecp,
+                        'std_block_len_behavior': std_block_len_behavior,
+                        'std_block_len_naive': std_block_len_naive,
+                        'std_block_len_ecp': std_block_len_ecp,
+
+                        # Lists/Dicts (dropped in Excel, kept in CSV/Pickle)
+                        'shift_undercover_behavior': shift_undercover_behavior,
+                        'shift_undercover_naive': shift_undercover_naive,
+                        'shift_undercover_ecp': shift_undercover_ecp,
+                        'daily_undercover_behavior': daily_undercover_behavior,
+                        'daily_undercover_naive': daily_undercover_naive,
+                        'daily_undercover_ecp': daily_undercover_ecp,
+
+                        # Convergence history (BAP)
+                        'rmp_obj_hist': rmp_obj_hist_behavior,
+                        'sp_obj_hist': sp_obj_hist_behavior,
+                        'rmp_time_hist': rmp_time_hist_behavior,
+                        'sp_time_hist': sp_time_hist_behavior,
+                        'lagrange_hist': lagrange_hist_behavior,
                     }])
 
         results = pd.concat([results, result], ignore_index=True)
+
+def recursive_round(val, decimals=4):
+    if isinstance(val, (float, np.floating)):
+        return round(val, decimals)
+    elif isinstance(val, list):
+        return [recursive_round(x, decimals) for x in val]
+    elif isinstance(val, tuple):
+        return tuple(recursive_round(x, decimals) for x in val)
+    elif isinstance(val, dict):
+        return {k: recursive_round(v, decimals) for k, v in val.items()}
+    else:
+        return val
+
+# Round all float values in results (including inside lists/dicts) to 4 decimal places
+for col in results.columns:
+    results[col] = results[col].apply(lambda x: recursive_round(x, 4))
 
 # ---------------------------------------------------------------------------
 # Save WITHOUT data loss.
@@ -236,6 +401,11 @@ ordered_cols = [
     'gap', 'lagrange', 'lbound', 'iteration', 'time_sp', 'time_rmp', 'time_ip', 'time_total',
     
     # Metrics (behavior, naive, ecp sequentially)
+    'reduction_naive',
+    'reduction_ecp',
+    'p_end_behavior', 'p_end_naive', 'p_end_ecp', 'b_end_tau_behavior', 'b_end_tau_naive', 'b_end_tau_ecp',
+    'l_tail_tau_behavior', 'l_tail_tau_naive', 'l_tail_tau_ecp',
+    'p_bar_d_behavior', 'p_bar_d_naive', 'p_bar_d_ecp',
     'objval', 'objval_naive', 'objval_ecp',
     'undercover_behavior', 'undercover_naive', 'undercover_ecp',
     'undercover_norm_behavior', 'undercover_norm_naive', 'undercover_norm_ecp',
@@ -247,31 +417,46 @@ ordered_cols = [
     'understaffing_norm_behavior', 'understaffing_norm_naive', 'understaffing_norm_ecp',
     
     # Inequality / Fairness metrics (consistency)
-    'results_ineq_sc_behavior', 'results_ineq_sc_naive', 'results_ineq_sc_ecp',
     'spread_sc_behavior', 'spread_sc_naive', 'spread_sc_ecp',
     'load_share_sc_behavior', 'load_share_sc_naive', 'load_share_sc_ecp',
     'gini_sc_behavior', 'gini_sc_naive', 'gini_sc_ecp',
-    
+    'disutility_sc_behavior', 'disutility_sc_naive', 'disutility_sc_ecp',
+    'top10_sc_behavior', 'top10_sc_naive', 'top10_sc_ecp',
+
+    # Non-group-specific (pooled) descriptive stats for shift changes
+    'mean_sc_behavior', 'mean_sc_naive', 'mean_sc_ecp',
+    'min_sc_behavior', 'min_sc_naive', 'min_sc_ecp',
+    'max_sc_behavior', 'max_sc_naive', 'max_sc_ecp',
+    'std_sc_behavior', 'std_sc_naive', 'std_sc_ecp',
+
     # Inequality / Fairness metrics (performance)
-    'results_ineq_perf_behavior', 'results_ineq_perf_naive', 'results_ineq_perf_ecp',
     'spread_perf_behavior', 'spread_perf_naive', 'spread_perf_ecp',
     'load_share_perf_behavior', 'load_share_perf_naive', 'load_share_perf_ecp',
     'gini_perf_behavior', 'gini_perf_naive', 'gini_perf_ecp',
-    
+    'disutility_perf_behavior', 'disutility_perf_naive', 'disutility_perf_ecp',
+    'top10_perf_behavior', 'top10_perf_naive', 'top10_perf_ecp',
+
+    # Non-group-specific (pooled) descriptive stats for performance loss
+    'mean_perf_behavior', 'mean_perf_naive', 'mean_perf_ecp',
+    'min_perf_behavior', 'min_perf_naive', 'min_perf_ecp',
+    'max_perf_behavior', 'max_perf_naive', 'max_perf_ecp',
+    'std_perf_behavior', 'std_perf_naive', 'std_perf_ecp',
+
     # Number of shift blocks
     'shift_blocks_behavior', 'shift_blocks_naive', 'shift_blocks_ecp',
+    'num_blocks_behavior', 'num_blocks_naive', 'num_blocks_ecp',
+    'mean_block_len_behavior', 'mean_block_len_naive', 'mean_block_len_ecp',
+    'min_block_len_behavior', 'min_block_len_naive', 'min_block_len_ecp',
+    'max_block_len_behavior', 'max_block_len_naive', 'max_block_len_ecp',
+    'std_block_len_behavior', 'std_block_len_naive', 'std_block_len_ecp',
     
     # Lists/Dicts (dropped in Excel, kept in CSV/Pickle)
     'shift_undercover_behavior', 'shift_undercover_naive', 'shift_undercover_ecp',
     'daily_behavior', 'daily_naive', 'daily_ecp',
     'perf_list_behavior', 'perf_list_naive', 'perf_list_ecp',
-    'cons_list_behavior', 'cons_list_naive', 'cons_list_ecp',
-    'x_list_behavior', 'x_list_naive', 'x_list_ecp',
-    'r_list_behavior', 'r_list_naive', 'r_list_ecp',
-    'p_list_behavior', 'p_list_naive', 'p_list_ecp',
-    
+
     # Convergence history (BAP)
-    'rmp_obj_hist_behavior', 'sp_obj_hist_behavior', 'rmp_time_hist_behavior', 'sp_time_hist_behavior', 'lagrange_hist_behavior'
+    'rmp_obj_hist', 'sp_obj_hist', 'rmp_time_hist', 'sp_time_hist', 'lagrange_hist'
 ]
 # Retain only existing columns and sort the DataFrame
 results = results[[c for c in ordered_cols if c in results.columns]]
@@ -280,18 +465,14 @@ _stamp = datetime.now().strftime("%d_%m_%Y_%H-%M")
 results.to_pickle(f'results/pkl/Results_{_stamp}.pkl')
 results.to_csv(f'results/csv/Results_{_stamp}.csv', index=False)
 
+
 _EXCEL_CELL_LIMIT = 32767
 _excel_df = results.copy()
-_dropped = []
-for _col in list(_excel_df.columns):
-    _maxlen = _excel_df[_col].apply(lambda v: len(str(v))).max()
-    if _maxlen is not None and _maxlen > _EXCEL_CELL_LIMIT:
-        _dropped.append((_col, int(_maxlen)))
-        _excel_df = _excel_df.drop(columns=[_col])
+for _col in _excel_df.columns:
+    _excel_df[_col] = _excel_df[_col].apply(
+        lambda v: str(v)[:_EXCEL_CELL_LIMIT] if len(str(v)) > _EXCEL_CELL_LIMIT else v
+    )
 _excel_df.to_excel(f'results/xlsx/Results_{_stamp}.xlsx', index=False)
-if _dropped:
-    print(f"\n[Excel] Dropped {len(_dropped)} too long list columns from the .xlsx "
-          f"(fully preserved in .pkl/.csv): {[c for c, _ in _dropped]}")
 
 print(results)
 print(f"")
@@ -303,14 +484,15 @@ print("\n" + "=" * 80)
 print("SUMMARY: CG+bidir Results")
 print("=" * 80)
 for idx, row in results.iterrows():
-    print(f"Scenario {row['scenario']}: obj={row['objval']:.2f}, LB={row['lbound']:.2f}, gap={row['gap']:.2f}%, iter={row['iteration']}, time={row['time_total']:.1f}s")
+    print(f"Scenario {row['scenario']}: obj={row['objval']:.4f}, LB={row['lbound']:.4f}, gap={row['gap']:.4f}%, iter={row['iteration']}, time={row['time_total']:.4f}s")
 print("=" * 80)
 
 # Gini Statistics
 print("\n" + "=" * 80)
 print("GINI COEFFICIENT STATISTICS (Mean +/- Std Dev)")
 print("=" * 80)
-gini_cols = ['gini_sc_behavior', 'gini_perf_behavior', 'gini_sc_naive', 'gini_perf_naive']
+gini_cols = ['gini_sc_behavior', 'gini_perf_behavior', 'gini_sc_naive', 'gini_perf_naive',
+             'disutility_sc_behavior', 'disutility_perf_behavior', 'disutility_sc_naive', 'disutility_perf_naive']
 for col in gini_cols:
     if col in results.columns:
         mean_val = results[col].mean()

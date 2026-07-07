@@ -205,7 +205,7 @@ def column_generation_naive(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_
 
 
 
-    undercoverage_, understaffing_, perfloss_, consistency_, consistency_norm_, undercoverage_norm_, understaffing_norm_, perfloss_norm_, ls_perf, cumulative_total_ = master.calc_naive(ls_perf_, ls_sc, ls_rec, scale, worker_groups=worker_groups)
+    undercoverage_, understaffing_, perfloss_, consistency_, consistency_norm_, undercoverage_norm_, understaffing_norm_, perfloss_norm_, ls_perf, cumulative_total_, ls_perf_cellwise, undercover_cellwise = master.calc_naive(ls_perf_, ls_sc, ls_rec, scale, worker_groups=worker_groups)
     consistency_ = compute_consistency_from_ls_x(ls_x, len(I), len(T))
     consistency_norm_ = round(consistency_ / (len(master.nurses) * scale), 5)
 
@@ -221,7 +221,8 @@ def column_generation_naive(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_
     pool_dist = None  # pool-averaged distributional scalars (set below)
     if n_pool and n_pool > 1:
         agg = [0.0] * 8
-        agg_d = [0.0] * 6  # spread_sc, load_share_sc, gini_sc, spread_perf, load_share_perf, gini_perf
+        agg_d = [0.0] * 10  # spread_sc, load_share_sc, gini_sc, disutility_sc, top10_sc, spread_perf, load_share_perf, gini_perf, disutility_perf, top10_perf
+        agg_u = [0.0] * len(undercover_cellwise)  # pool-averaged cell-wise undercoverage
         sols = []          # (undercoverage, perfloss, lam) per optimal pool solution
         cnt = 0
         nd, nn = len(master.days), len(master.nurses)
@@ -241,14 +242,21 @@ def column_generation_naive(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_
             r_i[4] = round(co_i / (nn * scale), 5)
             for j in range(8):
                 agg[j] += r_i[j]
-            # distributional scalars for this pool solution (worker_totals dict is not averaged)
-            x_i = [1.0 if p > 0 else 0.0 for p in perf_i]
-            Lp_i = [x * (1 - p) for x, p in zip(x_i, perf_i)]
-            _, sp_sc, lsh_sc, gi_sc = evaluate_inequality(sc_i, nd, nn)
-            _, sp_pf, lsh_pf, gi_pf = evaluate_inequality(
+            # distributional scalars for this pool solution (worker_totals dict is not averaged).
+            # Use the recomputed cell-wise nonlinear performance (r_i[-2]), NOT perf_i itself:
+            # perf_i is the raw optimization-time schedule where performance is forced to 100%
+            # (eps=0/e_max=0 during pricing), so it is trivially 0/1 and would silently corrupt
+            # the "real" performance loss used for spread/gini/disutility.
+            perf_cellwise_i = r_i[-2]
+            undercover_cellwise_i = r_i[-1]
+            Lp_i = [x * (1 - p) for x, p in zip(x_i, perf_cellwise_i)]
+            _, sp_sc, lsh_sc, gi_sc, du_sc, t10_sc = evaluate_inequality(sc_i, nd, nn)
+            _, sp_pf, lsh_pf, gi_pf, du_pf, t10_pf = evaluate_inequality(
                 [sum(Lp_i[j:j + 3]) for j in range(0, len(Lp_i), 3)], nd, nn)
-            for j, v in enumerate((sp_sc, lsh_sc, gi_sc, sp_pf, lsh_pf, gi_pf)):
+            for j, v in enumerate((sp_sc, lsh_sc, gi_sc, du_sc, t10_sc, sp_pf, lsh_pf, gi_pf, du_pf, t10_pf)):
                 agg_d[j] += v
+            for j, v in enumerate(undercover_cellwise_i):
+                agg_u[j] += v
             sols.append((r_i[0], r_i[2], lam))
             cnt += 1
         master.model.Params.SolutionNumber = 0  # restore incumbent
@@ -258,6 +266,10 @@ def column_generation_naive(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_
              consistency_norm_, undercoverage_norm_, understaffing_norm_,
              perfloss_norm_) = avg8
             pool_dist = [a / cnt for a in agg_d]
+            # Pool-averaged cell-wise undercoverage: sums to undercoverage_ (avg8[0]) by
+            # construction, since summation is linear and each undercover_cellwise_i sums
+            # to that pool solution's own scalar undercoverage.
+            undercover_cellwise = [a / cnt for a in agg_u]
             # Representative solution: the optimal pool solution closest to the pool
             # average (undercoverage, perfloss). Its schedule provides the raw per-worker
             # lists so that the stored lists match the averaged scalars.
@@ -268,7 +280,7 @@ def column_generation_naive(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_
             ls_perf_ = [round(x, 5) for x in plotPerformanceList(Perf_schedules, rep_lam)]
             ls_x = [1.0 if x > 0 else 0.0 for x in ls_perf_]
             ls_rec = process_recovery(ls_sc, chi, len(T))
-            _, _, _, _, _, _, _, _, ls_perf, cumulative_total_ = master.calc_naive(
+            _, _, _, _, _, _, _, _, ls_perf, cumulative_total_, ls_perf_cellwise, _ = master.calc_naive(
                 ls_perf_, ls_sc, ls_rec, scale, worker_groups=worker_groups)
             # scalar metrics stay as pool average (avg8); only lists come from rep solution
             consistency_ = avg8[3]
@@ -276,33 +288,25 @@ def column_generation_naive(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_
             print(f"  NPP: averaged decomposition (+ inequality) over {cnt} optimal pool solutions; representative lists selected")
     # ------------------------------------------------------------------------
 
-    undercoverage_naive = master.getUndercoverage()
-    #print(ls_p, ls_sc, ls_perf, ls_x, ls_rec, sep="\n")
-    # Print each value with description
-    #print("Undercoverage:", undercoverage_)
-    #print("Understaffing:", understaffing_)
-    #print("Performance loss:", perfloss_)
-    #print("Consistency:", consistency_)
-    #print("Normalized consistency:", consistency_norm_)
-    #print("Normalized undercoverage:", undercoverage_norm_)
-    #print("Normalized understaffing:", understaffing_norm_)
-    #print("Normalized performance loss:", perfloss_norm_)
-    #print("Performance local search:", ls_perf)
-    #print("Cumulative total:", cumulative_total_)
-    cumulative_with_naive = [cumulative_total_[j] + undercoverage_naive[j] for j in range(len(cumulative_total_))]
-    #print("Cumulative total + naive undercoverage:", cumulative_with_naive)
+    # Cell-wise undercoverage to report: pool-averaged when pooling occurred (guaranteed
+    # to sum to undercoverage_), otherwise the single incumbent solution's own value.
+    # (No longer built from cumulative_total_ + master.getUndercoverage(), which could mix
+    # the performance-loss component of one schedule with the nominal component of another.)
+    cumulative_with_naive = undercover_cellwise
 
     # Inequality
-    L_perf = [x * (1 - p) for x, p in zip(ls_x, ls_perf)]
-    results_ineq_sc, spread_sc, load_share_sc, gini_sc = evaluate_inequality(ls_sc, len(master.days),
-                                                                             len(master.nurses))
-    results_ineq_perf, spread_perf, load_share_perf, gini_perf = evaluate_inequality(
+    # ls_perf_cellwise has the same day-shift-cell layout as ls_x (unlike ls_perf, which is
+    # only per-day and would silently misalign when zipped with ls_x).
+    L_perf = [x * (1 - p) for x, p in zip(ls_x, ls_perf_cellwise)]
+    _, spread_sc, load_share_sc, gini_sc, disutility_sc, top10_sc = evaluate_inequality(ls_sc, len(master.days),
+                                                                                          len(master.nurses))
+    _, spread_perf, load_share_perf, gini_perf, disutility_perf, top10_perf = evaluate_inequality(
         [sum(L_perf[i:i + 3]) for i in range(0, len(L_perf), 3)], len(master.days), len(master.nurses))
 
-    # Replace the incumbent distributional scalars by their pool average (skew-free);
-    # the per-worker worker_totals dicts (results_ineq_*) stay from the incumbent.
+    # Replace the incumbent distributional scalars by their pool average (skew-free).
     if pool_dist is not None:
-        spread_sc, load_share_sc, gini_sc, spread_perf, load_share_perf, gini_perf = pool_dist
+        (spread_sc, load_share_sc, gini_sc, disutility_sc, top10_sc,
+         spread_perf, load_share_perf, gini_perf, disutility_perf, top10_perf) = pool_dist
 
     # shift blocks
     shift_blocks = analyze_and_plot_blocks(ls_x, len(master.nurses), len(master.days), len(master.shifts))
@@ -324,13 +328,15 @@ def column_generation_naive(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_
         ls_x,
         ls_rec,
         cumulative_with_naive,
-        results_ineq_sc,
         spread_sc,
         load_share_sc,
         gini_sc,
-        results_ineq_perf,
+        disutility_sc,
+        top10_sc,
         spread_perf,
         load_share_perf,
         gini_perf,
+        disutility_perf,
+        top10_perf,
         shift_blocks
     )

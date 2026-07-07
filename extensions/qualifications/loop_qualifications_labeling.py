@@ -12,6 +12,7 @@ import numpy as np
 from core.base_case import get_wd_constraints
 from core.masterproblem import MasterProblem
 from core.subproblem_dp_extensions import SubproblemQualificationsDP
+from core.subproblem_dp_extensions_numba import SubproblemQualificationsNumba
 from Utils.demand import generate_demand
 from extensions.qualifications.loop_qualifications import make_qual_groups, PI_VALUES
 from core.nonlinear_transitions import evaluate_schedule_nl
@@ -20,7 +21,11 @@ from core.base_case import K_ECP
 from core.solver_base import MAX_ITR, THRESHOLD, TIME_CG_INIT, TIME_CG_SP
 
 
-def run_cg(data, demand_dict, qual_groups, mode, max_itr=MAX_ITR, threshold=THRESHOLD, time_cg=TIME_CG_SP):
+def run_cg(data, demand_dict, qual_groups, mode, max_itr=MAX_ITR, threshold=THRESHOLD, time_cg=TIME_CG_SP,
+           solver='dp'):
+    """solver: 'dp' (exact Python label-setting, default) or 'numba' (JIT-compiled,
+    same recursion -- see core.subproblem_dp_extensions_numba.SubproblemQualificationsNumba)."""
+    SubproblemCls = SubproblemQualificationsNumba if solver == 'numba' else SubproblemQualificationsDP
     T = data['T'].dropna().astype(int).unique().tolist()
     K = data['K'].dropna().astype(int).unique().tolist()
     I = data['I'].dropna().astype(int).unique().tolist()
@@ -42,8 +47,8 @@ def run_cg(data, demand_dict, qual_groups, mode, max_itr=MAX_ITR, threshold=THRE
         improvable = False
         for g_idx, (gname, group) in enumerate(qual_groups.items(), start=1):
             eps_sp = 0.06 if mode == 'bap' else 0.0
-            sp = SubproblemQualificationsDP(duals_i.get(g_idx, 0.0), duals_ts, data, group.worker_ids[0], itr,
-                                             eps_sp, Min_WD_i, Max_WD_i, group.chi, group.eligible_shifts)
+            sp = SubproblemCls(duals_i.get(g_idx, 0.0), duals_ts, data, group.worker_ids[0], itr,
+                               eps_sp, Min_WD_i, Max_WD_i, group.chi, group.eligible_shifts)
             if mode == 'bap':
                 sp.gamma_C, sp.gamma_R, sp.alpha_R, sp.delta, sp.e_max = (
                     group.gamma_C, group.gamma_R, group.alpha_R, group.delta, group.e_max)

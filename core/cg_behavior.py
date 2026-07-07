@@ -187,11 +187,11 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
     last_itr = 0
 
     # Create empty results lists
-    histories = ["objValHistSP", "timeHist", "objValHistRMP", "avg_rc_hist", "lagrange_hist", "sum_rc_hist", "avg_sp_time", "rmp_time_hist", "sp_time_hist"]
+    histories = ["objValHistSP", "timeHist", "objValHistRMP", "avg_rc_hist", "lagrange_hist", "sum_rc_hist", "avg_sp_time", "rmp_time_hist"]
     histories_dict = {}
     for history in histories:
         histories_dict[history] = []
-    objValHistSP, timeHist, objValHistRMP, avg_rc_hist, lagrange_hist, sum_rc_hist, avg_sp_time, rmp_time_hist, sp_time_hist = histories_dict.values()
+    objValHistSP, timeHist, objValHistRMP, avg_rc_hist, lagrange_hist, sum_rc_hist, avg_sp_time, rmp_time_hist = histories_dict.values()
 
     X_schedules = {}
     for index in I:
@@ -214,6 +214,18 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
     x_by_group = {g: {} for g in _group_names}
     p_by_group = {g: {} for g in _group_names}
     rec_by_group = {g: {} for g in _group_names}
+
+    # Per-group SP timing/reduced-cost histories (one list per group, appended
+    # every CG iteration). A "mean" series is added on top ONLY when there is
+    # more than one group -- with a single group it would just duplicate that
+    # group's own list. Replaces the old pooled sp_time_hist (summed wall-clock
+    # across all groups' solves that iteration) / sp_min_rc_hist (min reduced
+    # cost across groups), which discarded the per-group breakdown entirely.
+    sp_time_hist_by_group = {g: [] for g in _group_names}
+    sp_obj_hist_by_group = {g: [] for g in _group_names}
+    if len(_group_names) > 1:
+        sp_time_hist_by_group['mean'] = []
+        sp_obj_hist_by_group['mean'] = []
 
     # Seed roster index 1 (the INITIAL heuristic column set via setStartSolution)
     # into the per-group stores. Roster 1 is never added through the CG loop, so
@@ -290,6 +302,7 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
             group_dual_i = duals_i.get(group_idx, 0.0)
             
             # Build SP with group-specific (epsilon, chi)
+            group_sp_start = time.time()
             subproblem = create_subproblem(
                 sp_solver, group_dual_i, duals_ts, data, representative_worker, itr,
                 group.epsilon, Min_WD_i, Max_WD_i, group.chi,
@@ -309,16 +322,19 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
                 subproblem.solveModelNOpt(time_cg)
             else:
                 subproblem.solveModelOpt(time_cg)
+            sp_time_hist_by_group[group_name].append(time.time() - group_sp_start)
 
             # Check if SP is solvable
             status = subproblem.getStatus()
             if status != 2:
                 print(f"Warning: Pricing-Problem for group {group_name} not optimal")
+                sp_obj_hist_by_group[group_name].append(float('nan'))
                 continue
 
             # Get reduced cost
             reducedCost = subproblem.model.objval
             all_reduced_costs.append(reducedCost)
+            sp_obj_hist_by_group[group_name].append(reducedCost)
             print(f'Red. Cost for {group_name}: {reducedCost}')
 
             # Generate and add columns for this group
@@ -356,10 +372,11 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
                 rec_by_group[group_name][_r] = subproblem.getOptR()
         
         sub_end_time = time.time()
-        sp_time_hist.append(sub_end_time - sub_start_time)
         timeHist.append(sub_end_time - sub_start_time)
 
-        # Aggregate reduced costs for history
+        # Aggregate reduced costs for history (drives the opt/noopt heuristic
+        # and the Lagrangian bound -- unrelated to the per-group breakdown
+        # below, so this still pools across groups by design).
         if all_reduced_costs:
             min_rc = min(all_reduced_costs)
             objValHistSP.append(min_rc)
@@ -367,6 +384,17 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
         else:
             objValHistSP.append(0.0)
             previous_reduced_cost = 0.0
+
+        # Per-group SP time/reduced-cost history for this iteration, plus a
+        # cross-group mean -- only added when there is more than one group
+        # (with a single group the mean would just duplicate that group's
+        # own series).
+        if len(_group_names) > 1:
+            _times_this_itr = [sp_time_hist_by_group[g][-1] for g in _group_names if sp_time_hist_by_group[g]]
+            _objs_this_itr = [sp_obj_hist_by_group[g][-1] for g in _group_names
+                              if sp_obj_hist_by_group[g] and sp_obj_hist_by_group[g][-1] == sp_obj_hist_by_group[g][-1]]  # drop NaN
+            sp_time_hist_by_group['mean'].append(sum(_times_this_itr) / len(_times_this_itr) if _times_this_itr else float('nan'))
+            sp_obj_hist_by_group['mean'].append(sum(_objs_this_itr) / len(_objs_this_itr) if _objs_this_itr else float('nan'))
 
         # Increase latest used iteration
         last_itr = itr + 1
@@ -447,12 +475,12 @@ def column_generation_behavior(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_
 
     # Inequality
     L_perf = [x * (1 - p) for x, p in zip(ls_x, ls_perf)]
-    results_ineq_sc, spread_sc, load_share_sc, gini_sc = evaluate_inequality(ls_sc, len(master.days), len(master.nurses))
-    results_ineq_perf, spread_perf, load_share_perf, gini_perf = evaluate_inequality([sum(L_perf[i:i + 3]) for i in range(0, len(L_perf), 3)], len(master.days), len(master.nurses))
+    _, spread_sc, load_share_sc, gini_sc, disutility_sc, top10_sc = evaluate_inequality(ls_sc, len(master.days), len(master.nurses))
+    _, spread_perf, load_share_perf, gini_perf, disutility_perf, top10_perf = evaluate_inequality([sum(L_perf[i:i + 3]) for i in range(0, len(L_perf), 3)], len(master.days), len(master.nurses))
 
     # shift blocks
     shift_blocks = analyze_and_plot_blocks(ls_x, len(master.nurses), len(master.days), len(master.shifts))
 
     undercoverage_ab, understaffing_ab, perfloss_ab, consistency_ab, consistency_norm_ab, undercoverage_norm_ab, understaffing_norm_ab, perfloss_norm_ab = master.calc_behavior(ls_perf, ls_sc, scale)
 
-    return round(undercoverage_ab, 5), round(understaffing_ab, 5), round(perfloss_ab, 5), round(consistency_ab, 5), round(consistency_norm_ab, 5), round(undercoverage_norm_ab, 5), round(understaffing_norm_ab, 5), round(perfloss_norm_ab, 5),  round(final_obj, 5), round(final_lb, 5), itr, lagranigan_bound, integrality_gap_pct, time_in_sps, time_in_rmp, time_in_ip, ls_p, ls_sc, ls_perf, ls_x, ls_rec, [0.0 if abs(round(x, 5)) == 0 else round(x, 5) for x in master.getUndercoverage()], results_ineq_sc, spread_sc, load_share_sc, gini_sc, results_ineq_perf, spread_perf, load_share_perf, gini_perf, shift_blocks, objValHistRMP, objValHistSP, rmp_time_hist, sp_time_hist, lagrange_hist
+    return round(undercoverage_ab, 5), round(understaffing_ab, 5), round(perfloss_ab, 5), round(consistency_ab, 5), round(consistency_norm_ab, 5), round(undercoverage_norm_ab, 5), round(understaffing_norm_ab, 5), round(perfloss_norm_ab, 5),  round(final_obj, 5), round(final_lb, 5), itr, lagranigan_bound, integrality_gap_pct, time_in_sps, time_in_rmp, time_in_ip, ls_p, ls_sc, ls_perf, ls_x, ls_rec, [0.0 if abs(round(x, 5)) == 0 else round(x, 5) for x in master.getUndercoverage()], spread_sc, load_share_sc, gini_sc, disutility_sc, top10_sc, spread_perf, load_share_perf, gini_perf, disutility_perf, top10_perf, shift_blocks, objValHistRMP, sp_obj_hist_by_group, rmp_time_hist, sp_time_hist_by_group, lagrange_hist

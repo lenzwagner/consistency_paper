@@ -212,7 +212,8 @@ def forward_pass_numba(
 
                 # ECP rolling-window cap: at most ecp_k changes in the 7-day window
                 # (current day + previous six). cw holds the previous six days' changes.
-                if ecp_k > 0 and (popcount6(cw) + c_new) > ecp_k:
+                # ecp_k < 0 means "disabled" (BAP/NPP); ecp_k == 0 means "no changes allowed".
+                if ecp_k >= 0 and (popcount6(cw) + c_new) > ecp_k:
                     continue
                 new_cw = ((cw << 1) | c_new) & 0x3F
 
@@ -392,7 +393,8 @@ def forward_pass_from_states(
                 # shift changes in any 7-day window (current day + previous six). Must be
                 # enforced here too, otherwise the second half of the bidirectional pass
                 # would be uncapped and generate cap-violating columns near the seam/end.
-                if ecp_k > 0 and (popcount6(cw) + c_new) > ecp_k:
+                # ecp_k < 0 means "disabled" (BAP/NPP); ecp_k == 0 means "no changes allowed".
+                if ecp_k >= 0 and (popcount6(cw) + c_new) > ecp_k:
                     continue
 
                 new_cw = ((cw << 1) | c_new) & 0x3F
@@ -770,7 +772,7 @@ class SubproblemDPNumba:
 
                 # Prepare JIT non-linear parameters
                 gamma_C, gamma_R, alpha_R, delta_flat, e_max = self._prepare_jit_params()
-                ecp_k = int(getattr(self, 'ecp_k', 0))
+                ecp_k = int(getattr(self, 'ecp_k', -1))
 
                 # Forward pass 1: day 0 to mid_day
                 fwd_states, fwd_costs, fwd_paths, n_fwd = forward_pass_numba(
@@ -827,7 +829,7 @@ class SubproblemDPNumba:
         
         # Prepare JIT non-linear parameters
         gamma_C, gamma_R, alpha_R, delta_flat, e_max = self._prepare_jit_params()
-        ecp_k = int(getattr(self, 'ecp_k', 0))
+        ecp_k = int(getattr(self, 'ecp_k', -1))
 
         states, costs, paths, n_states = forward_pass_numba(
             n_days, n_shifts, self.duals_flat, self.duals_i,
