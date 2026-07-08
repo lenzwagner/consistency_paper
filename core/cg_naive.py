@@ -338,5 +338,6 @@ def column_generation_naive(data, demand_dict, eps, Min_WD_i, Max_WD_i, time_cg_
         gini_perf,
         disutility_perf,
         top10_perf,
-        shift_blocks
+        shift_blocks,
+        ls_perf_cellwise
     )
