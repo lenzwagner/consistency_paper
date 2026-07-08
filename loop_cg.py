@@ -5,7 +5,7 @@ from Utils.Plots.plots import *
 from Utils.aggundercover import *
 from datetime import *
 from Utils.demand import *
-from core.base_case import get_base_case_groups, get_wd_constraints, LEN_I_RANGE, SCENARIO_RANGE, PATTERN, CHI, K_ECP
+from core.base_case import get_base_case_groups, get_homogeneous_base_case_group, get_wd_constraints, LEN_I_RANGE, SCENARIO_RANGE, PATTERN, CHI, K_ECP
 from core.solver_base import MAX_ITR, THRESHOLD, TIME_CG_INIT, TIME_CG, OUTPUT_LEN, SCALE
 from Utils.metrics import evaluate_inequality, compute_horizon_stability_metrics
 import time
@@ -78,7 +78,7 @@ for len_I in LEN_I_RANGE:
         demand_dict = read_demand('data/demand_data_vol.xlsx', len(I), PATTERN, scenario=scenario)
 
         Min_WD_i, Max_WD_i = get_wd_constraints(I)
-        worker_groups = get_base_case_groups(I)
+        worker_groups = get_homogeneous_base_case_group(I)
         print(f"Worker groups: {[(g.name, len(g.worker_ids), g.chi) for g in worker_groups.values()]}")
 
         print(f"")
@@ -171,15 +171,19 @@ for len_I in LEN_I_RANGE:
         # existing gini/spread/disutility/top10 inequality metrics (which
         # already pool across all workers) with the plain mean/min/max/std
         # one would report first.
-        mean_sc_behavior, min_sc_behavior, max_sc_behavior, std_sc_behavior = _worker_total_stats(ls_sc_behavior, len(T), len(I))
-        mean_sc_naive, min_sc_naive, max_sc_naive, std_sc_naive = _worker_total_stats(ls_sc_naive, len(T), len(I))
-        mean_sc_ecp, min_sc_ecp, max_sc_ecp, std_sc_ecp = _worker_total_stats(ls_sc_ecp, len(T), len(I))
+        n_sched_behavior = len(ls_sc_behavior) // len(T)
+        n_sched_naive = len(ls_sc_naive) // len(T)
+        n_sched_ecp = len(ls_sc_ecp) // len(T)
+
+        mean_sc_behavior, min_sc_behavior, max_sc_behavior, std_sc_behavior = _worker_total_stats(ls_sc_behavior, len(T), n_sched_behavior)
+        mean_sc_naive, min_sc_naive, max_sc_naive, std_sc_naive = _worker_total_stats(ls_sc_naive, len(T), n_sched_naive)
+        mean_sc_ecp, min_sc_ecp, max_sc_ecp, std_sc_ecp = _worker_total_stats(ls_sc_ecp, len(T), n_sched_ecp)
         mean_perf_behavior, min_perf_behavior, max_perf_behavior, std_perf_behavior = _perf_loss_worker_stats(
-            ls_x_behavior, ls_perf_behavior, len(K), len(T), len(I))
+            ls_x_behavior, ls_perf_behavior, len(K), len(T), n_sched_behavior)
         mean_perf_naive, min_perf_naive, max_perf_naive, std_perf_naive = _perf_loss_worker_stats(
-            ls_x_naive, ls_perf_naive, len(K), len(T), len(I))
+            ls_x_naive, ls_perf_naive, len(K), len(T), n_sched_naive)
         mean_perf_ecp, min_perf_ecp, max_perf_ecp, std_perf_ecp = _perf_loss_worker_stats(
-            ls_x_ecp, ls_perf_ecp, len(K), len(T), len(I))
+            ls_x_ecp, ls_perf_ecp, len(K), len(T), n_sched_ecp)
 
         # Relative reduction in total undercoverage achieved by the BAP vs. the NPP / ECP (%).
         reduction_naive = ((undercoverage_naive - undercoverage_behavior) / undercoverage_naive * 100
@@ -196,9 +200,9 @@ for len_I in LEN_I_RANGE:
         # zero degradation (delta=0/e_max=0), so P_schedules is trivially 1.0 always. The
         # correctly recomputed ex-post per-day performance is ls_perf_naive/ls_perf_ecp
         # (from calc_naive/_calc_naive_nl's evaluate_schedule_nl reconstruction), not ls_p_*.
-        horizon_stats_behavior = compute_horizon_stability_metrics(ls_p_behavior, len(I), len(T), tau=0.9, k=7)
-        horizon_stats_naive = compute_horizon_stability_metrics(ls_perf_naive, len(I), len(T), tau=0.9, k=7)
-        horizon_stats_ecp = compute_horizon_stability_metrics(ls_perf_ecp, len(I), len(T), tau=0.9, k=7)
+        horizon_stats_behavior = compute_horizon_stability_metrics(ls_p_behavior, n_sched_behavior, len(T), tau=0.9, k=7)
+        horizon_stats_naive = compute_horizon_stability_metrics(ls_perf_naive, n_sched_naive, len(T), tau=0.9, k=7)
+        horizon_stats_ecp = compute_horizon_stability_metrics(ls_perf_ecp, n_sched_ecp, len(T), tau=0.9, k=7)
 
         # Data frame -- every metric that exists for all three paradigms is
         # grouped as a behavior/naive/ecp triple, in the same order as
@@ -314,7 +318,7 @@ for len_I in LEN_I_RANGE:
                         'top10_perf_naive': top10_perf_naive,
                         'top10_perf_ecp': top10_perf_ecp,
 
-                        # Non-group-specific (pooled) descriptive stats for performance loss
+                        # (Pooled) descriptive stats for performance loss
                         'mean_perf_behavior': mean_perf_behavior,
                         'mean_perf_naive': mean_perf_naive,
                         'mean_perf_ecp': mean_perf_ecp,
