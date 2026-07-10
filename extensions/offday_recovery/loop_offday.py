@@ -52,8 +52,10 @@ def evaluate_schedule_beta(x_dict, days, shifts, nl_spec, beta_g):
     return perf_history
 
 
-def run_cg(data, demand_dict, worker_groups, beta_g, mode, max_itr=MAX_ITR, threshold=THRESHOLD,
-           time_cg_init=TIME_CG_INIT, time_cg=TIME_CG_SP):
+def _solve_cg(data, demand_dict, worker_groups, mode, beta_g, max_itr, threshold,
+              time_cg_init, time_cg):
+    """Inner CG solve. For NPP/ECP beta_g is irrelevant in pricing (e_max=0),
+    so callers should pass beta_g=1 and re-use this master for all beta values."""
     T = data['T'].dropna().astype(int).unique().tolist()
     K = data['K'].dropna().astype(int).unique().tolist()
     I = data['I'].dropna().astype(int).unique().tolist()
@@ -122,7 +124,11 @@ def run_cg(data, demand_dict, worker_groups, beta_g, mode, max_itr=MAX_ITR, thre
     master.model.Params.PoolSolutions = 50
     master.model.Params.PoolGap = 0.0
     master.model.optimize()
+    return master, x_by_group, T, K
 
+
+def _evaluate_pool(master, x_by_group, worker_groups, demand_dict, beta_g, T, K):
+    """Pool-averaged ex-post evaluation under a given beta_g."""
     def _reconstruct(get_count):
         ls_x_by_worker = []
         for g_idx, (gname, group) in enumerate(worker_groups.items(), start=1):
@@ -180,10 +186,23 @@ def run_cg(data, demand_dict, worker_groups, beta_g, mode, max_itr=MAX_ITR, thre
 
     if cnt_sols == 0:
         lam = {(g, r): round(master.lmbda[(g, r)].X) for (g, r) in master.lmbda}
-        undercoverage, understaffing, perfloss, consistency = _reconstruct(lambda g, r_: lam.get((g, r_), 0))
-    else:
-        undercoverage, understaffing, perfloss, consistency = [a / cnt_sols for a in agg]
-    return undercoverage, understaffing, perfloss, consistency
+        return _reconstruct(lambda g, r_: lam.get((g, r_), 0))
+    return tuple(a / cnt_sols for a in agg)
+
+
+def run_cg(data, demand_dict, worker_groups, beta_g, mode, max_itr=MAX_ITR, threshold=THRESHOLD,
+           time_cg_init=TIME_CG_INIT, time_cg=TIME_CG_SP):
+    """Solve CG and evaluate at beta_g.
+
+    BAP: pricing depends on beta_g -> solved per beta_g.
+    NPP/ECP: pricing is beta_g-invariant (e_max=0) -> solved once at beta_g=1,
+    evaluated ex-post at the requested beta_g (matches loop_offday_labeling.py).
+    """
+    solve_beta = beta_g if mode == 'bap' else 1
+    master, x_by_group, T, K = _solve_cg(
+        data, demand_dict, worker_groups, mode, solve_beta,
+        max_itr, threshold, time_cg_init, time_cg)
+    return _evaluate_pool(master, x_by_group, worker_groups, demand_dict, beta_g, T, K)
 
 
 if __name__ == "__main__":
@@ -198,7 +217,17 @@ if __name__ == "__main__":
     print(f"Extension 2 (Off-Day Recovery): {len_I} workers, {num_days} days")
     for mode in ("bap", "npp", "ecp"):
         print(f"\n--- {mode.upper()} ---")
-        for beta in BETAS:
-            uc, us, pl, cons = run_cg(data, demand_dict, worker_groups, beta, mode)
-            print(f"  beta_g={beta}  undercover={uc:7.2f}  understaff={us:7.2f}  "
-                  f"perfloss={pl:7.2f}  changes={cons:4.0f}")
+        if mode == "bap":
+            for beta in BETAS:
+                uc, us, pl, cons = run_cg(data, demand_dict, worker_groups, beta, mode)
+                print(f"  beta_g={beta}  undercover={uc:7.2f}  understaff={us:7.2f}  "
+                      f"perfloss={pl:7.2f}  changes={cons:4.0f}")
+        else:
+            master, x_by_group, T, K = _solve_cg(
+                data, demand_dict, worker_groups, mode, 1,
+                MAX_ITR, THRESHOLD, TIME_CG_INIT, TIME_CG_SP)
+            for beta in BETAS:
+                uc, us, pl, cons = _evaluate_pool(
+                    master, x_by_group, worker_groups, demand_dict, beta, T, K)
+                print(f"  beta_g={beta}  undercover={uc:7.2f}  understaff={us:7.2f}  "
+                      f"perfloss={pl:7.2f}  changes={cons:4.0f}")

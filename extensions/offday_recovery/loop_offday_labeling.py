@@ -69,6 +69,8 @@ def optimize_schedule(data, demand_dict, worker_groups, mode, beta_g=1, max_itr=
                 sp.delta = np.zeros((4, 4))
             if mode == 'ecp':
                 sp.addECPConstraint(K_ECP)
+            if solver == 'numba':
+                sp._use_bidir = True
             sp.buildModel()
             sp.solveModelOpt(time_cg)
             if sp.getStatus() != gu.GRB.OPTIMAL:

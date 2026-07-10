@@ -88,6 +88,22 @@ def _compute_group_block_lengths(ls_x, n_days, n_shifts, worker_ids, n_workers):
     return float(np.mean(group_blocks))
 
 
+def _compute_mean_perf_level(ls_p, T_len, worker_ids, n_workers):
+    worker_averages = []
+    for wid in worker_ids:
+        idx = wid - 1
+        if idx >= n_workers:
+            continue
+        worker_p = ls_p[idx * T_len : (idx + 1) * T_len]
+        if worker_p:
+            worker_averages.append(np.mean(worker_p))
+        else:
+            worker_averages.append(1.0)
+    if not worker_averages:
+        return 1.0
+    return float(np.mean(worker_averages))
+
+
 # DataFrame
 results = pd.DataFrame(columns=['I', 'T', 'K', 'pattern', 'scenario', 'prob', 'num_groups', 'epsilon', 'chi', 'gap', 'lagrange', 'objval', 'lbound', 'iteration', 'time_sp', 'time_rmp',
                                 'time_ip', 'undercover_behavior', 'undercover_norm_behavior', 'cons_behavior', 'cons_norm_behavior', 'perf_behavior',
@@ -411,12 +427,26 @@ for len_I in LEN_I_RANGE:
             group_results[f'mean_block_len_{g_name}_naive'] = mean_block_nai
             group_results[f'mean_block_len_{g_name}_ecp'] = mean_block_ecp
 
+            # Average performance levels (wellness)
+            mean_p_level_bev = _compute_mean_perf_level(ls_p_behavior, len(T), g_ids, n_sched_behavior)
+            mean_p_level_nai = _compute_mean_perf_level(ls_perf_naive, len(T), g_ids, n_sched_naive)
+            mean_p_level_ecp = _compute_mean_perf_level(ls_perf_ecp, len(T), g_ids, n_sched_ecp)
+            
+            group_results[f'mean_perf_level_{g_name}_behavior'] = mean_p_level_bev
+            group_results[f'mean_perf_level_{g_name}_naive'] = mean_p_level_nai
+            group_results[f'mean_perf_level_{g_name}_ecp'] = mean_p_level_ecp
+
 
         # Relative reduction in total undercoverage achieved by the BAP vs. the NPP / ECP (%).
         reduction_naive = ((undercoverage_naive - undercoverage_behavior) / undercoverage_naive * 100
                             if undercoverage_naive else 0.0)
         reduction_ecp = ((undercoverage_ecp - undercoverage_behavior) / undercoverage_ecp * 100
                           if undercoverage_ecp else 0.0)
+
+        # Pooled average performance levels (wellness)
+        mean_perf_level_behavior = float(np.mean(ls_p_behavior))
+        mean_perf_level_naive = float(np.mean(ls_perf_naive))
+        mean_perf_level_ecp = float(np.mean(ls_perf_ecp))
 
         # End-of-horizon performance stability (demand-regime / exhaustion analysis):
         # mean daily performance trajectory, end-of-horizon performance, share of
@@ -548,6 +578,11 @@ for len_I in LEN_I_RANGE:
                         'std_perf_naive': std_perf_naive,
                         'std_perf_ecp': std_perf_ecp,
 
+                        # Average performance level (wellness)
+                        'mean_perf_level_behavior': mean_perf_level_behavior,
+                        'mean_perf_level_naive': mean_perf_level_naive,
+                        'mean_perf_level_ecp': mean_perf_level_ecp,
+
                         # Number of shift blocks
                         'shift_blocks_behavior': shift_blocks_behavior,
                         'shift_blocks_naive': shift_blocks_naive,
@@ -653,6 +688,10 @@ block_group_cols = []
 for g in group_names:
     block_group_cols.extend([f'mean_block_len_{g}_behavior', f'mean_block_len_{g}_naive', f'mean_block_len_{g}_ecp'])
 
+perf_level_group_cols = []
+for g in group_names:
+    perf_level_group_cols.extend([f'mean_perf_level_{g}_behavior', f'mean_perf_level_{g}_naive', f'mean_perf_level_{g}_ecp'])
+
 ordered_cols = [
     # Metadata
     'I', 'T', 'K', 'pattern', 'scenario', 'prob', 'num_groups',
@@ -707,6 +746,10 @@ ordered_cols = [
 ] + perf_group_cols['max'] + [
     'std_perf_behavior', 'std_perf_naive', 'std_perf_ecp',
 ] + perf_group_cols['std'] + [
+
+    # Average performance level (wellness)
+    'mean_perf_level_behavior', 'mean_perf_level_naive', 'mean_perf_level_ecp',
+] + perf_level_group_cols + [
 
     # Number of shift blocks
     'shift_blocks_behavior', 'shift_blocks_naive', 'shift_blocks_ecp',

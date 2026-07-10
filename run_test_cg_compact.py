@@ -40,9 +40,9 @@ from Utils.demand import generate_demand
 # =============================================================================
 # CONFIGURATION  --  set parameters here
 # =============================================================================
-SEED_START  = 1      # first seed (inclusive)
-SEED_END    = 10     # last seed (inclusive)
-NUM_WORKERS = 10     # number of workers
+SEED_START  = 20      # first seed (inclusive)
+SEED_END    = 40     # last seed (inclusive)
+NUM_WORKERS = 12     # number of workers
 NUM_DAYS    = 10     # number of days / planning horizon
 
 # Solver parameters

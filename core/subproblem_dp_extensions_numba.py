@@ -14,6 +14,7 @@ import gurobipy as gu
 
 from .subproblem_dp_optimized import (
     njit, NUMBA_AVAILABLE, pack_state, unpack_state, popcount6, SubproblemDPNumba,
+    merge_bidirectional,
 )
 from .nonlinear_transitions import h_func, r_func
 
@@ -424,6 +425,157 @@ def forward_pass_offday(
     return curr_states[:n_curr].copy(), curr_costs[:n_curr].copy(), curr_paths[:n_curr].copy(), n_curr
 
 
+@njit(cache=True)
+def forward_pass_offday_from_states(
+    n_days, n_shifts, duals_flat, chi, min_wd, max_wd, days_off,
+    start_day, init_states, init_costs, n_init,
+    enforce_no_change, enforce_performance_floor,
+    gamma_R, gamma_C, alpha_R, delta_flat, e_max, ecp_k, beta_g,
+):
+    """Second half of the bidirectional pass for the off-day extension.
+
+    Mirrors forward_pass_from_states (base case) but uses pack_state_od /
+    unpack_state_od (8-bit rho) and advances rho by beta_g on off-day arcs.
+    Tracks curr_init_idx so merge_bidirectional can stitch the two halves.
+    """
+    MAX_STATES = 200000
+
+    curr_states = np.zeros(MAX_STATES, dtype=np.int64)
+    curr_costs = np.zeros(MAX_STATES, dtype=np.float64)
+    curr_init_idx = np.zeros(MAX_STATES, dtype=np.int32)
+    curr_paths = np.zeros((MAX_STATES, n_days + 1), dtype=np.int8)
+
+    next_states = np.zeros(MAX_STATES, dtype=np.int64)
+    next_costs = np.zeros(MAX_STATES, dtype=np.float64)
+    next_init_idx = np.zeros(MAX_STATES, dtype=np.int32)
+    next_paths = np.zeros((MAX_STATES, n_days + 1), dtype=np.int8)
+
+    n_curr = min(n_init, MAX_STATES)
+    for i in range(n_curr):
+        curr_states[i] = init_states[i]
+        curr_costs[i] = init_costs[i]
+        curr_init_idx[i] = i
+
+    forbidden = np.array([[3, 1], [3, 2], [2, 1]], dtype=np.int32)
+
+    for d in range(start_day, n_days):
+        next_day = d + 1
+        n_next = 0
+        days_remaining = n_days - next_day + 1
+
+        for i in range(n_curr):
+            state = curr_states[i]
+            cost = curr_costs[i]
+            init_idx = curr_init_idx[i]
+
+            omega, rho, nu, e, last_worked, s_last, first_flag, cw = unpack_state_od(state)
+            has_worked = last_worked > 0
+
+            can_off = True
+            if omega > 0 and omega < min_wd:
+                if days_remaining >= min_wd or first_flag == 1:
+                    can_off = False
+
+            if can_off and n_next < MAX_STATES:
+                new_rho = rho + beta_g
+                new_nu = 0
+                new_cw_off = (cw << 1) & 0x3F
+                recov = r_func(new_rho, chi, gamma_R, alpha_R)
+                new_e = max(0.0, e - recov)
+                p_new_off = 1.0 - new_e
+                if enforce_performance_floor > 0.0 and p_new_off < enforce_performance_floor:
+                    can_off = False
+                if can_off:
+                    next_states[n_next] = pack_state_od(-1 if omega > 0 else omega - 1, new_rho, new_nu, new_e, last_worked, 0, first_flag, new_cw_off)
+                    next_costs[n_next] = cost
+                    next_init_idx[n_next] = init_idx
+                    next_paths[n_next, :] = curr_paths[i, :]
+                    next_paths[n_next, next_day] = -1
+                    n_next += 1
+
+            for shift in range(1, n_shifts + 1):
+                if omega >= max_wd:
+                    continue
+                if omega < 0 and has_worked and -omega < days_off:
+                    continue
+
+                is_forbidden = False
+                if s_last > 0:
+                    for f in range(3):
+                        if forbidden[f, 0] == s_last and forbidden[f, 1] == shift:
+                            is_forbidden = True
+                            break
+                if is_forbidden:
+                    continue
+
+                if enforce_no_change == 1 and last_worked > 0 and last_worked != shift:
+                    continue
+
+                c_new = 1 if (last_worked > 0 and last_worked != shift) else 0
+
+                if ecp_k >= 0 and (popcount6(cw) + c_new) > ecp_k:
+                    continue
+                new_cw = ((cw << 1) | c_new) & 0x3F
+
+                new_rho = rho + 1 if c_new == 0 else 0
+                new_nu = nu + 1 if c_new == 1 else 0
+
+                if c_new == 1:
+                    degrad = delta_flat[last_worked * 4 + shift] * h_func(new_nu, gamma_C)
+                    new_e = min(e_max, e + degrad)
+                else:
+                    recov = r_func(new_rho, chi, gamma_R, alpha_R)
+                    new_e = max(0.0, e - recov)
+                p_new = 1.0 - new_e
+
+                if enforce_performance_floor > 0.0 and p_new < enforce_performance_floor:
+                    continue
+
+                dual_val = duals_flat[(next_day - 1) * n_shifts + (shift - 1)]
+                new_cost = cost - dual_val * p_new
+
+                new_first = first_flag
+                if not has_worked and next_day == start_day + 1:
+                    new_first = 1
+
+                if n_next < MAX_STATES:
+                    next_states[n_next] = pack_state_od(1 if omega <= 0 else omega + 1, new_rho, new_nu, new_e, shift, shift, new_first, new_cw)
+                    next_costs[n_next] = new_cost
+                    next_init_idx[n_next] = init_idx
+                    next_paths[n_next, :] = curr_paths[i, :]
+                    next_paths[n_next, next_day] = shift
+                    n_next += 1
+
+        if n_next > 0:
+            sort_idx = np.argsort(next_states[:n_next])
+            n_pruned = 0
+            i = 0
+            while i < n_next:
+                idx = sort_idx[i]
+                current_state = next_states[idx]
+                best_c = next_costs[idx]
+                best_idx = idx
+                j = i + 1
+                while j < n_next and next_states[sort_idx[j]] == current_state:
+                    jdx = sort_idx[j]
+                    if next_costs[jdx] < best_c:
+                        best_c = next_costs[jdx]
+                        best_idx = jdx
+                    j += 1
+                curr_states[n_pruned] = current_state
+                curr_costs[n_pruned] = best_c
+                curr_init_idx[n_pruned] = next_init_idx[best_idx]
+                curr_paths[n_pruned, :] = next_paths[best_idx, :]
+                n_pruned += 1
+                i = j
+            n_curr = n_pruned
+        else:
+            n_curr = 0
+
+    return (curr_states[:n_curr].copy(), curr_costs[:n_curr].copy(),
+            curr_init_idx[:n_curr].copy(), curr_paths[:n_curr].copy(), n_curr)
+
+
 class SubproblemOffdayNumba(_NumbaECPMixin, SubproblemDPNumba):
     def __init__(self, duals_i, duals_ts, df, i, iteration, eps, Min_WD_i, Max_WD_i, chi,
                  beta_g=1, model_type='nonlinear'):
@@ -441,14 +593,51 @@ class SubproblemOffdayNumba(_NumbaECPMixin, SubproblemDPNumba):
         enc_pf = float(enc_pf) if enc_pf is not None else 0.0
         gamma_C, gamma_R, alpha_R, delta_flat, e_max = self._prepare_jit_params()
         ecp_k = int(getattr(self, 'ecp_k', -1))
+        beta_g = round(self.beta_g)
 
-        states, costs, paths, n_states = forward_pass_offday(
-            n_days, n_shifts, self.duals_flat, self.duals_i, self.chi,
-            self.Min_WD, self.Max_WD, self.Days_Off, self.suffix_bounds, n_days,
-            enc_nc, enc_pf, gamma_R, gamma_C, alpha_R, delta_flat, e_max, ecp_k,
-            round(self.beta_g),
-        )
-        _finalize_forward(self, states, costs, paths, n_states)
+        use_bidir = getattr(self, '_use_bidir', False)
+        if use_bidir and n_days >= 8:
+            mid_day = n_days // 2
+            fwd_states, fwd_costs, fwd_paths, n_fwd = forward_pass_offday(
+                n_days, n_shifts, self.duals_flat, self.duals_i, self.chi,
+                self.Min_WD, self.Max_WD, self.Days_Off, self.suffix_bounds, mid_day,
+                enc_nc, enc_pf, gamma_R, gamma_C, alpha_R, delta_flat, e_max, ecp_k, beta_g,
+            )
+            if n_fwd > 0:
+                _, second_costs, second_init_idx, second_paths, n_second = \
+                    forward_pass_offday_from_states(
+                        n_days, n_shifts, self.duals_flat, self.chi,
+                        self.Min_WD, self.Max_WD, self.Days_Off,
+                        mid_day, fwd_states, fwd_costs, n_fwd,
+                        enc_nc, enc_pf, gamma_R, gamma_C, alpha_R, delta_flat, e_max, ecp_k, beta_g,
+                    )
+                if n_second > 0:
+                    best_cost, best_path = merge_bidirectional(
+                        fwd_states, fwd_costs, fwd_paths, n_fwd,
+                        second_costs, second_init_idx, second_paths, n_second,
+                        n_days, mid_day,
+                    )
+                    if best_cost < np.inf:
+                        self.objval = best_cost
+                        self.best_path = best_path
+                        self.all_optimal_paths = [best_path.copy()]
+                        self.n_optimal = 1
+                        self.status = gu.GRB.OPTIMAL
+                        return
+            # fallback to forward-only if bidir produced nothing
+            states, costs, paths, n_states = forward_pass_offday(
+                n_days, n_shifts, self.duals_flat, self.duals_i, self.chi,
+                self.Min_WD, self.Max_WD, self.Days_Off, self.suffix_bounds, n_days,
+                enc_nc, enc_pf, gamma_R, gamma_C, alpha_R, delta_flat, e_max, ecp_k, beta_g,
+            )
+            _finalize_forward(self, states, costs, paths, n_states)
+        else:
+            states, costs, paths, n_states = forward_pass_offday(
+                n_days, n_shifts, self.duals_flat, self.duals_i, self.chi,
+                self.Min_WD, self.Max_WD, self.Days_Off, self.suffix_bounds, n_days,
+                enc_nc, enc_pf, gamma_R, gamma_C, alpha_R, delta_flat, e_max, ecp_k, beta_g,
+            )
+            _finalize_forward(self, states, costs, paths, n_states)
 
     def solveModelNOpt(self, timeLimit):
         self.solveModelOpt(timeLimit)

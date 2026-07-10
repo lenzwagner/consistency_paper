@@ -40,6 +40,12 @@ def run_cg(data, demand_dict, worker_groups, chi, prob, lam, F_bar, mode,
     master.buildModel()
     master.setStartSolution()
 
+    # Apply fairness penalty to the initial dummy column (which has 0 shifts -> 0 burden)
+    for g_idx in master.group_info:
+        start_col_cost = lam * abs(0.0 - F_bar)
+        master.lmbda[g_idx, 1].Obj = start_col_cost
+    master.model.update()
+
     group_names = list(worker_groups.keys())
     perf_by_group, x_by_group = {g: {} for g in group_names}, {g: {} for g in group_names}
 
@@ -159,20 +165,20 @@ def run_cg(data, demand_dict, worker_groups, chi, prob, lam, F_bar, mode,
 
 
 if __name__ == "__main__":
-    len_I, num_days, chi, prob = 6, 14, 3, 1.0
+    len_I, num_days, chi, prob = 100, 28, 3, 1.0
     T = list(range(1, num_days + 1)); I = list(range(1, len_I + 1)); K = [1, 2, 3]
     maxlen = max(len(I), len(T), len(K))
     data = pd.DataFrame({'I': I + [np.nan] * (maxlen - len(I)),
                           'T': T + [np.nan] * (maxlen - len(T)),
                           'K': K + [np.nan] * (maxlen - len(K))})
-    demand_dict = generate_demand(num_days, prob, len_I, shift_probs=(50, 30, 20), delta=0.25, seed=3)
+    demand_dict = generate_demand(num_days, prob, len_I, shift_probs=(25, 50, 25), delta=0.25, seed=1)
     worker_groups = create_groups_from_fractions(I, "1/2,1/2", [(0.5, 0.5, 2, 7), (1.5, 1.5, 4, 21)])
 
     print(f"Extension 1 (Fairness, LABELING): {len_I} workers, {num_days} days, mu={MU}")
     for mode in ("bap", "npp", "ecp"):
-        _, _, _, _, F_bar, _ = run_cg(data, demand_dict, worker_groups, chi, prob, 0.0, 0.0, mode)
+        _, _, _, _, F_bar, _ = run_cg(data, demand_dict, worker_groups, chi, prob, 0.0, 0.0, mode, solver='numba')
         print(f"\n--- {mode.upper()} ---  F_bar (preprocessing) = {F_bar:.2f}")
         for lam in LAMBDAS:
-            uc, us, pl, cons, _, g = run_cg(data, demand_dict, worker_groups, chi, prob, lam, F_bar, mode)
+            uc, us, pl, cons, _, g = run_cg(data, demand_dict, worker_groups, chi, prob, lam, F_bar, mode, solver='numba')
             print(f"  lambda={lam:<5} undercover={uc:7.2f}  understaff={us:7.2f}  "
                   f"perfloss={pl:7.2f}  changes={cons:4.0f}  gini(F)={g:.3f}")

@@ -387,6 +387,7 @@ class SubproblemPreferencesDP(SubproblemDP):
 @dataclass
 class FairLabel(Label):
     f: float = 0.0
+    lam: float = 0.0  # fairness weight; when 0, f-based dominance is inactive
 
     # Discretization bin width for the burden resource f, used only for the
     # dominance check (extensions.tex: "If f is discretized into B bins, the
@@ -397,6 +398,8 @@ class FairLabel(Label):
     # exponentially over 2+ week horizons; binning restores tractable pruning
     # at the cost of a small, controlled discretization error in the
     # fairness-penalty terminal cost used purely for pricing (RC) decisions.
+    # NOTE: when lam=0 (no fairness penalty), f is irrelevant and should not
+    # affect dominance, saving state-space explosion from f-discretization noise.
     F_BIN = 1.0
 
     def copy(self):
@@ -405,7 +408,7 @@ class FairLabel(Label):
             e=self.e, rho=self.rho, omega=self.omega, cost=self.cost,
             path=self.path.copy(), total_workdays=self.total_workdays,
             sc_history=self.sc_history.copy(), r_history=self.r_history.copy(),
-            p_history=self.p_history.copy(), nu=self.nu, f=self.f,
+            p_history=self.p_history.copy(), nu=self.nu, f=self.f, lam=self.lam,
         )
 
     def _f_bin(self):
@@ -418,7 +421,9 @@ class FairLabel(Label):
             # Terminal cost (incl. fairness penalty) is applied after the forward
             # pass in SubproblemFairnessDP._solve, so raw `cost` here is still
             # pre-penalty and comparable only among labels with equal f-bin.
-            if self._f_bin() != other._f_bin():
+            # BUT: only group by f-bin if lam > 0 (fairness is active); if lam=0,
+            # f is irrelevant and should not prevent dominance.
+            if self.lam > 1e-9 and self._f_bin() != other._f_bin():
                 return False
             return self.cost < other.cost - 1e-9
         if self.day != other.day or self.s_last != other.s_last:
@@ -429,7 +434,9 @@ class FairLabel(Label):
             return False
         if self.rho != other.rho or self.omega != other.omega or self.nu != other.nu:
             return False
-        if self._f_bin() != other._f_bin():
+        # Only f-bin grouping when fairness is active (lam > 0); when lam=0,
+        # f-tracking is wasted overhead and should not inflate state space.
+        if self.lam > 1e-9 and self._f_bin() != other._f_bin():
             return False
         return self.cost < other.cost - 1e-9
 
@@ -446,7 +453,7 @@ class SubproblemFairnessDP(SubproblemDP):
         return FairLabel(
             day=0, s_last=None, last_worked_shift=None, e=0.0, rho=0, omega=0,
             cost=-self.duals_i, path=[], total_workdays=0, sc_history=[], r_history=[],
-            p_history=[], nu=0, f=0.0,
+            p_history=[], nu=0, f=0.0, lam=self.lam,
         )
 
     def _create_day_off_label(self, label: 'FairLabel', next_day: int):
