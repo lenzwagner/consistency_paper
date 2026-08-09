@@ -32,87 +32,6 @@ fig = plt.figure(figsize = (my_width, my_width/golden))
 
 
 
-def demand_dict_fifty(num_days, prob, demand, middle_shift, fluctuation=0.25):
-    base_total_demand = int(prob * demand)
-    demand_dict = {}
-
-    for day in range(1, num_days + 1):
-        fluctuation_factor = 1 + (random.uniform(-fluctuation, fluctuation))
-        total_demand = int(base_total_demand * fluctuation_factor)
-
-        middle_shift_ratio = random.random()
-        middle_shift_demand = round(total_demand * middle_shift_ratio)
-        remaining_demand = total_demand - middle_shift_demand
-
-        early_late_ratio = random.random()
-        early_demand = round(remaining_demand * early_late_ratio)
-        late_demand = remaining_demand - early_demand
-
-        if middle_shift == 1:
-            demand_dict[(day, 1)] = middle_shift_demand
-            demand_dict[(day, 2)] = early_demand
-            demand_dict[(day, 3)] = late_demand
-        elif middle_shift == 2:
-            demand_dict[(day, 1)] = early_demand
-            demand_dict[(day, 2)] = middle_shift_demand
-            demand_dict[(day, 3)] = late_demand
-        elif middle_shift == 3:
-            demand_dict[(day, 1)] = early_demand
-            demand_dict[(day, 2)] = late_demand
-            demand_dict[(day, 3)] = middle_shift_demand
-        else:
-            raise ValueError("Invalid middle_shift value")
-
-    return demand_dict
-
-
-def demand_dict_third(num_days, prob, demand):
-    total_demand = int(prob * demand)
-    demand_dict = {}
-
-    for day in range(1, num_days + 1):
-        z1 = random.random()
-        z2 = random.random()
-        z3 = random.random()
-
-        summe = z1 + z2 + z3
-
-        demand1 = (z1 / summe) * total_demand
-        demand2 = (z2 / summe) * total_demand
-        demand3 = (z3 / summe) * total_demand
-
-        demand1_rounded = round(demand1)
-        demand2_rounded = round(demand2)
-        demand3_rounded = round(demand3)
-
-        rounded_total = demand1_rounded + demand2_rounded + demand3_rounded
-        rounding_difference = total_demand - rounded_total
-
-        if rounding_difference != 0:
-            shift_indices = [1, 2, 3]
-            random.shuffle(shift_indices)
-            for i in range(abs(rounding_difference)):
-                if rounding_difference > 0:
-                    if shift_indices[i] == 1:
-                        demand1_rounded += 1
-                    elif shift_indices[i] == 2:
-                        demand2_rounded += 1
-                    else:
-                        demand3_rounded += 1
-                else:
-                    if shift_indices[i] == 1:
-                        demand1_rounded -= 1
-                    elif shift_indices[i] == 2:
-                        demand2_rounded -= 1
-                    else:
-                        demand3_rounded -= 1
-
-        demand_dict[(day, 1)] = demand1_rounded
-        demand_dict[(day, 2)] = demand2_rounded
-        demand_dict[(day, 3)] = demand3_rounded
-
-    return demand_dict
-
 def plot_demand_pattern(demands, days, shifts):
     shift_labels = ["Morning", "Noon", "Evening"]
     """
@@ -229,44 +148,77 @@ def plot_demand_bar_by_day(demands, days, shifts, pt):
     plt.savefig('images/demand.eps', bbox_inches='tight')
     plt.show()
 
-def demand_dict_fifty_min(num_days, prob, demand, middle_shift, fluctuation=0.25, seed=None):
+def generate_demand(num_days, prob, demand, shift_probs=(0.50, 0.30, 0.20), delta=0.25,
+                    seed=None, prop_volatility=0.0):
+    """Generate a demand dictionary keyed by (day, shift).
+
+    Parameters
+    ----------
+    num_days    : length of the planning horizon.
+    prob        : demand scarcity factor (e.g. 0.9 / 1.0 / 1.1) applied to `demand`.
+    demand      : base total demand per day (e.g. the workforce size |I|).
+    shift_probs : target proportions for the three shifts, positionally
+                  (shift 1, shift 2, shift 3) = (early E, late L, night N).
+                  The base case is E-heavy (0.50, 0.30, 0.20). Values need not
+                  sum to 1; they are normalized internally, so (50, 30, 20)
+                  and (0.5, 0.3, 0.2) are equivalent.
+    delta       : daily volatility of the TOTAL. The daily total fluctuates uniformly
+                  in [(1-delta)*base, (1+delta)*base].
+    prop_volatility : day-to-day volatility of the SHIFT SPLIT (default 0.0 = the
+                  legacy behaviour where every day has the identical fixed split).
+                  With prop_volatility=0 the per-shift demand is proportionally
+                  constant across days, so a fixed shift-type assignment covers it
+                  perfectly and BAP has NO incentive to change shifts (cons=0).
+                  Set it > 0 (e.g. 0.25-0.35) to perturb each day's proportions so
+                  that some days are E-heavy, others L- or N-heavy; this is what
+                  forces shift changes. Implemented as a symmetric Dirichlet-style
+                  perturbation: p_day[j] = normalize(max(eps, p[j] + U(-v, v))).
+    seed        : optional RNG seed for reproducibility.
+    """
     if seed is not None:
         random.seed(seed)
 
-    base_total_demand = int(prob * demand)
+    p = list(shift_probs)
+    if len(p) != 3:
+        raise ValueError("shift_probs must have exactly 3 entries (E, L, N).")
+    s = sum(p)
+    if s <= 0:
+        raise ValueError("shift_probs must sum to a positive value.")
+    p = [x / s for x in p]  # normalize -> proportions
+
+    base_total_demand = prob * demand
+    lo = int(math.floor((1 - delta) * base_total_demand))
+    hi = int(math.floor((1 + delta) * base_total_demand))
     demand_dict = {}
 
     for day in range(1, num_days + 1):
-        fluctuation_factor = 1 + (random.uniform(-fluctuation, fluctuation))
-        total_demand = int(base_total_demand * fluctuation_factor)
+        # Daily total: uniform integer in [floor((1-delta)*base), floor((1+delta)*base)].
+        total_demand = random.randint(lo, hi)
 
-        # Ensure each shift has at least 5% of total demand
-        min_demand_per_shift = math.ceil(0.05 * total_demand)
-        remaining_demand = total_demand - 3 * min_demand_per_shift
-
-        # Distribute the remaining demand
-        middle_shift_ratio = random.random()
-        middle_shift_demand = round(remaining_demand * middle_shift_ratio) + min_demand_per_shift
-        remaining_demand -= (middle_shift_demand - min_demand_per_shift)
-
-        early_late_ratio = random.random()
-        early_demand = round(remaining_demand * early_late_ratio) + min_demand_per_shift
-        late_demand = remaining_demand - (early_demand - min_demand_per_shift) + min_demand_per_shift
-
-        if middle_shift == 1:
-            demand_dict[(day, 1)] = middle_shift_demand
-            demand_dict[(day, 2)] = early_demand
-            demand_dict[(day, 3)] = late_demand
-        elif middle_shift == 2:
-            demand_dict[(day, 1)] = early_demand
-            demand_dict[(day, 2)] = middle_shift_demand
-            demand_dict[(day, 3)] = late_demand
-        elif middle_shift == 3:
-            demand_dict[(day, 1)] = early_demand
-            demand_dict[(day, 2)] = late_demand
-            demand_dict[(day, 3)] = middle_shift_demand
+        # Per-day shift split. With prop_volatility>0 each day's proportions are
+        # perturbed so the shift MIX (not just the total) varies day-to-day, which
+        # is what creates a shift-change incentive for BAP.
+        if prop_volatility > 0.0:
+            eps = 0.01
+            p_day = [max(eps, p[j] + random.uniform(-prop_volatility, prop_volatility))
+                     for j in range(3)]
+            ssum = sum(p_day)
+            p_day = [x / ssum for x in p_day]
         else:
-            raise ValueError("Invalid middle_shift value")
+            p_day = p
+
+        # Shift split (Appendix formula): round the first two shifts to their target
+        # proportion, the last shift takes the remainder so the total is preserved.
+        q1 = int(round(p_day[0] * total_demand))
+        q2 = int(round(p_day[1] * total_demand))
+        q3 = total_demand - q1 - q2
+        if q3 < 0:  # safety for extreme proportions/rounding
+            q3 = 0
+            q2 = total_demand - q1
+
+        demand_dict[(day, 1)] = q1
+        demand_dict[(day, 2)] = q2
+        demand_dict[(day, 3)] = q3
 
     return demand_dict
 

@@ -9,7 +9,10 @@ import plotly.io as pio
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
-import gurobi_logtools as glt
+try:
+    import gurobi_logtools as glt
+except ImportError:
+    glt = None
 import matplotlib.colors as mcolors
 
 plt.rcParams.update({
@@ -512,7 +515,7 @@ def performancePlotxml(xml_file_path, days, name, anzahl_ls, liste1_name="BAP", 
 def performancePlotAvg(ls1, ls2, days, name, anzahl_ls, eps, chi):
     # Data validation and preprocessing
     ls1 = np.clip(ls1, 0, 1)  # Clip values between 0 and 1
-    ls2 = np.clip(ls2, 0, 1)  # Clip values between 0 und 1
+    ls2 = np.clip(ls2, 0, 1)  # Clip values between 0 and 1
 
     sublists1 = [ls1[i:i + days * anzahl_ls] for i in range(0, len(ls1), days * anzahl_ls)]
     sublists2 = [ls2[i:i + days * anzahl_ls] for i in range(0, len(ls2), days * anzahl_ls)]
@@ -578,7 +581,7 @@ def performancePlotAvg(ls1, ls2, days, name, anzahl_ls, eps, chi):
     print("Overall average comparison plot generated successfully.")
 
     # Create a separate figure for the legend
-    figlegend = plt.figure(figsize=(6.6, 0.5))  # 660 Pixel breit bei 100 dpi, Höhe anpassbar
+    figlegend = plt.figure(figsize=(6.6, 0.5))  # 660 pixels wide at 100 dpi, adjustable height
     ax = figlegend.add_subplot(111)
 
     legend_elements = [
@@ -586,24 +589,24 @@ def performancePlotAvg(ls1, ls2, days, name, anzahl_ls, eps, chi):
         plt.Line2D([0], [0], color=palette2[0], lw=2, label='Machine-Like Scheduling Approach')
     ]
 
-    # Erstellen Sie die Legende
+    # Create the legend
     leg = ax.legend(handles=legend_elements, loc='center', ncol=2, frameon=False,
                     fontsize=11, handlelength=1.5, handleheight=1)
 
-    # Entfernen Sie die Achsen
+    # Remove the axes
     ax.axis('off')
 
-    # Passen Sie die Figurengröße an den Inhalt an
+    # Adjust the figure size to the content
     bbox = leg.get_window_extent(figlegend.canvas.get_renderer()).transformed(figlegend.dpi_scale_trans.inverted())
     figlegend.set_size_inches(6.6, bbox.height)
 
-    # Zentrieren Sie die Legende vertikal
+    # Center the legend vertically
     fig_height = figlegend.get_size_inches()[1]
     leg_height = bbox.height
     y_offset = (fig_height - leg_height) / 2
     leg.set_bbox_to_anchor((0.5, 0.5 + y_offset/fig_height), transform=ax.transAxes)
 
-    # Speichern Sie die Legende als separates Bild
+    # Save the legend as a separate image
     legend_file = f".{os.sep}images{os.sep}perfplots{os.sep}perfpl_legend_{eps}_{chi}.svg"
     plt.savefig(legend_file, dpi=100, bbox_inches='tight', pad_inches=0.1)
 
@@ -648,7 +651,7 @@ def visualize_schedule_dual(dic, days, I, num_workers=None):
             elif value == 2:
                 color = '#251255'
             elif value == 3:
-                # Diagonale Teilung
+                # Diagonal division
                 fig.add_shape(
                     type="path",
                     path=f"M {i},{j} L {i+1},{j} L {i},{j+1} Z",
@@ -677,7 +680,7 @@ def visualize_schedule_dual(dic, days, I, num_workers=None):
     width = max(300, num_workers * 30)
     height = max(400, days * 30)
 
-    # Legende hinzufügen
+    # Add legend
     legend_items = [
         go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=10, color='#feb77e', symbol='square'), name='Model 1', showlegend=True),
         go.Scatter(x=[None], y=[None], mode='markers', marker=dict(size=10, color='#251255', symbol='square'), name='Model 2', showlegend=True),
@@ -685,7 +688,7 @@ def visualize_schedule_dual(dic, days, I, num_workers=None):
     ]
     fig.add_traces(legend_items)
 
-    # Layout-Anpassungen
+    # Layout adjustments
     fig.update_layout(
         xaxis=dict(
             tickmode='array',
@@ -705,11 +708,11 @@ def visualize_schedule_dual(dic, days, I, num_workers=None):
             title_font=dict(family="Computer Modern Roman", size=10),
             tickfont=dict(family="Computer Modern Roman", size=6),
         ),
-        height=height + 50,  # Höhe erhöht, um Platz für die Legende zu schaffen
+        height=height + 50,  # Height increased to make room for the legend
         width=width,
         plot_bgcolor='white',
         autosize=False,
-        margin=dict(l=10, r=10, t=10, b=80),  # Unterer Rand erhöht für die Legende
+        margin=dict(l=10, r=10, t=10, b=80),  # Bottom margin increased for the legend
         font=dict(family="Computer Modern Roman", size=11),
         legend=dict(
             orientation="h",

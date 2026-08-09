@@ -36,38 +36,68 @@ def calculate_90_10_ratio(values: List[float]) -> float:
     p10 = np.percentile(values, 10)
     return p90 / p10 if p10 > 0 else float('inf')
 
-def evaluate_inequality(lst: List[float], T: int, n_workers_given: int = None) -> Tuple[Dict[int, float], float, float, float]:
+def calculate_disutility_index(values: List[float]) -> float:
     """
-    Evaluate inequality metrics (spread, load share, gini) for a flattened list of assignments.
-    
+    Level-and-inequality-adjusted score for "less is better" quantities
+    (e.g. shift changes, performance loss): mean * (1 + Gini).
+    Lower is better on both the level (mean) and the equality (Gini) dimension.
+    """
+    values = np.array(values, dtype=np.float64)
+    if len(values) == 0:
+        return 0.0
+    return float(np.mean(values) * (1.0 + calculate_gini(values)))
+
+def calculate_top_share(values: List[float], frac: float = 0.1) -> float:
+    """
+    Share of the total borne by the top `frac` (e.g. 10%) most-burdened workers.
+    At least one worker is always included, even if frac * n < 1.
+    """
+    values = np.array(values, dtype=np.float64)
+    n = len(values)
+    if n == 0:
+        return 0.0
+    total = np.sum(values)
+    if total <= 0:
+        return 0.0
+    n_top = max(1, int(np.ceil(frac * n)))
+    top_sum = np.sum(np.sort(values)[-n_top:])
+    return float(top_sum / total)
+
+def evaluate_inequality(lst: List[float], T: int, n_workers_given: int = None) -> Tuple[Dict[int, float], float, float, float, float, float]:
+    """
+    Evaluate inequality metrics (spread, load share, gini, disutility, top-10% share)
+    for a flattened list of assignments.
+
     Args:
         lst: Flattened list of values (e.g., shift changes per day per worker)
         T: Horizon length (days)
         n_workers_given: Number of workers. If None, calculated from list length.
-        
+
     Returns:
-        tuple: (worker_totals_dict, spread, load_share, gini)
+        tuple: (worker_totals_dict, spread, load_share, gini, disutility, top10_share)
     """
     if n_workers_given is None:
         n_workers = int(np.ceil(len(lst) / T))
     else:
         n_workers = n_workers_given
-        
+
     # Calculate totals per worker
     worker_totals = {}
     for i in range(n_workers):
         start = i * T
         end = min((i + 1) * T, len(lst))
         worker_totals[i + 1] = sum(lst[start:end])
-    
+
     values = list(worker_totals.values())
     total_sum = sum(values)
-    
+
     spread = max(values) - min(values) if values else 0.0
     load_share = round(max(values) / total_sum, 3) if total_sum > 0 else 0.0
     gini = calculate_gini(values)
-    
-    return worker_totals, round(spread, 3), load_share, round(gini, 3)
+    disutility = calculate_disutility_index(values)
+    top10_share = calculate_top_share(values, frac=0.1)
+
+    return worker_totals, round(spread, 3), load_share, round(gini, 3), round(disutility, 3), round(top10_share, 3)
 
 def calculate_group_metrics(
     ls_sc: List[float], 
@@ -144,6 +174,49 @@ def calculate_group_metrics(
     }
     
     return group_metrics, fairness
+
+def compute_horizon_stability_metrics(
+    p_list: List[float],
+    n_workers: int,
+    n_days: int,
+    tau: float = 0.9,
+    k: int = 7,
+) -> Dict[str, Any]:
+    """
+    End-of-horizon performance stability proxies (used in the demand-regime /
+    exhaustion analysis): mean daily performance, end-of-horizon performance,
+    the share of workers below a performance floor at the end, and the number
+    of low-performance days in the final k-day window.
+
+    Args:
+        p_list: Flattened per-worker, per-day continuous performance state
+            (worker-major layout, length n_workers * n_days) -- this is the
+            "p_list_*"/"ls_p" list already exported by the CG functions
+            (subproblem.getOptP(), i.e. p_{id} regardless of whether the
+            worker is actually scheduled that day).
+        n_workers: Number of workers.
+        n_days: Horizon length.
+        tau: Performance floor for B^end_tau / L^tail_tau.
+        k: Window size (days) for L^tail_tau.
+
+    Returns:
+        dict with keys: p_bar_d (list, length n_days), p_end, b_end_tau, l_tail_tau
+    """
+    p = np.array(p_list, dtype=np.float64).reshape(n_workers, n_days)
+
+    p_bar_d = p.mean(axis=0)  # average across workers, per day
+    p_end = float(p_bar_d[-1])
+    b_end_tau = float(np.mean(p[:, -1] < tau))
+
+    window = p_bar_d[-k:] if n_days >= k else p_bar_d
+    l_tail_tau = int(np.sum(window < tau))
+
+    return {
+        'p_bar_d': p_bar_d.tolist(),
+        'p_end': round(p_end, 5),
+        'b_end_tau': round(b_end_tau, 5),
+        'l_tail_tau': l_tail_tau,
+    }
 
 def compute_autocorrelation(series: List[float], lag: int) -> float:
     """Compute autocorrelation for a series at a specific lag."""
