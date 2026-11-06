@@ -24,7 +24,7 @@ facts:[
 sources:[
 ["Bericht","IPCC (2021): Climate Change 2021. The Physical Science Basis. Summary for Policymakers. Sechster Sachstandsbericht, Arbeitsgruppe I.","https://www.ipcc.ch/report/ar6/wg1/chapter/summary-for-policymakers/"],
 ["Studie","Lynas, M., Houlton, B. Z., Perry, S. (2021): Greater than 99% consensus on human caused climate change in the peer-reviewed scientific literature. Environmental Research Letters 16, 114005.","https://ui.adsabs.harvard.edu/abs/2021ERL....16k4005L/abstract"],
-["Studie","Neukom, R. et al. (2019): No evidence for globally coherent warm and cold periods over the preindustrial Common Era. Nature 571, S. 550 bis 554.","https://doi.org/10.1038/s41586-019-1401-2"],
+["Studie","Neukom, R. et al. (2019): No evidence for globally coherent warm and cold periods over the preindustrial Common Era. Nature 571, S. 550 bis 554.","https://link.springer.com/10.1038/s41586-019-1401-2"],
 ["Behörde","Copernicus-Klimadienst / ECMWF (Januar 2026): 2025 was the third-warmest year on record.","https://www.ecmwf.int/node/31031"],
 ["Faktencheck","Klimafakten.de: Faktencheck zum Grundsatzprogramm der AfD.","https://www.klimafakten.de/sites/default/files/downloads/faktencheckafd-grundsatzprogramm.pdf"],
 ["Buch","Rahmstorf, S., Schellnhuber, H. J.: Der Klimawandel. Diagnose, Prognose, Therapie. C. H. Beck, München (Reihe C. H. Beck Wissen).",""],

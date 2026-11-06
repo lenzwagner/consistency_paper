@@ -308,7 +308,7 @@ facts:[
 ["Codes für alte Feindbilder","Begriffe wie „Neue Weltordnung“ oder „Globalisten“ funktionieren in QAnon-Kreisen als Codes für den Mythos einer „jüdischen Weltverschwörung“."]
 ],
 sources:[
-["Studie","Who could be behind QAnon? Authorship attribution with supervised machine-learning (2023). Preprint, arXiv 2303.02078.","https://arxiv.org/abs/2303.02078"],
+["Studie","Who could be behind QAnon? Authorship attribution with supervised machine-learning (2023). Preprint, arXiv 2303.02078.","https://ar5iv.labs.arxiv.org/html/2303.02078"],
 ["Medien","Engadget (2022): QAnon founder may have been identified thanks to machine learning.","https://www.engadget.com/qanon-machine-learning-205618665.html"],
 ["Medien","Encyclopaedia Britannica: Pizzagate.","https://britannica.com/topic/Pizzagate"],
 ["Medien","ZDF Schule: QAnon und Verschwörungsmythen.","https://schule.zdf.de/video/qanon-und-verschwoerungsmythen-creative-commons-clip-100"],
