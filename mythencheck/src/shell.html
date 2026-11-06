@@ -1,0 +1,203 @@
+<title>Der Mythencheck</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="35 verbreitete Verschwörungsmythen im Faktencheck: Behauptung, Hintergrund, belegte Fakten, Quellen und ein Quiz zu jedem Thema.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/*__CSS__*/
+</style>
+<!--__BODY__-->
+<div class="app" lang="de">
+<a class="skip" href="#themen">Direkt zu den Themen</a>
+
+<header class="nav">
+  <div class="wrap">
+    <button class="brand" id="brand" type="button" aria-label="Der Mythencheck, zum Seitenanfang">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+        <defs><linearGradient id="bm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--natur-1)"/><stop offset=".5" style="stop-color:var(--staat-1)"/><stop offset="1" style="stop-color:var(--maechte-2)"/></linearGradient></defs>
+        <rect x="1" y="1" width="22" height="22" rx="6.5" fill="url(#bm)"/>
+        <circle cx="10.6" cy="10.6" r="5" fill="none" stroke="#fff" stroke-width="2"/>
+        <path d="M14.4 14.4 18 18" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M8.4 10.8l1.6 1.6 2.9-3.1" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Mythencheck
+    </button>
+    <nav class="nav-links" aria-label="Bereiche">
+      <a href="#mechanismen">So funktionieren Mythen</a>
+      <a href="#themen">Themen</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#gespraech">Gesprächstipps</a>
+    </nav>
+    <button class="nav-progress" id="nav-progress" type="button" aria-label="Lernfortschritt anzeigen">
+      <span id="nav-progress-ring"></span><span id="nav-progress-text">0 gemeistert</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap">
+      <p class="eyebrow"><span id="lead-count">35</span> Verschwörungsmythen im Faktencheck</p>
+      <h1 id="hero-title">Die Wahrheit hat <span class="grad">Quellen.</span></h1>
+      <p class="lede">Von der flachen Erde bis zur Holocaustleugnung: was die Mythen behaupten, woher sie kommen und was Studien, Akten und Gerichte tatsächlich belegen. Mit einem Quiz zu jedem Thema.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#themen">Themen entdecken</a>
+        <button class="link-cta" type="button" data-quiz="alle">Schnellquiz starten <svg class="chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2.5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+
+      <button class="ticker" id="ticker" type="button">
+        <span class="ticker-top"><span>Behauptung</span><span>Antippen für die Fakten</span></span>
+        <span class="ticker-claim" id="ticker-claim"><span>„Die Erde ist eine Scheibe.“</span></span>
+        <span class="ticker-foot">
+          <span class="verdict"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Widerlegt</span>
+          <span class="ticker-dots" id="ticker-dots" aria-hidden="true"></span>
+        </span>
+      </button>
+
+      <div class="stats" role="list">
+        <div class="stat" role="listitem"><b id="stat-topics">35</b><span>Mythen</span></div>
+        <div class="stat" role="listitem"><b id="stat-q">105</b><span>Quizfragen</span></div>
+        <div class="stat" role="listitem"><b id="stat-src">157</b><span>belegte Quellen</span></div>
+        <div class="stat" role="listitem"><b id="stat-cats">5</b><span>Themenfelder</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-dark" id="mechanismen" aria-labelledby="mech-title">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="eyebrow">Das Muster dahinter</span>
+        <h2 id="mech-title">Wie Verschwörungs&shy;erzählungen funktionieren.</h2>
+        <p>Ob Mondlandung oder „Großer Austausch“: Fast alle Mythen folgen denselben Grundannahmen. Wer sie kennt, erkennt sie wieder.</p>
+      </div>
+      <div class="bento">
+        <article class="tile tile-a">
+          <span class="num">Grundannahme</span>
+          <h3>Nichts geschieht zufällig.</h3>
+          <p>Hinter jeder Krise, jedem Unglück und jeder Pandemie soll ein Plan stecken. Zufall, Fehler und Chaos kommen in diesem Weltbild nicht vor.</p>
+        </article>
+        <article class="tile tile-b">
+          <span class="num">Grundannahme</span>
+          <h3>Nichts ist, wie es scheint.</h3>
+          <p>Offizielle Erklärungen gelten als Tarnung. Je seriöser eine Quelle ist, desto verdächtiger erscheint sie.</p>
+        </article>
+        <article class="tile tile-c">
+          <span class="num">Grundannahme</span>
+          <h3>Alles ist verbunden.</h3>
+          <p>Gates, WHO, 5G und Impfungen werden zu einem einzigen Komplott verknüpft. Einzelne Fakten werden aneinandergereiht, bis ein scheinbares Muster entsteht.</p>
+          <span class="cite">Nach Michael Barkun: A Culture of Conspiracy (2003)</span>
+        </article>
+        <article class="tile tile-wide">
+          <h3>Immun gegen <span class="grad-text">Gegenbeweise.</span></h3>
+          <p>Jeder Beleg gegen den Mythos gilt als Beweis für die Macht der Verschwörer. Deshalb lassen sich Überzeugte selten mit einzelnen Fakten umstimmen. Wirksamer ist es, die Muster vorher zu kennen: Studien zur „psychologischen Impfung“ zeigen, dass Menschen Manipulationstechniken besser erkennen, wenn sie zuvor darüber aufgeklärt wurden.</p>
+          <span class="cite"><a href="https://doi.org/10.1126/sciadv.abo6254" target="_blank" rel="noopener noreferrer">Roozenbeek et al., Science Advances (2022)</a></span>
+        </article>
+        <article class="tile tile-wide">
+          <h3>Am Ende steht oft ein <span class="grad-text">antisemitischer Kern.</span></h3>
+          <p>Ob „Neue Weltordnung“, „Großer Austausch“, Reptiloiden oder QAnon: Viele Erzählungen münden in den alten Mythos einer jüdischen Weltverschwörung. Begriffe wie „Globalisten“ oder „Hochfinanz“ dienen dabei als Codes.</p>
+          <span class="cite"><a href="https://www.bpb.de/themen/antisemitismus/dossier-antisemitismus/" target="_blank" rel="noopener noreferrer">Bundeszentrale für politische Bildung, Dossier Antisemitismus</a></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-alt" id="themen" aria-labelledby="themen-title">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="eyebrow">Alle Mythen. Alle Fakten.</span>
+        <h2 id="themen-title">Behauptung trifft Beleg.</h2>
+        <p>Wähle ein Thema, lies Behauptung, Hintergrund und Belege, und teste danach dein Wissen.</p>
+      </div>
+      <div class="controls">
+        <label class="search" for="search">
+          <span class="sr">Mythen durchsuchen</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+          <input id="search" type="search" placeholder="Suchen, z. B. Chemtrails" autocomplete="off" spellcheck="false">
+        </label>
+        <div class="chips" id="chips" role="group" aria-label="Nach Themenfeld filtern"></div>
+      </div>
+      <p class="result-line" id="result-line" aria-live="polite"></p>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="band" id="quiz" aria-labelledby="quiz-title">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="eyebrow">Wissen festigen</span>
+        <h2 id="quiz-title">Teste dich selbst.</h2>
+        <p>Jede Antwort wird sofort erklärt. Wer sich irrt, lernt am meisten.</p>
+      </div>
+      <div class="quiz-band">
+        <div class="quiz-hero">
+          <h3>Schnellquiz</h3>
+          <p>Zehn zufällige Fragen aus allen Themen oder aus einem Themenfeld deiner Wahl. Am Ende siehst du, welche Themen du noch einmal nachlesen solltest.</p>
+          <div class="row">
+            <button class="btn btn-primary" type="button" data-quiz="alle">Schnellquiz starten</button>
+            <button class="link-cta" type="button" id="random-topic">Zufälliges Thema <svg class="chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2.5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div class="sample">
+            <span class="label">Beispielfrage</span>
+            <p class="sample-q">Auf wie viele Kinder stützte sich die Studie von 1998, mit der die Angst vor der MMR-Impfung begann?</p>
+            <div class="sample-opts" aria-hidden="true"><span>12</span><span>1.200</span><span>50.000</span><span>657.461</span></div>
+            <button class="link-cta" type="button" data-open="impf-autismus" data-tab="quiz">Selbst beantworten <svg class="chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2.5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+        <div class="progress-card">
+          <div class="ring-row">
+            <span id="progress-ring"></span>
+            <div class="ring-label"><b id="progress-done">0 von 35</b><span>Themen gemeistert</span></div>
+          </div>
+          <div class="bars" id="progress-bars"></div>
+          <p class="src-note">Gemeistert heißt: alle drei Fragen eines Themas richtig beantwortet. Dein Fortschritt wird nur in diesem Browser gespeichert.</p>
+          <div id="reset-area"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-alt" id="gespraech" aria-labelledby="talk-title">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="eyebrow">Im Gespräch</span>
+        <h2 id="talk-title">Wenn jemand im Umfeld abdriftet.</h2>
+        <p>Fakten allein überzeugen selten. Diese Grundsätze helfen, im Gespräch zu bleiben, ohne Falschbehauptungen stehen zu lassen.</p>
+      </div>
+      <div class="tips">
+        <article class="tip"><h3>Beziehung vor Rechthaben</h3><p>Spott und Abwertung treiben Menschen tiefer in ihre Gruppen. Zeig Interesse an der Person und ihren Sorgen, ohne die Behauptung zu übernehmen.</p></article>
+        <article class="tip"><h3>Fragen statt dozieren</h3><p>„Woher weißt du das?“ oder „Was müsste passieren, damit du deine Meinung änderst?“ Gute Fragen regen eigenes Nachdenken an.</p></article>
+        <article class="tip"><h3>Muster benennen</h3><p>Statt jedes Detail zu widerlegen, lohnt der Blick auf die Technik: Wer soll profitieren? Warum gilt jeder Gegenbeweis als Teil des Plans?</p></article>
+        <article class="tip"><h3>Klare Grenzen ziehen</h3><p>Bei Antisemitismus, Holocaustleugnung oder Aufrufen zu Gewalt gibt es nichts zu verhandeln. Holocaustleugnung ist in Deutschland strafbar.</p></article>
+        <article class="tip"><h3>Selbst prüfen</h3><p>Wer verbreitet die Behauptung, seit wann und mit welchem Ziel? Viele „Beweisfotos“ stammen aus ganz anderen Zusammenhängen. Eine Bildersuche und unabhängige Faktenchecks klären oft in Minuten, woher ein Bild kommt.</p></article>
+        <article class="tip"><h3>Hilfe holen</h3><p>Für Angehörige gibt es spezialisierte Beratungsangebote. Kontakte vermitteln unter anderem die Landeszentralen für politische Bildung sowie Sekten- und Weltanschauungsbeauftragte.</p></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p><strong>Der Mythencheck.</strong> Stand der Recherche: November 2026. Alle Zahlen und Aussagen sind mit Quellen belegt, die bei jedem Thema aufgeführt sind; Links führen zu externen Seiten. Die Behauptungen werden ausschließlich dargestellt, um sie zu widerlegen. Die Leugnung des Holocaust ist in Deutschland nach § 130 Abs. 3 StGB strafbar.</p>
+    <div class="foot-links">
+      <span>Weiterlesen:</span>
+      <a href="https://www.tagesschau.de/faktenfinder" target="_blank" rel="noopener noreferrer">tagesschau Faktenfinder</a>
+      <a href="https://correctiv.org/faktencheck/" target="_blank" rel="noopener noreferrer">Correctiv Faktencheck</a>
+      <a href="https://www.bpb.de/shop/zeitschriften/apuz/verschwoerungstheorien-2021/" target="_blank" rel="noopener noreferrer">bpb: Verschwörungstheorien (APuZ)</a>
+      <a href="https://www.zdf.de/dokus/verschwoerungswelten-100" target="_blank" rel="noopener noreferrer">ZDFinfo: Verschwörungswelten</a>
+    </div>
+    <p>Dein Quiz-Fortschritt bleibt lokal in deinem Browser und wird nirgendwohin übertragen.</p>
+  </div>
+</footer>
+
+<div class="sheet-root" id="sheet-root" hidden>
+  <div class="scrim"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title"></div>
+</div>
+</div>
+<script>
+/*__DATA__*/
+</script>
+<script>
+/*__APP__*/
+</script>
