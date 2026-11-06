@@ -66,7 +66,8 @@ sources:[
 ["Medien","Newsweek (2019): Bericht über die Experimente in der Netflix-Dokumentation „Behind the Curve“.","https://newsweek.com/behind-curve-netflix-ending-light-experiment-mark-sargent-documentary-movie-1343362"],
 ["Behörde","Bundeszentrale für politische Bildung: Reichsbürger, Mondlandung, Reptiloide, Flacherde.","https://www.bpb.de/themen/medien-journalismus/wahre-welle/270429/reichsbuerger-mondlandung-reptiloide-flacherde/"],
 ["Behörde","NASA Goddard Space Flight Center (NSSDC): Earth Fact Sheet (Äquatorradius 6378,137 km, daraus rund 40.075 km Umfang).","https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html"],
-["Behörde","Canadian Space Agency: International Space Station FAQ (Bahnhöhe rund 400 km).","https://www.asc-csa.gc.ca/eng/iss/information-kit/faq.asp"]
+["Behörde","Canadian Space Agency: International Space Station FAQ (Bahnhöhe rund 400 km).","https://www.asc-csa.gc.ca/eng/iss/information-kit/faq.asp"],
+["Medien","DER SPIEGEL (2017): Glaube an Scheibenwelt: Flachwitz.","https://www.spiegel.de/wissenschaft/mensch/scheibenwelt-was-wir-von-flacherdlern-lernen-koennen-a-1162461.html"]
 ],
 quiz:[
 ["Wer berechnete schon im 3. Jahrhundert v. Chr. den Umfang der Erde?",["Eratosthenes von Kyrene","Galileo Galilei","Isaac Newton","Nikolaus Kopernikus"],"Eratosthenes verglich den Sonnenstand in Syene und Alexandria und berechnete daraus den Erdumfang, fast 1800 Jahre vor Kopernikus."],

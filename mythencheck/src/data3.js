@@ -190,7 +190,8 @@ sources:[
 ["Buch","Barkun, M. (2003): A Culture of Conspiracy. Apocalyptic Visions in Contemporary America. University of California Press, Berkeley.",""],
 ["Buch","Butter, M. (2018): „Nichts ist, wie es scheint“. Über Verschwörungstheorien. Suhrkamp, Berlin.","https://d-nb.info/1141700190"],
 ["Behörde","International Institute of Social History: The Illuminati.","https://iisg.nl/collections/secretsocieties/illuminati.php"],
-["Medien","ZDF Terra X History: Gefährliche Mächte? Die großen Verschwörungstheorien.","https://www.zdf.de/video/dokus/terra-x-history-102/gefaehrliche-maechte-die-grossen-verschwoerungstheorien-100"]
+["Medien","ZDF Terra X History: Gefährliche Mächte? Die großen Verschwörungstheorien.","https://www.zdf.de/video/dokus/terra-x-history-102/gefaehrliche-maechte-die-grossen-verschwoerungstheorien-100"],
+["Medien","DER SPIEGEL: Trittin und sein Bilderberg-Problem (zur öffentlich diskutierten Teilnahme des Grünen-Politikers an der Konferenz 2012).","https://www.spiegel.de/politik/deutschland/gruener-juergen-trittin-rechtfertigt-teilnahme-an-bilderberg-konferenz-a-837110.html"]
 ],
 quiz:[
 ["Wann wurde der Illuminatenorden verboten?",["1784/85 in Bayern","Nie, er regiert bis heute","1945","2001"],"Kurfürst Karl Theodor verbot Geheimgesellschaften, der Orden löste sich auf. Der Mythos entstand erst danach."],
