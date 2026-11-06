@@ -24,7 +24,9 @@ sources:[
 ["Behörde","Konrad-Adenauer-Stiftung: Reichsbürger.","https://www.kas.de/de/web/extremismus/rechtsextremismus/reichsbuerger"],
 ["Primärquelle","Bundeszentrale für politische Bildung: Zwei-plus-Vier-Vertrag, Artikel 7.","https://www.bpb.de/themen/deutsche-einheit/zwei-plus-vier-vertrag/44119/artikel-7/"],
 ["Gericht","Legal Tribune Online: BGH bestätigt Mordurteil gegen den „Reichsbürger von Georgensgmünd“.","https://www.lto.de/recht/nachrichten/n/bgh-1str209-18-reichsbuerger-mord-polizist-revision-verworfen"],
-["Medien","Jüdische Allgemeine (2025): Verfassungsschutz hat deutlich mehr Extremisten im Blick.","https://www.juedische-allgemeine.de/politik/verfassungsschutz-hat-deutlich-mehr-extremisten-im-blick/"]
+["Medien","Jüdische Allgemeine (2025): Verfassungsschutz hat deutlich mehr Extremisten im Blick.","https://www.juedische-allgemeine.de/politik/verfassungsschutz-hat-deutlich-mehr-extremisten-im-blick/"],
+["Medien","tagesschau.de (2022): Bundesweite Razzia wegen geplanten Staatsstreichs.","https://www.tagesschau.de/investigativ/razzia-reichsbuerger-staatsstreich-101.html"],
+["Medien","DER SPIEGEL: „Reichsbürger“ dürfen keine Waffen besitzen.","https://www.spiegel.de/panorama/justiz/giessen-reichsbuerger-duerfen-keine-waffen-besitzen-a-1215162.html"]
 ],
 quiz:[
 ["Was ist die „Bundesrepublik Deutschland Finanzagentur GmbH“?",["Eine Gesellschaft, die für den Bund die Staatsschulden verwaltet","Die eigentliche Regierung Deutschlands","Eine Firma der Alliierten","Eine Erfindung der Reichsbürger"],"Die Finanzagentur ist ein Dienstleister des Bundesfinanzministeriums. Der Staat besitzt sie, nicht umgekehrt."],
@@ -44,7 +46,7 @@ origin:[
 ],
 kernel:"Bis 1990 behielten sich die drei Westmächte und die Sowjetunion tatsächlich Rechte vor, etwa für Berlin und für Deutschland als Ganzes. Diese Vorbehalte waren öffentlich bekannt, unter anderem aus dem Genehmigungsschreiben der Militärgouverneure zum Grundgesetz, und endeten mit der Wiedervereinigung.",
 facts:[
-["Erfundener Minister, unmögliches Datum","Der angebliche Absender, ein „Staatsminister Dr. Rickermann“, ist frei erfunden, und der angebliche Vertrag datiert zwei Tage vor der Gründung der Bundesrepublik am 23. Mai 1949. Holger Berwinkel nannte das Schreiben in einem Blogbeitrag vom April 2014 („Die Kanzlerakte: eine offensichtliche Aktenfälschung“) eine „grobe Fälschung“."],
+["Erfundener Minister, unmögliches Datum","Der Bundesnachrichtendienst kennt gar keine Staatsminister; ein Schreiben eines BND-„Staatsministers Dr. Rickermann“ ist also schon formal unmöglich. Der angebliche Vertrag datiert zudem zwei Tage vor der Gründung der Bundesrepublik am 23. Mai 1949. Die Wissenschaftlichen Dienste des Bundestages verweisen auf die Analyse des Archivars Holger Berwinkel, der das Schreiben als „groteske Aktenfälschung“ einordnet."],
 ["Offiziell als Fälschung benannt","Die Bundesregierung erklärte 2009 auf eine schriftliche Frage aus dem Bundestag, das im Internet kursierende „streng vertrauliche“ Schriftstück sei eine Fälschung."],
 ["Bahrs Bericht belegt keine Kanzlerakte","Bahr bezog sich auf die bekannten alliierten Vorbehalte. Seine Schilderung enthält sachliche Ungenauigkeiten, ein solcher Brief ist nicht dokumentiert, und Helmut Schmidt konnte sich nicht erinnern, je ein entsprechendes Schreiben vorgelegt bekommen zu haben."],
 ["Vorbehaltsrechte endeten mit der Einheit","Mit dem Zwei-plus-Vier-Vertrag endeten die Rechte und Verantwortlichkeiten der Vier Mächte; sie waren schon ab dem 3. Oktober 1990 ausgesetzt, der Vertrag trat am 15. März 1991 in Kraft. Artikel 7 garantiert dem vereinten Deutschland volle Souveränität."]
@@ -53,6 +55,8 @@ sources:[
 ["Behörde","Wissenschaftliche Dienste des Deutschen Bundestages: Ausarbeitung WD 1 021/22.","https://bundestag.de/resource/blob/1028488/48e9a73c0c4dbd4b44b84cff434839aa/WD-1-021-22-pdf.pdf"],
 ["Medien","Abgeordnetenwatch: Antwort von Martin Gerster (MdB) zur Kanzlerakte.","https://www.abgeordnetenwatch.de/profile/martin-gerster/fragen-antworten/115980"],
 ["Faktencheck","Mimikama: Mythos „Kanzlerakte“. Ein gefälschtes Geheimdokument entlarvt.","https://www.mimikama.org/?p=344773"],
+["Faktencheck","Mimikama: Faktencheck: Geheimer Staatsvertrag.","https://www.mimikama.org/geheimer-staatsvertrag-faktencheck/"],
+["Blog","CompGen: Blogs kurz vorgestellt: „Aktenkunde“ (zum Blog des Archivars Holger Berwinkel, unter anderem mit einer Analyse der „Kanzlerakte“).","https://www.compgen.de/?p=22071"],
 ["Primärquelle","Bundeszentrale für politische Bildung: Zwei-plus-Vier-Vertrag, Artikel 7.","https://www.bpb.de/themen/deutsche-einheit/zwei-plus-vier-vertrag/44119/artikel-7/"]
 ],
 quiz:[
@@ -83,7 +87,9 @@ sources:[
 ["Gericht","Bundesverfassungsgericht, Urteil vom 3. März 2009, 2 BvC 3/07, 2 BvC 4/07 (Wahlcomputer).","https://www.bundesverfassungsgericht.de/SharedDocs/Entscheidungen/DE/2009/03/cs20090303_2bvc000307.html"],
 ["Behörde","Bundeszentrale für politische Bildung (2023): Bundestagswahl wird in Berlin teilweise wiederholt.","https://www.bpb.de/kurz-knapp/hintergrund-aktuell/523096/bundestagswahl-wird-in-berlin-teilweise-wiederholt/"],
 ["Behörde","Die Bundeswahlleiterin: Bundestagswahl 2021.","https://bundeswahlleiterin.de/bundestagswahlen/2021.html"],
-["Gesetz","Bundeswahlgesetz, § 31: „Die Wahlhandlung ist öffentlich.“","https://www.gesetze-im-internet.de/bwahlg/BJNR003830956.html"]
+["Gesetz","Bundeswahlgesetz, § 31: „Die Wahlhandlung ist öffentlich.“","https://www.gesetze-im-internet.de/bwahlg/BJNR003830956.html"],
+["Medien","tagesschau.de (2025): Bundestagswahl muss nicht neu ausgezählt werden.","https://www.tagesschau.de/inland/bsw-gescheitert-neuauszaehlung-bundestagswahl-100.html"],
+["Medien","tagesschau.de: Offenbar russische Kampagne: Gefälschte Videos zur Briefwahl aufgetaucht.","https://www.tagesschau.de/inland/bundestagswahl/desinformation-russland-briefwahl-100.html"]
 ],
 quiz:[
 ["Wer darf bei der Stimmauszählung im Wahllokal zuschauen?",["Jede Person, die Auszählung ist öffentlich","Nur die Polizei","Nur Parteivorsitzende","Niemand"],"Die Öffentlichkeit der Wahl ist ein Grundprinzip. Wer Zweifel hat, kann sich selbst ein Bild machen."],
@@ -114,7 +120,9 @@ sources:[
 ["Medien","evangelisch.de / epd (2020): Bundestag und Bundesrat verabschieden Infektionsschutzgesetz.","https://www.evangelisch.de/inhalte/178562/18-11-2020/bundestag-und-bundesrat-verabschieden-infektionsschutzgesetz"],
 ["Faktencheck","Mimikama: Problematisch. Infektionsschutzgesetz als Ermächtigungsgesetz?","https://www.mimikama.org/problematisch-infektionsschutzgesetz-als-ermaechtigungsgesetz/"],
 ["Gericht","Bundesverfassungsgericht, Beschluss vom 19. November 2021, 1 BvR 781/21 u. a. (Bundesnotbremse).",""],
-["Behörde","Bundeszentrale für politische Bildung: Sekundärer Antisemitismus.","https://www.bpb.de/themen/antisemitismus/dossier-antisemitismus/was-heisst-antisemitismus/37962/sekundaerer-antisemitismus/"]
+["Behörde","Bundeszentrale für politische Bildung: Sekundärer Antisemitismus.","https://www.bpb.de/themen/antisemitismus/dossier-antisemitismus/was-heisst-antisemitismus/37962/sekundaerer-antisemitismus/"],
+["Medien","tagesschau.de: „Krude Verharmlosungen des Holocaust“ (Kritik an der Rede in Hannover).","https://www.tagesschau.de/inland/antisemitismus-querdenken-kritk-101.html"],
+["Medien","tagesschau.de Faktenfinder: NS-Vergleiche: Relativieren und dämonisieren.","https://www.tagesschau.de/faktenfinder/ns-vergleiche-antisemitismus-101.html"]
 ],
 quiz:[
 ["Was erlaubte das Ermächtigungsgesetz von 1933?",["Der Regierung, Gesetze ohne Parlament zu erlassen, auch verfassungswidrige","Eine Maskenpflicht","Freie Wahlen","Die Gründung der Bundesrepublik"],"Es beseitigte die Gewaltenteilung und war ein Grundstein der NS-Diktatur."],
@@ -149,7 +157,8 @@ sources:[
 ["Behörde","Bundeszentrale für politische Bildung (2025): Pressefreiheit. Die Lage verschlechtert sich.","https://www.bpb.de/kurz-knapp/hintergrund-aktuell/561743/pressefreiheit-die-lage-verschlechtert-sich/"],
 ["Medien","evangelisch.de / epd (2025): Pressefreiheit. Deutschland fällt auf Platz 11.","https://www.evangelisch.de/inhalte/242563/02-05-2025/tiefpunkt-fuer-pressefreiheit-pressefreiheit-deutschland-faellt-auf-platz-11"],
 ["Gericht","Bundesverfassungsgericht, Urteil vom 25. März 2014, 1 BvF 1/11 (ZDF-Staatsvertrag).",""],
-["Medien","ZDFheute: Rangliste der Pressefreiheit.","https://www.zdfheute.de/politik/pressefreiheit-rangliste-deutschland-100.html"]
+["Medien","ZDFheute: Rangliste der Pressefreiheit.","https://www.zdfheute.de/politik/pressefreiheit-rangliste-deutschland-100.html"],
+["Medien","DER SPIEGEL: Stimmungsmache gegen Flüchtlinge: Wie rechte Hetzer bei Facebook manipulieren.","https://www.spiegel.de/politik/deutschland/fluechtlinge-wie-hetzer-im-netz-manipulieren-und-stimmung-machen-a-1048420.html"]
 ],
 quiz:[
 ["Welche Rolle spielte der Begriff „Lügenpresse“ im Nationalsozialismus?",["Die Nationalsozialisten nutzten ihn als Kampfbegriff gegen die freie Presse","Er wurde 2014 von Journalisten erfunden","Er war ein Ehrentitel für Zeitungen","Er stammt aus der Werbung"],"Der Begriff hat eine lange antidemokratische Geschichte. 2014 wurde er zum Unwort des Jahres gewählt."],
@@ -249,7 +258,8 @@ sources:[
 ["Medien","Voice of America: What Is the „Great Replacement“ Theory?","https://www.voanews.com/a/what-is-the-great-replacement-theory-/6578349.html"],
 ["Behörde","Bundeszentrale für politische Bildung: Asylanträge und Asylsuchende.","https://www.bpb.de/gesellschaft/migration/flucht/zahlen-zu-asyl/265708/asylantraege-und-asylsuchende"],
 ["Medien","ZDFheute (2025): AfD-Gutachten des Verfassungsschutzes. Was in dem Dokument steht.","https://www.zdfheute.de/politik/deutschland/afd-verfassungsschutz-gutachten-rechtsextremistisch-100.html"],
-["Medien","Wikipedia (englisch): Kalergi Plan (Überblick mit Quellenangaben).","https://en.wikipedia.org/wiki/Kalergi_Plan"]
+["Medien","Wikipedia (englisch): Kalergi Plan (Überblick mit Quellenangaben).","https://en.wikipedia.org/wiki/Kalergi_Plan"],
+["Medien","DER SPIEGEL: Wie das Gerücht vom „Bevölkerungsaustausch“ in die Welt kam.","https://www.spiegel.de/spiegel/bevoelkerungsaustausch-wie-ein-rechter-kampfbegriff-karriere-macht-a-1200829.html"]
 ],
 quiz:[
 ["Was untersuchte der UN-Bericht „Replacement Migration“ von 2000?",["Wie viel Zuwanderung rechnerisch nötig wäre, um Bevölkerungsrückgang und Alterung auszugleichen","Einen Plan zur Abschaffung europäischer Völker","Die Geburtenrate in Afrika","Den Bau von Grenzzäunen"],"Der Bericht ist eine demografische Modellrechnung. Er hielt eine solche Zuwanderung sogar für unrealistisch."],
@@ -282,7 +292,9 @@ sources:[
 ["Buch","Benz, W. (2007): Die Protokolle der Weisen von Zion. Die Legende von der jüdischen Weltverschwörung. C. H. Beck, München.","https://d-nb.info/982061862"],
 ["Buch","Hofer, S. (2011): Richter zwischen den Fronten. Die Urteile des Berner Prozesses um die „Protokolle der Weisen von Zion“ 1933 bis 1937. Helbing Lichtenhahn, Basel.","https://d-nb.info/1015056393"],
 ["Medien","Encyclopaedia Britannica: Where Do Anti-Semitic Conspiracy Theories About the Rothschild Family Come From?","https://www.britannica.com/story/where-do-anti-semitic-conspiracy-theories-about-the-rothschild-family-come-from"],
-["Primärquelle","The Rothschild Archive: Nathan Rothschild and the Battle of Waterloo (Brian Cathcart).","https://www.rothschildarchive.org/materials/nathan_and_waterloo.pdf"]
+["Primärquelle","The Rothschild Archive: Nathan Rothschild and the Battle of Waterloo (Brian Cathcart).","https://www.rothschildarchive.org/materials/nathan_and_waterloo.pdf"],
+["Medien","DER SPIEGEL: Trumps Trolle zeigen sich (zu antisemitischen Codes wie „die Rothschilds“, Soros und „globale Bankenelite“ bei QAnon).","https://www.spiegel.de/politik/ausland/donald-trump-und-die-verschwoerungstheorie-qanon-trumps-trolle-kriechen-hervor-a-1221463.html"],
+["Medien","DER SPIEGEL: Schwarze Liste für antisemitische Bücher (aktualisierte Ausgaben der „Protokolle“ auf einer Buchmesse).","https://www.spiegel.de/kultur/literatur/0,1518,409721,00.html"]
 ],
 quiz:[
 ["Aus welchem Werk wurden die „Protokolle“ zu großen Teilen abgeschrieben?",["Aus einer Satire von Maurice Joly gegen Napoleon III. (1864)","Aus dem Talmud","Aus dem Protokoll eines jüdischen Kongresses","Aus der Bibel"],"In Jolys Text kommen Juden gar nicht vor. Die Fälscher ersetzten Napoleon III. durch eine angebliche jüdische Führung."],
@@ -312,7 +324,9 @@ sources:[
 ["Medien","Engadget (2022): QAnon founder may have been identified thanks to machine learning.","https://www.engadget.com/qanon-machine-learning-205618665.html"],
 ["Medien","Encyclopaedia Britannica: Pizzagate.","https://britannica.com/topic/Pizzagate"],
 ["Medien","ZDF Schule: QAnon und Verschwörungsmythen.","https://schule.zdf.de/video/qanon-und-verschwoerungsmythen-creative-commons-clip-100"],
-["Buch","Rothschild, M. (2021): The Storm Is Upon Us. How QAnon Became a Movement, Cult, and Conspiracy Theory of Everything. Melville House.",""]
+["Buch","Rothschild, M. (2021): The Storm Is Upon Us. How QAnon Became a Movement, Cult, and Conspiracy Theory of Everything. Melville House.",""],
+["Medien","tagesschau.de Faktenfinder: Verschwörungsanhänger: Was ist QAnon?","https://www.tagesschau.de/faktenfinder/qanon-faq-101.html"],
+["Medien","DER SPIEGEL: QAnon und seine deutschen Anhänger: Der gefährlichste Kult unserer Zeit.","https://www.spiegel.de/panorama/gesellschaft/qanon-kommt-nach-deutschland-der-gefaehrlichste-kult-der-welt-a-00000000-0002-0001-0000-000173100094"]
 ],
 quiz:[
 ["Was ist Adrenochrom tatsächlich?",["Ein Oxidationsprodukt von Adrenalin ohne verjüngende Wirkung","Ein geheimes Elixier der Elite","Ein Impfstoff","Ein Stoff aus Kinderblut, der unsterblich macht"],"Die Substanz ist chemisch gut bekannt und lässt sich im Labor herstellen. Die Geschichte dahinter ist frei erfunden."],
@@ -371,7 +385,9 @@ sources:[
 ["Medien","PBS NewsHour: Identifying Victims (DNA-Identifizierung der Opfer).","https://www.pbs.org/newshour/show/identifying-victims"],
 ["Bericht","National Commission on Terrorist Attacks Upon the United States (2004): The 9/11 Commission Report.","https://9-11commission.gov/report/"],
 ["Behörde","NIST: Questions and Answers about the NIST WTC 7 Investigation.","https://www.nist.gov/property-fieldsection/questions-and-answers-about-nist-wtc-7-investigation"],
-["Studie","Bažant, Z. P., Zhou, Y. (2002): Why Did the World Trade Center Collapse? Simple Analysis. Journal of Engineering Mechanics 128(1), S. 2 bis 6.","https://ascelibrary.com/doi/10.1061/(ASCE)0733-9399(2002)128:1(2)"]
+["Studie","Bažant, Z. P., Zhou, Y. (2002): Why Did the World Trade Center Collapse? Simple Analysis. Journal of Engineering Mechanics 128(1), S. 2 bis 6.","https://ascelibrary.com/doi/10.1061/(ASCE)0733-9399(2002)128:1(2)"],
+["Medien","DER SPIEGEL (2003): Panoptikum des Absurden.","https://www.spiegel.de/spiegel/print/d-28530325.html"],
+["Medien","DER SPIEGEL Special (2006): Fakten zum 11. September.","https://www.spiegel.de/spiegelspecial/a-435547.html"]
 ],
 quiz:[
 ["Warum musste der Stahl im World Trade Center nicht schmelzen, um zu versagen?",["Baustahl verliert schon bei rund 600 °C etwa die Hälfte seiner Festigkeit","Weil die Türme aus Holz gebaut waren","Weil Kerosin Stahl chemisch auflöst","Weil der Stahl vorher gefroren war"],"Tragwerke versagen lange vor dem Schmelzpunkt, wenn ihre Festigkeit unter die Last sinkt."],
@@ -400,7 +416,9 @@ sources:[
 ["Behörde","UN News (März 2022): Bericht über die Sitzung des UN-Sicherheitsrats zu russischen Biowaffen-Vorwürfen.","https://news.un.org/en/story/2022/03/1114272"],
 ["Primärquelle","UN Press (März 2022): Sitzungsbericht des Sicherheitsrats SC/14835.","https://press.un.org/en/2022/sc14835.doc.htm"],
 ["Medien","Wikipedia (englisch): 2019 Ukrainian parliamentary election (amtliche Ergebnisse mit Quellenangaben).","https://en.wikipedia.org/wiki/2019_Ukrainian_parliamentary_election"],
-["Medien","TASS (2019): Zelensky wins 73.22% of the vote.","https://tass.com/world/1055237/amp"]
+["Medien","TASS (2019): Zelensky wins 73.22% of the vote.","https://tass.com/world/1055237/amp"],
+["Medien","tagesschau.de (2022): UN-Sicherheitsrat streitet über Biowaffen.","https://www.tagesschau.de/ausland/amerika/un-russland-biowaffen-101.html"],
+["Medien","DER SPIEGEL: Westliche Staaten werfen Russland „wilde“ Verschwörungsmythen zu Biowaffen vor.","https://www.spiegel.de/ausland/ukraine-krieg-westliche-staaten-werfen-russland-wilde-verschwoerungsmythen-zu-biowaffen-vor-a-75375187-2c71-4d83-bf87-ead7c9c07469"]
 ],
 quiz:[
 ["Was erklärte die UN-Abrüstungsbeauftragte im März 2022 zu den Biowaffen-Vorwürfen?",["Den Vereinten Nationen seien keine Biowaffenprogramme in der Ukraine bekannt","Sie bestätigte US-Biowaffenlabore","Sie verweigerte jede Aussage","Sie forderte die Zerstörung der Labore"],"Russland legte keine überzeugenden Belege vor. Die Labore sind Teil eines öffentlich dokumentierten Programms."],

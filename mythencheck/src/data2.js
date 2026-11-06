@@ -28,7 +28,8 @@ sources:[
 ["Medien","ZDF Schule: Holocaustleugnung. Welche Lügen kursieren und wie ihr sie erkennt.","https://schule.zdf.de/video/mw2gg-holocaustleugnung-102"],
 ["Buch","Hilberg, R. (1990): Die Vernichtung der europäischen Juden. 3 Bände. Fischer Taschenbuch Verlag, Frankfurt am Main.","https://d-nb.info/901331147"],
 ["Buch","Benz, W. (Hg.) (1991): Dimension des Völkermords. Die Zahl der jüdischen Opfer des Nationalsozialismus. Oldenbourg, München.",""],
-["Buch","Evans, R. J. (2001): Der Geschichtsfälscher. Holocaust und historische Wahrheit im David-Irving-Prozess. Campus, Frankfurt am Main.","https://d-nb.info/961517646"]
+["Buch","Evans, R. J. (2001): Der Geschichtsfälscher. Holocaust und historische Wahrheit im David-Irving-Prozess. Campus, Frankfurt am Main.","https://d-nb.info/961517646"],
+["Medien","DER SPIEGEL (2018): Holocaust-Leugnerin Haverbeck scheitert mit Klage gegen Haft.","https://www.spiegel.de/panorama/justiz/ursula-haverbeck-inhaftierte-holocaust-leugnerin-scheitert-mit-verfassungsklage-a-1221509.html"]
 ],
 quiz:[
 ["Was dokumentiert das Höfle-Telegramm vom Januar 1943?",["1.274.166 Deportierte in die Lager der „Aktion Reinhardt“ allein im Jahr 1942","Die Kapitulation der Wehrmacht","Einen Befehl zur Auflösung der Lager","Die Zahl deutscher Kriegsgefangener"],"Das Telegramm ist eine interne SS-Meldung. Es wurde vom britischen Geheimdienst abgefangen und erst im Jahr 2000 in Archiven entdeckt."],
@@ -58,7 +59,8 @@ sources:[
 ["Behörde","Bundeszentrale für politische Bildung: Auschwitzlüge.","https://www.bpb.de/themen/antisemitismus/dossier-antisemitismus/504203/auschwitzluege/"],
 ["Buch","van Pelt, R. J. (2002): The Case for Auschwitz. Evidence from the Irving Trial. Indiana University Press, Bloomington.","https://d-nb.info/96729665X"],
 ["Buch","Pressac, J.-C. (1989): Auschwitz. Technique and Operation of the Gas Chambers. Beate Klarsfeld Foundation, New York.",""],
-["Medien","Morris, E. (1999): Mr. Death. The Rise and Fall of Fred A. Leuchter, Jr. Dokumentarfilm.",""]
+["Medien","Morris, E. (1999): Mr. Death. The Rise and Fall of Fred A. Leuchter, Jr. Dokumentarfilm.",""],
+["Medien","FOCUS Online: Urteil: Zweieinhalb Jahre Haft für Holocaustleugner (zu Germar Rudolf).","https://www.focus.de/politik/deutschland/urteil_aid_50798.html"]
 ],
 quiz:[
 ["Warum fanden sich in Leuchters Proben kaum Cyanidrückstände?",["Cyanid haftet vor allem an der Oberfläche; große, zermahlene Brocken verdünnten die Spuren","Weil es nie Gaskammern gab","Weil das Labor bestochen war","Weil Blausäure ungiftig ist"],"Die Methode war für die Fragestellung ungeeignet. Mit passenden Verfahren wurden Cyanidverbindungen sehr wohl nachgewiesen."],
@@ -117,7 +119,8 @@ sources:[
 ["Behörde","Landeshauptstadt Dresden: Historikerkommission zu den Luftangriffen auf Dresden.","https://dresden.de/en/city/07/03/historical_commission.php"],
 ["Medien","t-online (2020): Interview mit dem Historiker Dietmar Süß zum Dresden-Opfermythos.","https://www.t-online.de/nachrichten/wissen/geschichte/id_87278172/dresden-bombardierung-vor-75-jahren-opfer-mythos-ist-goebbels-letzter-erfolg-.html"],
 ["Faktencheck","Holocaust Denial on Trial (Emory University): Dresden death toll.","https://www.hdot.org/debunking-denial/d2-dresden-death-toll/"],
-["Buch","Taylor, F. (2004): Dresden, Dienstag, 13. Februar 1945. Militärische Logik oder blanker Terror? Bertelsmann, München.","https://d-nb.info/972383751"]
+["Buch","Taylor, F. (2004): Dresden, Dienstag, 13. Februar 1945. Militärische Logik oder blanker Terror? Bertelsmann, München.","https://d-nb.info/972383751"],
+["Medien","DER SPIEGEL: Zehntausend bei Anti-Neonazi-Kette: Dresden stemmt sich gegen die Geschichtsklitterer.","https://www.spiegel.de/politik/deutschland/zehntausend-bei-anti-neonazi-kette-dresden-stemmt-sich-gegen-die-geschichtsklitterer-a-677692.html"]
 ],
 quiz:[
 ["Wie viele Todesopfer ermittelte die Dresdner Historikerkommission 2010?",["Bis zu 25.000","Rund 250.000","Rund 500.000","Rund 2.000"],"Die Kommission prüfte alle verfügbaren Quellen. Die Zahl deckt sich mit der Zählung der Behörden von 1945."],
@@ -209,7 +212,8 @@ sources:[
 ["Buch","Streit, C. (1978): Keine Kameraden. Die Wehrmacht und die sowjetischen Kriegsgefangenen 1941 bis 1945. DVA, Stuttgart.",""],
 ["Buch","Hamburger Institut für Sozialforschung (Hg.) (2002): Verbrechen der Wehrmacht. Dimensionen des Vernichtungskrieges 1941 bis 1944. Ausstellungskatalog. Hamburger Edition, Hamburg.","https://d-nb.info/961922583"],
 ["Medien","Berliner Zeitung (2018): „Vogelschiss“-Äußerung. Gauland denkt nicht an Entschuldigung.","https://www.berliner-zeitung.de/article/vogelschiss-aeusserung-gauland-denkt-nicht-an-entschuldigung-29043"],
-["Behörde","Bundeszentrale für politische Bildung: Rechtsextremer Geschichtsrevisionismus.","https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/576903/rechtsextremer-geschichtsrevisionismus/"]
+["Behörde","Bundeszentrale für politische Bildung: Rechtsextremer Geschichtsrevisionismus.","https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/576903/rechtsextremer-geschichtsrevisionismus/"],
+["Medien","DER SPIEGEL (2018): Gaulands „Vogelschiss“-Provokation: Geschichte lässt sich nicht wegwischen.","https://www.spiegel.de/kultur/gesellschaft/alexander-gauland-zur-nazi-zeit-kommentar-zur-vogelschiss-aussage-a-1210896.html"]
 ],
 quiz:[
 ["Wie viele sowjetische Kriegsgefangene starben in deutschem Gewahrsam?",["Mehr als drei Millionen","Rund 3.000","Rund 300.000","Keine"],"Die Wehrmacht ließ sowjetische Gefangene systematisch hungern. Mehr als die Hälfte der rund 5,7 Millionen überlebte nicht."],
@@ -239,7 +243,8 @@ sources:[
 ["Studie","Charlier, P. et al. (2018): The remains of Adolf Hitler. A biomedical analysis and definitive identification. European Journal of Internal Medicine 54, S. 10 bis 12.","https://doi.org/10.1016/j.ejim.2018.05.014"],
 ["Medien","History.com (2018): Bericht über die Untersuchung von Hitlers Zähnen.","https://history.com/news/hitler-death-cause-teeth-analysis"],
 ["Buch","Lüdecke, C., Summerhayes, C. (2012): The Third Reich in Antarctica. The German Antarctic Expedition 1938 bis 39. Erskine Press, Norwich.","https://d-nb.info/1416932720"],
-["Behörde","Bundeszentrale für politische Bildung: Reichsbürger, Mondlandung, Reptiloide, Flacherde.","https://www.bpb.de/themen/medien-journalismus/wahre-welle/270429/reichsbuerger-mondlandung-reptiloide-flacherde/"]
+["Behörde","Bundeszentrale für politische Bildung: Reichsbürger, Mondlandung, Reptiloide, Flacherde.","https://www.bpb.de/themen/medien-journalismus/wahre-welle/270429/reichsbuerger-mondlandung-reptiloide-flacherde/"],
+["Medien","DER SPIEGEL: Mythos um antarktische Nazi-Zuflucht: Die Mär von Hitlers Festung im ewigen Eis.","https://www.spiegel.de/wissenschaft/mensch/mythos-um-antarktische-nazi-zuflucht-die-maer-von-hitlers-festung-im-ewigen-eis-a-475772.html"]
 ],
 quiz:[
 ["Wie lange dauerte die Deutsche Antarktische Expedition 1938/39?",["Knapp vier Monate, von Dezember 1938 bis April 1939","Sieben Jahre","Bis Kriegsende 1945","Sie hat nie stattgefunden"],"Die Expedition war real, aber kurz. Eine Basis wurde nicht gebaut."],

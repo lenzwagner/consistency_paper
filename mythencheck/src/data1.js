@@ -28,7 +28,9 @@ sources:[
 ["Behörde","Copernicus-Klimadienst / ECMWF (Januar 2026): 2025 was the third-warmest year on record.","https://www.ecmwf.int/node/31031"],
 ["Faktencheck","Klimafakten.de: Faktencheck zum Grundsatzprogramm der AfD.","https://www.klimafakten.de/sites/default/files/downloads/faktencheckafd-grundsatzprogramm.pdf"],
 ["Buch","Rahmstorf, S., Schellnhuber, H. J. (2019): Der Klimawandel. Diagnose, Prognose, Therapie. 9. Auflage. C. H. Beck, München.","https://d-nb.info/1189939045"],
-["Buch","Oreskes, N., Conway, E. M. (2010): Merchants of Doubt. Bloomsbury Press. Deutsche Ausgabe: Die Machiavellis der Wissenschaft. Das Netzwerk des Leugnens. Wiley-VCH, Weinheim 2014.","https://d-nb.info/1049503333"]
+["Buch","Oreskes, N., Conway, E. M. (2010): Merchants of Doubt. Bloomsbury Press. Deutsche Ausgabe: Die Machiavellis der Wissenschaft. Das Netzwerk des Leugnens. Wiley-VCH, Weinheim 2014.","https://d-nb.info/1049503333"],
+["Medien","DER SPIEGEL: Werteunion und die Neue Rechte: Koalition der Klimawandelleugner.","https://www.spiegel.de/wissenschaft/mensch/koalition-der-klimawandelleugner-a-c1a03be4-8921-4898-a4f3-a11a1c814008"],
+["Medien","DER SPIEGEL International: AfD Hopes to Win Votes by Opposing Climate Protection.","https://www.spiegel.de/international/germany/afd-seeks-votes-by-opposing-climate-protection-a-1265494.html"]
 ],
 quiz:[
 ["Wie groß ist laut Weltklimarat die beste Schätzung des menschengemachten Anteils an der Erwärmung (Zeitraum 2010 bis 2019 gegenüber 1850 bis 1900)?",["1,07 °C","0,1 °C","0,4 °C","2,5 °C"],"Der IPCC beziffert den menschengemachten Anteil auf 1,07 °C. Das entspricht praktisch der gesamten beobachteten Erwärmung; natürliche Faktoren lagen nahe null."],
@@ -94,7 +96,9 @@ sources:[
 ["Behörde","NASA Science: Apollo 11 Landing Site, Aufnahmen des Lunar Reconnaissance Orbiter.","https://science.nasa.gov/resource/apollo-11-landing-site"],
 ["Medien","NPR (2011): Tracks, Equipment Left By Apollo Missions Visible In New Moon Photos.","https://www.npr.org/blogs/thetwo-way/2011/09/06/140216986/tracks-equipment-left-by-apollo-missions-visible-in-new-moon-photos"],
 ["Behörde","NASA, Apollo Lunar Surface Journal: Working on the Moon, Radiation (Strahlendosen der Apollo-Crews).","https://www.nasa.gov/wp-content/uploads/static/history/alsj/WOTM/WOTM-Radiation.html"],
-["Studie","Grimes, D. R. (2016): On the Viability of Conspiratorial Beliefs. PLOS ONE 11(1), e0147905.","https://doi.org/10.1371/journal.pone.0147905"]
+["Studie","Grimes, D. R. (2016): On the Viability of Conspiratorial Beliefs. PLOS ONE 11(1), e0147905.","https://doi.org/10.1371/journal.pone.0147905"],
+["Medien","DER SPIEGEL (2019): Laserreflektoren auf dem Mond: Die Anti-Verschwörungstheorie-Maschinen.","https://www.spiegel.de/wissenschaft/weltall/laserreflektoren-auf-dem-mond-die-anti-verschwoerungstheorie-maschinen-a-1278583.html"],
+["Medien","DER SPIEGEL: „Vom ersten Tag an gab es Zweifler“. Mondlandung, Chemtrails, Reichsflugscheibe: Verschwörungstheorien im Check.","https://www.spiegel.de/wissenschaft/weltall/mondlandung-chemtrail-reichsflugscheibe-verschwoerungstheorien-im-check-a-1277763.html"]
 ],
 quiz:[
 ["Was messen Observatorien bis heute mit Hilfe der Apollo-Retroreflektoren?",["Die Entfernung zwischen Erde und Mond","Die Temperatur auf dem Mond","Die Strahlung im All","Nichts, es gibt dort keine Reflektoren"],"Laserpulse werden von den Spiegeln zurückgeworfen. Aus der Laufzeit ergibt sich die Entfernung auf Zentimeter genau."],
@@ -125,7 +129,9 @@ sources:[
 ["Faktencheck","Lead Stories (2022): It is not Air Force policy to control the weather by 2025.","https://leadstories.com/hoax-alert/2022/11/fact-check-it-is-not-air-force-policy-to-control-the-weather-by-2025.html"],
 ["Studie","Shearer, C., West, M., Caldeira, K., Davis, S. J. (2016): Quantifying expert consensus against the existence of a secret, large-scale atmospheric spraying program. Environmental Research Letters 11, 084011.","https://doi.org/10.1088/1748-9326/11/8/084011"],
 ["Behörde","Umweltbundesamt: Chemtrails. Gefährliche Experimente in der Atmosphäre oder bloße Fiktion?","https://www.umweltbundesamt.de/publikationen/chemtrails-gefaehrliche-experimente-atmosphaere"],
-["Faktencheck","Correctiv (2021): Nein, diese Fotos beweisen nicht, dass es Chemtrails gibt.","https://correctiv.org/faktencheck/2021/05/05/nein-diese-fotos-beweisen-nicht-dass-es-chemtrails-gibt/"]
+["Faktencheck","Correctiv (2021): Nein, diese Fotos beweisen nicht, dass es Chemtrails gibt.","https://correctiv.org/faktencheck/2021/05/05/nein-diese-fotos-beweisen-nicht-dass-es-chemtrails-gibt/"],
+["Medien","DER SPIEGEL (2016): Chemtrails: Forscher sagen, es gibt sie nicht.","https://www.spiegel.de/wissenschaft/mensch/chemtrails-forscher-sagen-es-gibt-sie-nicht-a-1107738.html"],
+["Medien","DER SPIEGEL (2023): Kleine Anfrage der AfD: Sächsische Staatskanzlei muss sich mit Chemtrails befassen.","https://www.spiegel.de/politik/deutschland/afd-in-sachsen-staatskanzlei-muss-sich-nach-kleiner-anfrage-mit-chemtrails-befassen-a-5d295473-0a4c-4cda-a958-2e9ef1b61f6d"]
 ],
 quiz:[
 ["Warum bleiben manche Kondensstreifen stundenlang sichtbar?",["Weil die Luft in Reiseflughöhe sehr kalt und feucht ist, sodass die Eiskristalle nicht verdunsten","Weil dem Treibstoff Chemikalien beigemischt sind","Weil die Flugzeuge besonders langsam fliegen","Weil nachts weniger Wind weht"],"Ob ein Streifen schnell verschwindet oder sich ausbreitet, hängt von Temperatur und Feuchtigkeit der umgebenden Luft ab, nicht von geheimen Zusätzen."],
@@ -154,7 +160,8 @@ sources:[
 ["Behörde","HAARP (University of Alaska Fairbanks): Häufige Fragen, u. a. Sendeleistung 3,6 Megawatt.","https://haarp.gi.alaska.edu/faq"],
 ["Behörde","University of Alaska Fairbanks (2016): HAARP ready for business under UAF management.","https://uaf.edu/news/archives/news-archives-2010-2021/haarp-ready-business-uaf-management.php"],
 ["Medien","ARRL (2015): HAARP Facility Will Be Transferred to the University of Alaska Fairbanks on August 11.","https://www.arrl.org/news/haarp-facility-will-be-transferred-to-the-university-of-alaska-fairbanks-on-august-11"],
-["Studie","World Weather Attribution (2021): Heavy rainfall which led to severe flooding in Western Europe made more likely by climate change.","https://www.worldweatherattribution.org/heavy-rainfall-which-led-to-severe-flooding-in-western-europe-made-more-likely-by-climate-change"]
+["Studie","World Weather Attribution (2021): Heavy rainfall which led to severe flooding in Western Europe made more likely by climate change.","https://www.worldweatherattribution.org/heavy-rainfall-which-led-to-severe-flooding-in-western-europe-made-more-likely-by-climate-change"],
+["Medien","tagesschau.de Faktenfinder (2023): Erdbeben in Marokko: Falsche Videos und Verschwörungsansätze.","https://www.tagesschau.de/faktenfinder/marokko-erdbeben-falsche-videos-100.html"]
 ],
 quiz:[
 ["In welcher Schicht der Atmosphäre forscht HAARP?",["In der Ionosphäre, ab etwa 70 bis 80 Kilometern Höhe","In der Troposphäre, wo das Wetter entsteht","Im Erdmantel","Jenseits der Mondumlaufbahn"],"HAARP untersucht die Ionosphäre. Das Wetter spielt sich dagegen in der viel tiefer liegenden Troposphäre ab."],
@@ -174,7 +181,7 @@ origin:[
 ],
 facts:[
 ["Viren funken nicht","Viren sind biologische Partikel, die sich nur in lebenden Zellen vermehren und von Mensch zu Mensch über Tröpfchen und Aerosole übertragen werden. Radiowellen können sie weder erzeugen noch transportieren."],
-["Pandemie ohne 5G","Das Coronavirus verbreitete sich auch in vielen Ländern, die gar kein 5G-Netz hatten. Zudem können Viren nicht über Funkwellen übertragen werden."],
+["Pandemie ohne 5G","Das Coronavirus verbreitete sich auch in vielen Ländern, die gar kein 5G-Netz hatten, etwa im Iran. Zudem können Viren nicht über Funkwellen übertragen werden."],
 ["Zu wenig Energie für Schäden am Erbgut","Mobilfunk nutzt nichtionisierende Strahlung. Ihre Energie reicht nicht aus, um chemische Bindungen oder das Erbgut zu schädigen. Der einzige gesicherte biologische Effekt ist eine leichte Gewebeerwärmung, und die Grenzwerte liegen deutlich darunter."],
 ["Keine Belege unterhalb der Grenzwerte","Nach Angaben der Bundesregierung und des Bundesamts für Strahlenschutz sind sich die Expertengremien einig: Es gibt keine Nachweise schädlicher Wirkungen unterhalb der geltenden Grenzwerte."],
 ["Keine exotischen Frequenzen","5G nutzt in Deutschland vor allem Frequenzen um 3,6 Gigahertz, also in einem ähnlichen Bereich wie WLAN mit 2,4 und 5 Gigahertz."]
@@ -183,7 +190,8 @@ sources:[
 ["Behörde","Bundesnetzagentur: Frequenzauktion 2019 (2-GHz- und 3,6-GHz-Bereich für 5G).","https://www.bundesnetzagentur.de/DE/Fachthemen/Telekommunikation/Breitband/MobilesBreitband/Frequenzauktion/2019/Auktion2019-node.html"],
 ["Studie","ICNIRP (2020): Guidelines for Limiting Exposure to Electromagnetic Fields (100 kHz to 300 GHz). Health Physics 118(5), S. 483 bis 524.","https://doi.org/10.1097/HP.0000000000001210"],
 ["Behörde","Bundesregierung: Beeinträchtigt 5G unsere Gesundheit? Strahlenschutz bei 5G.","https://www.bundesregierung.de/breg-de/suche/strahlenschutz-bei-5g-1829042"],
-["Medien","DutchNews (2020): Counter-terrorism service alerted as arsonists set fire to telecom masts.","https://dutchnews.nl/news/2020/04/counter-terrorism-service-alerted-as-arsonists-set-fire-to-telecom-masts"]
+["Medien","DutchNews (2020): Counter-terrorism service alerted as arsonists set fire to telecom masts.","https://dutchnews.nl/news/2020/04/counter-terrorism-service-alerted-as-arsonists-set-fire-to-telecom-masts"],
+["Medien","tagesschau.de Faktenfinder: 5G unter Feuer.","https://www.tagesschau.de/faktenfinder/5g-corona-mobilfunk-101.html"]
 ],
 quiz:[
 ["Warum kann 5G kein Virus übertragen?",["Viren sind biologische Partikel; Radiowellen können sie weder erzeugen noch transportieren","Weil 5G zu langsam ist","Weil Viren nur über Kabel reisen","Weil 5G-Masten Virenfilter haben"],"Viren brauchen lebende Zellen, um sich zu vermehren, und werden über Tröpfchen und Aerosole übertragen. Funkwellen sind elektromagnetische Schwingungen ohne Materie."],
@@ -213,7 +221,8 @@ sources:[
 ["Medien","taz: 300 Jahre erstunken und erlogen (zu Illigs Thesen).","https://taz.de/300-Jahre-erstunken-und-erlogen/!1493257/"],
 ["Studie","Friedrich, M. et al. (2004): The 12,460-year Hohenheim oak and pine tree-ring chronology from central Europe. Radiocarbon 46(3), S. 1111 bis 1122.","https://doi.org/10.1017/S003382220003304X"],
 ["Medien","Medievalists.net (2020): Why the Phantom Time Hypothesis is wrong.","https://www.medievalists.net/2020/04/why-phantom-time-hypothesis-wrong/"],
-["Medien","Discover Magazine: What Is the Truth Behind the Controversial Phantom Time Hypothesis?","https://discovermagazine.com/the-sciences/what-is-the-truth-behind-the-controversial-phantom-time-hypothesis"]
+["Medien","Discover Magazine: What Is the Truth Behind the Controversial Phantom Time Hypothesis?","https://discovermagazine.com/the-sciences/what-is-the-truth-behind-the-controversial-phantom-time-hypothesis"],
+["Medien","Saltzwedel, J. (2012): Gestrichene Jahrhunderte. Die abstruse These vom „erfundenen Mittelalter“. SPIEGEL Geschichte 6/2012.","https://www.spiegel.de/spiegel/spiegelgeschichte/d-89662035.html"]
 ],
 quiz:[
 ["Welche Zeitspanne soll laut Heribert Illig erfunden sein?",["Etwa 614 bis 911 n. Chr.","Etwa 1200 bis 1500","Die gesamte Antike","1933 bis 1945"],"Illig behauptet, rund 297 Jahre des Frühmittelalters seien nachträglich in die Geschichte eingefügt worden."],
@@ -245,7 +254,9 @@ sources:[
 ["Studie","Andersson, N. W. et al. (2025): Aluminum-Adsorbed Vaccines and Chronic Diseases in Childhood. A Nationwide Cohort Study. Annals of Internal Medicine.","https://doi.org/10.7326/ANNALS-25-00997"],
 ["Studie","Godlee, F., Smith, J., Marcovitch, H. (2011): Wakefield’s article linking MMR vaccine and autism was fraudulent. BMJ 342, c7452.","https://doi.org/10.1136/bmj.c7452"],
 ["Behörde","CDC, MMWR (2024): Progress Toward Measles Elimination, Worldwide, 2000 bis 2023.","https://www.cdc.gov/mmwr/volumes/73/wr/mm7345a4.htm"],
-["Medien","PBS NewsHour (2025): CDC vaccine safety webpage changed to contradict scientific conclusion that vaccines don’t cause autism.","https://www.pbs.org/newshour/health/cdc-vaccine-safety-webpage-changed-to-contradict-scientific-conclusion-that-vaccines-dont-cause-autism"]
+["Medien","PBS NewsHour (2025): CDC vaccine safety webpage changed to contradict scientific conclusion that vaccines don’t cause autism.","https://www.pbs.org/newshour/health/cdc-vaccine-safety-webpage-changed-to-contradict-scientific-conclusion-that-vaccines-dont-cause-autism"],
+["Medien","DER SPIEGEL: Zurückgezogene Studie: Das offizielle Ende eines Impf-Skandals.","https://www.spiegel.de/wissenschaft/medizin/0,1518,675592,00.html"],
+["Medien","DER SPIEGEL: Forschungsskandal: Britischer Autismus-Arzt erhält Berufsverbot.","https://www.spiegel.de/wissenschaft/medizin/forschungsskandal-britischer-autismus-arzt-erhaelt-berufsverbot-a-696472.html"]
 ],
 quiz:[
 ["Wie viele Kinder umfasste Wakefields Studie von 1998?",["12","1.200","657.461","50.000"],"Die Studie stützte sich auf nur zwölf Kinder, war manipuliert und wurde 2010 zurückgezogen."],
@@ -278,7 +289,9 @@ sources:[
 ["Behörde","Statistisches Bundesamt (2021): Pressemitteilung zur Todesursachenstatistik 2020.","https://www.destatis.de/DE/Presse/Pressemitteilungen/2021/12/PD21_563_12.html"],
 ["Behörde","WHO (27. Juni 2025): WHO Scientific Advisory Group issues report on origins of COVID-19.","https://www.who.int/news/item/27-06-2025-who-scientific-advisory-group-issues-report-on-origins-of-covid-19"],
 ["Faktencheck","Full Fact: Event 201 didn’t predict the Covid-19 pandemic.","https://fullfact.org/health/event-201-coronavirus-pandemic/"],
-["Medien","ZDF (ZDFinfo): Verschwörungswelten. Plandemie, The Great Reset und QAnon.","https://www.zdf.de/dokus/verschwoerungswelten-100"]
+["Medien","ZDF (ZDFinfo): Verschwörungswelten. Plandemie, The Great Reset und QAnon.","https://www.zdf.de/dokus/verschwoerungswelten-100"],
+["Medien","DER SPIEGEL: Coronavirus-Verschwörungstheorien: Die Gerüchte-Pandemie.","https://www.spiegel.de/wissenschaft/medizin/coronavirus-verschwoerungstheorien-die-geruechte-pandemie-a-0e7d1ffb-9aa8-49c7-a0b4-5fb8fd7db593"],
+["Medien","tagesschau.de Faktenfinder: Gerüchte und Fakes: Coronavirus als angebliche Verschwörung.","https://www.tagesschau.de/faktenfinder/fakes-geruechte-coronavirus-101.html"]
 ],
 quiz:[
 ["Wie hoch schätzt die WHO die weltweite Übersterblichkeit in den Jahren 2020 und 2021?",["Rund 14,8 Millionen Menschen","Rund 150.000 Menschen","Rund 1,5 Millionen Menschen","Rund 150 Millionen Menschen"],"Die WHO-Schätzung von rund 14,8 Millionen umfasst auch Todesfälle, die in offiziellen COVID-Statistiken fehlten."],
@@ -310,7 +323,9 @@ sources:[
 ["Studie","Polack, F. P. et al. (2020): Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine. New England Journal of Medicine 383, S. 2603 bis 2615.","https://pubmed.ncbi.nlm.nih.gov/33301246/"],
 ["Studie","Watson, O. J. et al. (2022): Global impact of the first year of COVID-19 vaccination. A mathematical modelling study. The Lancet Infectious Diseases 22(9), S. 1293 bis 1302.","https://pubmed.ncbi.nlm.nih.gov/35753318/"],
 ["Behörde","Arzneimittelkommission der deutschen Ärzteschaft: Drug Safety Mail 2021-57 zu Myokarditis nach mRNA-Impfung.","https://www.akdae.de/arzneimittelsicherheit/drug-safety-mail/newsdetail/drug-safety-mail-2021-57"],
-["Faktencheck","AP (2023, via KSL): „Died suddenly“ posts twist tragedies to push vaccine lies.","https://www.ksl.com/article/50572002"]
+["Faktencheck","AP (2023, via KSL): „Died suddenly“ posts twist tragedies to push vaccine lies.","https://www.ksl.com/article/50572002"],
+["Medien","tagesschau.de Faktenfinder: Gezielte Panikmache mit „Impfmassaker“.","https://www.tagesschau.de/faktenfinder/impfungen-todesfaelle-101.html"],
+["Medien","tagesschau.de Faktenfinder: Kein Nachweis für vermehrte Impfnebenwirkungen.","https://www.tagesschau.de/faktenfinder/corona-impfnebenwirkungen-101.html"]
 ],
 quiz:[
 ["Welche seltene Nebenwirkung von mRNA-Impfstoffen ist belegt?",["Herzmuskelentzündung, vor allem bei jungen Männern","„Turbokrebs“","Eine Veränderung des Erbguts","Unfruchtbarkeit bei allen Geimpften"],"Myokarditis ist eine bekannte, seltene Nebenwirkung. Die Behörden reagierten mit angepassten Empfehlungen für junge Menschen."],
@@ -342,7 +357,9 @@ sources:[
 ["Studie","McHugh, K. J. et al. (2019): Biocompatible near-infrared quantum dots delivered to the skin by microneedle patches record vaccination. Science Translational Medicine 11(523), eaay7162.","https://pubmed.ncbi.nlm.nih.gov/31852802/"],
 ["Medien","Rice University (2019): Quantum-dot tattoos hold vaccination record.","https://news.rice.edu/news/2019/quantum-dot-tattoos-hold-vaccination-record"],
 ["Faktencheck","PolitiFact (2021): Bill Gates didn’t say he wanted to use vaccines to reduce the population.","https://politifact.com/factchecks/2021/oct/11/blog-posting/bill-gates-didnt-say-he-wanted-use-vaccines-reduce/"],
-["Medien","Yahoo News (2020): New Yahoo News/YouGov poll shows coronavirus conspiracy theories spreading on the right.","https://news.yahoo.com/new-yahoo-news-you-gov-poll-shows-coronavirus-conspiracy-theories-spreading-on-the-right-may-hamper-vaccine-efforts-152843610.html"]
+["Medien","Yahoo News (2020): New Yahoo News/YouGov poll shows coronavirus conspiracy theories spreading on the right.","https://news.yahoo.com/new-yahoo-news-you-gov-poll-shows-coronavirus-conspiracy-theories-spreading-on-the-right-may-hamper-vaccine-efforts-152843610.html"],
+["Medien","tagesschau.de Faktenfinder: Mythen zum Coronavirus: Gates als globales Feindbild.","https://www.tagesschau.de/faktenfinder/feindbild-gates-101.html"],
+["Medien","FOCUS Online: Arm nach Covid-19-Impfung magnetisch? Nein, wir bekommen keine Mikrochips eingesetzt.","https://www.focus.de/gesundheit/news/vermeintlicher-beweis-fuer-mikrochip-theorie-einstichstelle-nach-impfung-magnetisch-experte-erklaert-das-netz-phaenomen_id_13335189.html"]
 ],
 quiz:[
 ["Was meinte Gates 2010 mit „vielleicht 10 oder 15 Prozent senken“?",["Ein geringeres Bevölkerungswachstum, weil bei sinkender Kindersterblichkeit weniger Kinder geboren werden","Die Tötung von 15 Prozent der Menschheit","Weniger Impfungen in armen Ländern","Eine Steuer auf Kinder"],"Der demografische Zusammenhang ist gut belegt: Wo Kinder überleben, sinken die Geburtenraten. Das Wachstum verlangsamt sich, ohne dass jemand stirbt."],
@@ -373,7 +390,8 @@ sources:[
 ["Studie","Reis, G. et al. (2022): Effect of Early Treatment with Ivermectin among Patients with Covid-19. New England Journal of Medicine 386, S. 1721 bis 1731.","https://doi.org/10.1056/NEJMoa2115869"],
 ["Medien","Deutsches Ärzteblatt (2022): COVID-19: Ivermectin bleibt auch in US-Studie ohne relevante Wirkung.","https://www.aerzteblatt.de/nachrichten/135034/COVID-19-Ivermectin-bleibt-auch-in-US-Studie-ohne-relevante-Wirkung"],
 ["Studie","Caly, L. et al. (2020): The FDA-approved drug ivermectin inhibits the replication of SARS-CoV-2 in vitro. Antiviral Research 178, 104787.","https://pmc.ncbi.nlm.nih.gov/articles/7129059"],
-["Studie","RECOVERY Collaborative Group (2021): Dexamethasone in Hospitalized Patients with Covid-19. New England Journal of Medicine 384, S. 693 bis 704.","https://pmc.ncbi.nlm.nih.gov/articles/PMC7383595/"]
+["Studie","RECOVERY Collaborative Group (2021): Dexamethasone in Hospitalized Patients with Covid-19. New England Journal of Medicine 384, S. 693 bis 704.","https://pmc.ncbi.nlm.nih.gov/articles/PMC7383595/"],
+["Medien","DER SPIEGEL: Entwurmungsmittel in Österreich ausverkauft, weil FPÖ-Chef es bei Corona empfiehlt.","https://www.spiegel.de/wirtschaft/unternehmen/ivomectin-entwurmungsmittel-in-oesterreich-ausverkauft-weil-fpoe-chef-es-bei-corona-empfiehlt-a-42689153-8d8b-4e52-bab1-e86a293fd1b8"]
 ],
 quiz:[
 ["Warum war die Laborwirkung von Ivermectin kein Beleg für eine Therapie?",["Die nötige Konzentration ist im menschlichen Blut mit zugelassenen Dosen nicht erreichbar","Weil Labore keine Viren untersuchen dürfen","Weil die Zellen von Tieren stammten","Weil die Studie geheim gehalten wurde"],"Was in der Petrischale wirkt, muss im Körper erreichbar sein. Bei Ivermectin lag die wirksame Konzentration weit über dem, was Menschen sicher erreichen."],
@@ -403,7 +421,9 @@ sources:[
 ["Medien","Legal Tribune Online: Streit um die Existenz des Masernvirus vor dem BGH.","https://www.lto.de/recht/nachrichten/n/streit-existenz-masern-virus-nichtzulassungsbeschwerde-bgh-auslobung-wette"],
 ["Behörde","CDC, MMWR (2024): Progress Toward Measles Elimination, Worldwide, 2000 bis 2023.","https://www.cdc.gov/mmwr/volumes/73/wr/mm7345a4.htm"],
 ["Studie","Wrapp, D. et al. (2020): Cryo-EM structure of the 2019-nCoV spike in the prefusion conformation. Science 367, S. 1260 bis 1263.","https://pmc.ncbi.nlm.nih.gov/articles/7164637"],
-["Studie","Enders, J. F., Peebles, T. C. (1954): Propagation in tissue cultures of cytopathogenic agents from patients with measles. Proceedings of the Society for Experimental Biology and Medicine 86(2), S. 277 bis 286.","https://pubmed.ncbi.nlm.nih.gov/13177653/"]
+["Studie","Enders, J. F., Peebles, T. C. (1954): Propagation in tissue cultures of cytopathogenic agents from patients with measles. Proceedings of the Society for Experimental Biology and Medicine 86(2), S. 277 bis 286.","https://pubmed.ncbi.nlm.nih.gov/13177653/"],
+["Medien","DER SPIEGEL: Posse um Masernvirus: Impfgegner muss Arzt 100.000 Euro zahlen (Urteil des Landgerichts).","https://www.spiegel.de/gesundheit/diagnose/existenz-des-masernvirus-stefan-lanka-verliert-vor-gericht-a-1023189.html"],
+["Medien","DER SPIEGEL: Streit um Existenz von Masernviren: Impfgegner siegt vor Gericht (Berufung zu den Bedingungen der Auslobung).","https://www.spiegel.de/panorama/justiz/masern-wette-impfgegner-muss-nicht-zahlen-a-1077601.html"]
 ],
 quiz:[
 ["Worüber entschied das Oberlandesgericht Stuttgart im Masern-Prozess 2016?",["Über die Bedingungen der Auslobung: Lanka hatte eine einzige Publikation als Nachweis verlangt","Dass es das Masernvirus nicht gibt","Dass Masernimpfungen verboten werden","Dass Lanka 100.000 Euro zahlen muss"],"Es ging um Vertragsrecht, nicht um Biologie. Wissenschaftliche Fragen klären Gerichte ohnehin nicht."],
@@ -437,7 +457,9 @@ sources:[
 ["Studie","Johnson, S. B. et al. (2018): Use of Alternative Medicine for Cancer and Its Impact on Survival. Journal of the National Cancer Institute 110(1), S. 121 bis 124.","https://academic.oup.com/jnci/article/110/1/121/4064136"],
 ["Medien","Apotheken Umschau: Pseudomedizin mit tödlichen Folgen. Was hinter der Germanischen Neuen Medizin steckt.","https://www.apotheken-umschau.de/therapie/germanische-neue-medizin-lebensgefaehrliche-pseudomedizin-und-ihre-folgen-1251777.html"],
 ["Medien","Deutsches Ärzteblatt (2017): Krebsheiler will Approbation zurück, Gericht lehnt ab.","https://www.aerzteblatt.de/nachrichten/73179/Krebsheiler-will-Approbation-zurueck-Gericht-lehnt-ab"],
-["Studie","Grimes, D. R. (2016): On the Viability of Conspiratorial Beliefs. PLOS ONE 11(1), e0147905.","https://doi.org/10.1371/journal.pone.0147905"]
+["Studie","Grimes, D. R. (2016): On the Viability of Conspiratorial Beliefs. PLOS ONE 11(1), e0147905.","https://doi.org/10.1371/journal.pone.0147905"],
+["Medien","tagesschau.de (BR-Recherche): „Germanische Neue Medizin“: Gefährlicher Medizin-Mythos breitet sich aus.","https://www.tagesschau.de/investigativ/br-recherche/pseudomedizin-hamer-100.html"],
+["Medien","DER SPIEGEL (1995): Kampf gegen die Stärksten (zum Fall Olivia Pilhar).","https://www.spiegel.de/wissenschaft/kampf-gegen-die-staerksten-a-4cc989f4-0002-0001-0000-000009208312"]
 ],
 quiz:[
 ["Warum gibt es nicht „die eine“ Krebsheilung?",["Weil Krebs Hunderte verschiedene Erkrankungen mit unterschiedlichen Ursachen umfasst","Weil die Pharmaindustrie sie versteckt","Weil Krebs ansteckend ist","Weil Krebsforschung verboten ist"],"Leukämie, Melanom und Darmkrebs unterscheiden sich in Ursachen und Biologie grundlegend und brauchen unterschiedliche Therapien."],
