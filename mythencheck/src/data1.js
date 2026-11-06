@@ -23,7 +23,7 @@ facts:[
 ],
 sources:[
 ["Bericht","IPCC (2021): Climate Change 2021. The Physical Science Basis. Summary for Policymakers. Sechster Sachstandsbericht, Arbeitsgruppe I.","https://www.ipcc.ch/report/ar6/wg1/chapter/summary-for-policymakers/"],
-["Studie","Lynas, M., Houlton, B. Z., Perry, S. (2021): Greater than 99% consensus on human caused climate change in the peer-reviewed scientific literature. Environmental Research Letters 16, 114005.","https://doi.org/10.1088/1748-9326/ac2966"],
+["Studie","Lynas, M., Houlton, B. Z., Perry, S. (2021): Greater than 99% consensus on human caused climate change in the peer-reviewed scientific literature. Environmental Research Letters 16, 114005.","https://ui.adsabs.harvard.edu/abs/2021ERL....16k4005L/abstract"],
 ["Studie","Neukom, R. et al. (2019): No evidence for globally coherent warm and cold periods over the preindustrial Common Era. Nature 571, S. 550 bis 554.","https://doi.org/10.1038/s41586-019-1401-2"],
 ["Behörde","Copernicus-Klimadienst / ECMWF (Januar 2026): 2025 was the third-warmest year on record.","https://www.ecmwf.int/node/31031"],
 ["Faktencheck","Klimafakten.de: Faktencheck zum Grundsatzprogramm der AfD.","https://www.klimafakten.de/sites/default/files/downloads/faktencheckafd-grundsatzprogramm.pdf"],
@@ -43,7 +43,7 @@ short:"Die Antarktis als Eiswall, NASA-Fotos als Fälschung: Was Flacherdler gla
 tags:["Flat Earth","Flacherde","Scheibe","NASA","Eiswall"],
 claim:"Die Erde sei eine flache Scheibe, umgeben von einem Eiswall, den wir Antarktis nennen. Die Kugelgestalt sei eine Lüge von NASA und Regierungen, Satellitenbilder seien gefälscht, und die Schwerkraft gebe es in dieser Form nicht.",
 origin:[
-"Die moderne Flacherde-Bewegung geht auf den Engländer Samuel Rowbotham zurück, der ab 1849 seine „Zetetische Astronomie“ verbreitete. 1956 gründete Samuel Shenton die Flat Earth Society. Einen enormen Aufschwung erlebte die Idee ab etwa 2014 durch Videos auf YouTube.",
+"Die moderne Flacherde-Bewegung geht auf den Engländer Samuel Rowbotham zurück, der ab Mitte des 19. Jahrhunderts seine „Zetetische Astronomie“ verbreitete. 1956 gründete Samuel Shenton die Flat Earth Society. Einen enormen Aufschwung erlebte die Idee ab etwa 2014 durch Videos auf YouTube.",
 "Pikant: Der verbreitete Glaube, die Menschen des Mittelalters hätten die Erde für eine Scheibe gehalten, ist selbst eine Legende des 19. Jahrhunderts. Gebildete wussten seit der Antike, dass die Erde eine Kugel ist."
 ],
 facts:[
@@ -55,6 +55,8 @@ facts:[
 ["Mit bloßem Auge sichtbar","Die Internationale Raumstation ISS umrundet die Erde etwa alle 90 Minuten. Ihre Überflüge lassen sich vorausberechnen und vom eigenen Balkon aus beobachten."]
 ],
 sources:[
+["Medien","Quarks (WDR), Science Cops Folge 88: Die Akte Flache Erde.","https://www.quarks.de/podcast/quarks-science-cops-folge-88-die-akte-flache-erde/"],
+["Medien","Executive Traveller: Qantas’ Sydney to Santiago flights make triumphant return (Nonstop-Verbindung).","https://www.executivetraveller.com/news/qantas-restarts-sydney-santiago-chile"],
 ["Buch","Garwood, C. (2007): Flat Earth. The History of an Infamous Idea. Macmillan, London.",""],
 ["Buch","Russell, J. B. (1991): Inventing the Flat Earth. Columbus and Modern Historians. Praeger, New York.",""],
 ["Medien","Newsweek (2019): Bericht über die Experimente in der Netflix-Dokumentation „Behind the Curve“.","https://newsweek.com/behind-curve-netflix-ending-light-experiment-mark-sargent-documentary-movie-1343362"],
@@ -85,6 +87,10 @@ facts:[
 ["Zu viele Mitwisser","Der Physiker David Robert Grimes schätzte 2016, dass rund 411.000 Menschen (die Zahl der NASA-Beschäftigten 1965) hätten schweigen müssen. Eine solche Verschwörung wäre seinem Modell zufolge nach etwa 3,7 Jahren aufgeflogen."]
 ],
 sources:[
+["Medien","Spektrum der Wissenschaft: 10 Mythen über die Mondlandungen.","https://www.spektrum.de/wissen/10-mythen-ueber-die-mondlandungen/1301190"],
+["Medien","Quarks (WDR), Science Cops: Die Mär von der falschen Mondlandung.","https://www.quarks.de/podcast/die-mondlandung-quarks-science-cops/"],
+["Bericht","National Academies of Sciences: Kapitel zu den rund 382 Kilogramm Apollo-Proben.","https://www.nap.edu/read/25312/chapter/4"],
+["Medien","Space.com: Why Is the Apollo Reflector Experiment Still Operating, 50 Years Later?","https://www.space.com/apollo-retroreflector-experiment-still-going-50-years-later.html"],
 ["Behörde","NASA Science: Apollo 11 Landing Site, Aufnahmen des Lunar Reconnaissance Orbiter.","https://science.nasa.gov/resource/apollo-11-landing-site"],
 ["Medien","NPR (2011): Tracks, Equipment Left By Apollo Missions Visible In New Moon Photos.","https://www.npr.org/blogs/thetwo-way/2011/09/06/140216986/tracks-equipment-left-by-apollo-missions-visible-in-new-moon-photos"],
 ["Behörde","NASA, Apollo Lunar Surface Journal: Working on the Moon, Radiation (Strahlendosen der Apollo-Crews).","https://www.nasa.gov/wp-content/uploads/static/history/alsj/WOTM/WOTM-Radiation.html"],
@@ -103,18 +109,20 @@ short:"Lange weiße Streifen am Himmel sollen ein geheimes Sprühprogramm beweis
 tags:["Kondensstreifen","Aluminium","Barium","Geoengineering","Sprühen"],
 claim:"Flugzeuge versprühten heimlich Chemikalien wie Aluminium oder Barium, um das Wetter zu manipulieren, die Bevölkerung zu vergiften oder unfruchtbar zu machen. Erkennbar sei das an Streifen, die lange am Himmel stehen bleiben und Gittermuster bilden.",
 origin:[
-"Die Erzählung entstand Ende der 1990er Jahre in den USA, befeuert durch Radiosendungen und ein Strategiepapier der US-Luftwaffe von 1996 mit dem Titel „Weather as a Force Multiplier: Owning the Weather in 2025“. Dieses Papier beschrieb lediglich ein spekulatives Zukunftsszenario.",
+"Die Erzählung entstand Ende der 1990er Jahre in den USA, befeuert durch Radiosendungen und eine Studienarbeit an der Air University der US-Luftwaffe von 1996 mit dem Titel „Weather as a Force Multiplier: Owning the Weather in 2025“. Die Luftwaffe selbst bezeichnete deren Inhalte als fiktive Zukunftsszenarien.",
 "Über das Internet verbreitete sich die Idee weltweit. In Deutschland beantworten Behörden wie das Umweltbundesamt seit Jahren Anfragen besorgter Bürgerinnen und Bürger dazu."
 ],
 kernel:"Es gibt tatsächlich Forschung zu Geoengineering, etwa zur Idee, Sonnenlicht mit Partikeln in der Stratosphäre zu reflektieren. Diese Forschung findet öffentlich statt, ist politisch umstritten und wird bisher nicht großflächig angewendet. Mit den Kondensstreifen von Linienflugzeugen hat sie nichts zu tun.",
 facts:[
-["Kondensstreifen sind Physik","Triebwerke stoßen heißen, wasserdampfreichen Abgasstrahl aus, der in Reiseflughöhe bei Temperaturen oft unter minus 40 °C zu Eiskristallen gefriert. Ist die Luft dort sehr feucht, bleiben die Streifen stundenlang bestehen und breiten sich zu Schleierwolken aus; in trockener Luft verschwinden sie schnell."],
+["Kondensstreifen sind Physik","Triebwerke stoßen heißen, wasserdampfreichen Abgasstrahl aus, der in Reiseflughöhe bei Temperaturen von meist unter etwa minus 40 °C zu Eiskristallen gefriert. Ist die Luft dort sehr feucht, bleiben die Streifen stundenlang bestehen und breiten sich zu Schleierwolken aus; in trockener Luft verschwinden sie schnell."],
 ["Gitter durch Flugrouten","Über Mitteleuropa kreuzen sich viele Flugrouten. Wind verschiebt und verbiegt die Streifen. So entstehen Gitter- und Bogenmuster, ohne dass jemand etwas versprüht."],
 ["76 von 77 Fachleuten","In einer Befragung (Shearer et al. 2016) gaben 76 von 77 Atmosphärenchemikern und Geochemikern an, keinerlei Hinweise auf ein geheimes Sprühprogramm gefunden zu haben. Die vorgebrachten „Belege“ ließen sich mit bekannter Physik und Chemie erklären."],
 ["Behörden sehen keine Belege","Das Umweltbundesamt stellt fest, dass es für ein gezieltes Einbringen von Aluminiumverbindungen in die Atmosphäre und für sogenannte Chemtrails keinerlei wissenschaftliche Belege gibt."],
 ["Die „Beweisfotos“","Das Recherchezentrum Correctiv verfolgte 2021 30 virale Chemtrail-Fotos zurück und fand bei 29 den Ursprung. Häufig zeigen sie Wassertanks, die bei Testflügen als Ballast dienen, oder schlicht Kondensstreifen."]
 ],
 sources:[
+["Medien","Quarks (WDR): Kondensstreifen oder Chemtrails. Werden wir manipuliert?","https://www.quarks.de/umwelt/klimawandel/kondensstreifen-oder-chemtrails-werden-wir-manipuliert/"],
+["Faktencheck","Lead Stories (2022): It is not Air Force policy to control the weather by 2025.","https://leadstories.com/hoax-alert/2022/11/fact-check-it-is-not-air-force-policy-to-control-the-weather-by-2025.html"],
 ["Studie","Shearer, C., West, M., Caldeira, K., Davis, S. J. (2016): Quantifying expert consensus against the existence of a secret, large-scale atmospheric spraying program. Environmental Research Letters 11, 084011.","https://doi.org/10.1088/1748-9326/11/8/084011"],
 ["Behörde","Umweltbundesamt: Chemtrails. Gefährliche Experimente in der Atmosphäre oder bloße Fiktion?","https://www.umweltbundesamt.de/publikationen/chemtrails-gefaehrliche-experimente-atmosphaere"],
 ["Faktencheck","Correctiv (2021): Nein, diese Fotos beweisen nicht, dass es Chemtrails gibt.","https://correctiv.org/faktencheck/2021/05/05/nein-diese-fotos-beweisen-nicht-dass-es-chemtrails-gibt/"]
@@ -132,7 +140,7 @@ short:"Eine Forschungsanlage in Alaska soll Fluten, Dürren und Erdbeben auslös
 tags:["Wettermanipulation","Alaska","Ahrtal","Flut","Ionosphäre"],
 claim:"Mit der Antennenanlage HAARP in Alaska ließe sich das Wetter steuern. Unwetter, Dürren, Erdbeben und auch die Flutkatastrophe im Ahrtal 2021 seien gezielt ausgelöst worden. Manche Varianten behaupten sogar Gedankenkontrolle.",
 origin:[
-"HAARP (High-frequency Active Auroral Research Program) wurde ab 1993 in Gakona, Alaska, im Auftrag von US-Luftwaffe und Marine aufgebaut, später unter Beteiligung der Forschungsbehörde DARPA. Die militärische Finanzierung und das ungewöhnliche Antennenfeld machten die Anlage früh zur Projektionsfläche.",
+"HAARP (High-frequency Active Auroral Research Program) wurde ab 1993 in Gakona, Alaska, als militärisch finanziertes Forschungsprojekt aufgebaut; die US-Luftwaffe betrieb die Anlage bis 2015. Die militärische Finanzierung und das ungewöhnliche Antennenfeld machten die Anlage früh zur Projektionsfläche.",
 "Nach nahezu jedem Extremwetter tauchen in sozialen Netzwerken HAARP-Behauptungen auf, so auch nach der Flut im Juli 2021 in Rheinland-Pfalz und Nordrhein-Westfalen."
 ],
 facts:[
@@ -143,9 +151,10 @@ facts:[
 ["Erdbeben entstehen im Gestein","Erdbeben entstehen durch Spannungen in der Erdkruste in Kilometern Tiefe. Radiowellen dringen nicht ins Gestein ein und können dort keine Spannungen erzeugen."]
 ],
 sources:[
+["Behörde","HAARP (University of Alaska Fairbanks): Häufige Fragen, u. a. Sendeleistung 3,6 Megawatt.","https://haarp.gi.alaska.edu/faq"],
 ["Behörde","University of Alaska Fairbanks (2016): HAARP ready for business under UAF management.","https://uaf.edu/news/archives/news-archives-2010-2021/haarp-ready-business-uaf-management.php"],
 ["Medien","ARRL (2015): HAARP Facility Will Be Transferred to the University of Alaska Fairbanks on August 11.","https://www.arrl.org/news/haarp-facility-will-be-transferred-to-the-university-of-alaska-fairbanks-on-august-11"],
-["Studie","World Weather Attribution (2021): Heavy rainfall which led to severe flooding in Western Europe made more likely by climate change.","https://www.worldweatherattribution.org/heavy-rainfall-which-led-to-severe-flooding-in-western-europe-made-more-likely-by-climate-change/"]
+["Studie","World Weather Attribution (2021): Heavy rainfall which led to severe flooding in Western Europe made more likely by climate change.","https://www.worldweatherattribution.org/heavy-rainfall-which-led-to-severe-flooding-in-western-europe-made-more-likely-by-climate-change"]
 ],
 quiz:[
 ["In welcher Schicht der Atmosphäre forscht HAARP?",["In der Ionosphäre, ab etwa 60 bis 80 Kilometern Höhe","In der Troposphäre, wo das Wetter entsteht","Im Erdmantel","Jenseits der Mondumlaufbahn"],"HAARP untersucht die Ionosphäre. Das Wetter spielt sich dagegen in der viel tiefer liegenden Troposphäre ab."],
@@ -171,6 +180,7 @@ facts:[
 ["Keine exotischen Frequenzen","5G nutzt in Deutschland vor allem Frequenzen um 3,6 Gigahertz, also in einem ähnlichen Bereich wie WLAN mit 2,4 und 5 Gigahertz."]
 ],
 sources:[
+["Behörde","Bundesnetzagentur: Frequenzauktion 2019 (2-GHz- und 3,6-GHz-Bereich für 5G).","https://www.bundesnetzagentur.de/DE/Fachthemen/Telekommunikation/Breitband/MobilesBreitband/Frequenzauktion/2019/Auktion2019-node.html"],
 ["Studie","ICNIRP (2020): Guidelines for Limiting Exposure to Electromagnetic Fields (100 kHz to 300 GHz). Health Physics 118(5), S. 483 bis 524.","https://doi.org/10.1097/HP.0000000000001210"],
 ["Behörde","Bundesregierung: Beeinträchtigt 5G unsere Gesundheit? Strahlenschutz bei 5G.","https://www.bundesregierung.de/breg-de/suche/strahlenschutz-bei-5g-1829042"],
 ["Medien","DutchNews (2020): Counter-terrorism service alerted as arsonists set fire to telecom masts.","https://dutchnews.nl/news/2020/04/counter-terrorism-service-alerted-as-arsonists-set-fire-to-telecom-masts"]
@@ -198,6 +208,9 @@ facts:[
 ["Die Welt außerhalb Europas","Die islamische Zeitrechnung beginnt mit der Hidschra 622, mitten in der angeblichen Phantomzeit. Die chinesische Tang-Dynastie (618 bis 907) ist durch eigene Chroniken belegt. All diese unabhängigen Überlieferungen hätten mitgefälscht werden müssen."]
 ],
 sources:[
+["Medien","Spektrum der Wissenschaft, Lexikon der Geowissenschaften: Kalenderreform.","https://www.spektrum.de/lexikon/geowissenschaften/kalenderreform/7935"],
+["Medien","Encyclopaedia Britannica: Ten Days That Vanished. The Switch to the Gregorian Calendar.","https://britannica.com/story/ten-days-that-vanished-the-switch-to-the-gregorian-calendar"],
+["Medien","taz: 300 Jahre erstunken und erlogen (zu Illigs Thesen).","https://taz.de/300-Jahre-erstunken-und-erlogen/!1493257/"],
 ["Studie","Friedrich, M. et al. (2004): The 12,460-year Hohenheim oak and pine tree-ring chronology from central Europe. Radiocarbon 46(3), S. 1111 bis 1122.","https://doi.org/10.1017/S003382220003304X"],
 ["Medien","Medievalists.net (2020): Why the Phantom Time Hypothesis is wrong.","https://www.medievalists.net/2020/04/why-phantom-time-hypothesis-wrong/"],
 ["Medien","Discover Magazine: What Is the Truth Behind the Controversial Phantom Time Hypothesis?","https://discovermagazine.com/the-sciences/what-is-the-truth-behind-the-controversial-phantom-time-hypothesis"]
@@ -227,7 +240,7 @@ facts:[
 ["Die realen Folgen","Nach der Wakefield-Studie sanken in mehreren Ländern die Impfquoten, Masern kehrten zurück. Weltweit verhinderte die Masernimpfung von 2000 bis 2023 schätzungsweise 60 Millionen Todesfälle."]
 ],
 sources:[
-["Studie","Hviid, A. et al. (2019): Measles, Mumps, Rubella Vaccination and Autism. A Nationwide Cohort Study. Annals of Internal Medicine 170(8), S. 513 bis 520.","https://doi.org/10.7326/M18-2101"],
+["Studie","Hviid, A. et al. (2019): Measles, Mumps, Rubella Vaccination and Autism. A Nationwide Cohort Study. Annals of Internal Medicine 170(8), S. 513 bis 520.","https://pubmed.ncbi.nlm.nih.gov/30831578/"],
 ["Studie","Taylor, L. E., Swerdfeger, A. L., Eslick, G. D. (2014): Vaccines are not associated with autism. An evidence-based meta-analysis of case-control and cohort studies. Vaccine 32(29), S. 3623 bis 3629.","https://pubmed.ncbi.nlm.nih.gov/24814559/"],
 ["Studie","Andersson, N. W. et al. (2025): Aluminum-Adsorbed Vaccines and Chronic Diseases in Childhood. A Nationwide Cohort Study. Annals of Internal Medicine.","https://doi.org/10.7326/ANNALS-25-00997"],
 ["Studie","Godlee, F., Smith, J., Marcovitch, H. (2011): Wakefield’s article linking MMR vaccine and autism was fraudulent. BMJ 342, c7452.","https://doi.org/10.1136/bmj.c7452"],
@@ -258,6 +271,9 @@ facts:[
 ["Ursprung offen, Plan nicht belegt","Das Beratergremium SAGO der WHO hält eine Übertragung vom Tier auf den Menschen für am besten belegt, kann einen Laborunfall aber mangels Daten aus China nicht ausschließen (Juni 2025). Der Bundesnachrichtendienst kam schon 2020 auf Basis von Indizien zu der Einschätzung, ein Laborunfall sei zu 80 bis 95 Prozent wahrscheinlich (bekannt seit März 2025). Beide Szenarien beschreiben ein Unglück, keine geplante Pandemie."]
 ],
 sources:[
+["Primärquelle","Johns Hopkins Center for Health Security: Übersicht der Pandemie-Übungen (Dark Winter, Clade X, Event 201).","https://www.centerforhealthsecurity.org/our-work/exercises"],
+["Medien","CBS News (2020): Viral coronavirus conspiracy video „Plandemic“ removed from Facebook and YouTube.","https://www.cbsnews.com/news/plandemic-coronavirus-conspiracy-removed-facebook-youtube"],
+["Medien","Pharmazeutische Zeitung: Vorletzte Grippewelle war tödlichste in 30 Jahren (RKI-Schätzung 25.100).","https://www.pharmazeutische-zeitung.de/vorletzte-grippewelle-war-toedlichste-in-30-jahren/"],
 ["Studie","Msemburi, W. et al. (2023): The WHO estimates of excess mortality associated with the COVID-19 pandemic. Nature 613, S. 130 bis 137.","https://doi.org/10.1038/s41586-022-05522-2"],
 ["Behörde","Statistisches Bundesamt (2021): Pressemitteilung zur Todesursachenstatistik 2020.","https://www.destatis.de/DE/Presse/Pressemitteilungen/2021/12/PD21_563_12.html"],
 ["Behörde","WHO (27. Juni 2025): WHO Scientific Advisory Group issues report on origins of COVID-19.","https://www.who.int/news/item/27-06-2025-who-scientific-advisory-group-issues-report-on-origins-of-covid-19"],
@@ -289,8 +305,10 @@ facts:[
 ["„Plötzlich und unerwartet“ gab es immer","Am plötzlichen Herztod sterben in Deutschland nach Angaben der Deutschen Herzstiftung jedes Jahr rund 65.000 Menschen. Die Formulierung in Todesanzeigen ist kein Indiz für eine bestimmte Ursache."]
 ],
 sources:[
-["Studie","Polack, F. P. et al. (2020): Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine. New England Journal of Medicine 383, S. 2603 bis 2615.","https://doi.org/10.1056/NEJMoa2034577"],
-["Studie","Watson, O. J. et al. (2022): Global impact of the first year of COVID-19 vaccination. A mathematical modelling study. The Lancet Infectious Diseases 22(9), S. 1293 bis 1302.","https://doi.org/10.1016/S1473-3099(22)00320-6"],
+["Medien","Pharmazeutische Zeitung (2021): STIKO empfiehlt kein Moderna mehr für unter 30-Jährige.","https://www.pharmazeutische-zeitung.de/stiko-empfiehlt-kein-moderna-mehr-fuer-unter-30-jaehrige-129343/"],
+["Faktencheck","Correctiv (2021): Es gibt keine Hinweise, dass mRNA-Impfstoffe die menschliche DNA verändern.","https://correctiv.org/faktencheck/2021/01/20/es-gibt-keine-hinweise-dass-mrna-impfstoffe-gegen-covid-19-die-menschliche-dna-veraendern/"],
+["Studie","Polack, F. P. et al. (2020): Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine. New England Journal of Medicine 383, S. 2603 bis 2615.","https://pubmed.ncbi.nlm.nih.gov/33301246/"],
+["Studie","Watson, O. J. et al. (2022): Global impact of the first year of COVID-19 vaccination. A mathematical modelling study. The Lancet Infectious Diseases 22(9), S. 1293 bis 1302.","https://pubmed.ncbi.nlm.nih.gov/35753318/"],
 ["Behörde","Arzneimittelkommission der deutschen Ärzteschaft: Drug Safety Mail 2021-57 zu Myokarditis nach mRNA-Impfung.","https://www.akdae.de/arzneimittelsicherheit/drug-safety-mail/newsdetail/drug-safety-mail-2021-57"],
 ["Faktencheck","AP (2023, via KSL): „Died suddenly“ posts twist tragedies to push vaccine lies.","https://www.ksl.com/article/50572002"]
 ],
@@ -318,7 +336,10 @@ facts:[
 ["Was tatsächlich finanziert wird","Die Gates-Stiftung ist Gründungspartner der Impfallianz Gavi, die nach eigenen Angaben dazu beigetragen hat, seit 2000 mehr als eine Milliarde Kinder zu impfen."]
 ],
 sources:[
-["Studie","McHugh, K. J. et al. (2019): Biocompatible near-infrared quantum dots delivered to the skin by microneedle patches record vaccination. Science Translational Medicine 11(523), eaay7162.","https://doi.org/10.1126/scitranslmed.aay7162"],
+["Faktencheck","Snopes: Did Bill Gates say vaccines could reduce population? (Wortlaut und Kontext des TED-Zitats).","https://www.snopes.com/bill-gates-vaccinations-depopulation/"],
+["Faktencheck","Snopes: Does Microsoft Own Patent „666“ About Implanting Microchips in People?","https://www.snopes.com/fact-check/microsoft-own-patent-666"],
+["Primärquelle","Gavi (2023): Vaccine Alliance reaches more than one billion children.","https://www.gavi.org/news/media-room/vaccine-alliance-reaches-more-one-billion-children"],
+["Studie","McHugh, K. J. et al. (2019): Biocompatible near-infrared quantum dots delivered to the skin by microneedle patches record vaccination. Science Translational Medicine 11(523), eaay7162.","https://pubmed.ncbi.nlm.nih.gov/31852802/"],
 ["Medien","Rice University (2019): Quantum-dot tattoos hold vaccination record.","https://news.rice.edu/news/2019/quantum-dot-tattoos-hold-vaccination-record"],
 ["Faktencheck","PolitiFact (2021): Bill Gates didn’t say he wanted to use vaccines to reduce the population.","https://politifact.com/factchecks/2021/oct/11/blog-posting/bill-gates-didnt-say-he-wanted-use-vaccines-reduce/"],
 ["Medien","Yahoo News (2020): New Yahoo News/YouGov poll shows coronavirus conspiracy theories spreading on the right.","https://news.yahoo.com/new-yahoo-news-you-gov-poll-shows-coronavirus-conspiracy-theories-spreading-on-the-right-may-hamper-vaccine-efforts-152843610.html"]
@@ -336,7 +357,7 @@ short:"Ein Wurmmittel als verschwiegenes Wundermittel? Große, sorgfältige Stud
 tags:["Ivermectin","Wurmmittel","Pharma","Corona","Therapie"],
 claim:"Das preiswerte Antiparasitikum Ivermectin heile COVID-19 zuverlässig. Pharmaindustrie und Behörden unterdrückten das Mittel, weil sich mit billigen Medikamenten kein Geld verdienen lasse.",
 origin:[
-"Den Anstoß gab eine australische Laborstudie von 2020 (Caly et al.): Ivermectin hemmte das Virus in Zellkulturen. Kleine, teils fehlerhafte Studien schienen eine Wirkung zu bestätigen. Eine vielzitierte ägyptische Studie wurde 2021 wegen schwerer Datenprobleme zurückgezogen.",
+"Den Anstoß gab eine australische Laborstudie von 2020 (Caly et al.): Ivermectin hemmte das Virus in Zellkulturen. Kleine, teils fehlerhafte Studien schienen eine Wirkung zu bestätigen. Eine vielzitierte ägyptische Studie zog der Preprint-Server Research Square im Juli 2021 wegen ethischer Bedenken zurück, nachdem Plagiate und Auffälligkeiten in den Daten aufgefallen waren.",
 "In sozialen Netzwerken und bei einigen Ärztinnen und Ärzten wurde Ivermectin zum Symbol des Widerstands gegen „das System“."
 ],
 facts:[
@@ -347,10 +368,12 @@ facts:[
 ["Billige Mittel werden sehr wohl empfohlen","Das alte, günstige Kortisonpräparat Dexamethason wurde 2020 umgehend in Behandlungsleitlinien aufgenommen, nachdem die große RECOVERY-Studie gezeigt hatte, dass es die Sterblichkeit beatmeter Patientinnen und Patienten um etwa ein Drittel senkt."]
 ],
 sources:[
+["Studie","Bitterman, A. et al. (2022): Comparison of Trials Using Ivermectin for COVID-19 Between Regions With High and Low Prevalence of Strongyloidiasis. JAMA Network Open.","https://pmc.ncbi.nlm.nih.gov/articles/PMC8938718"],
+["Medien","Pharmazeutische Zeitung: Was der Zwergfadenwurm mit Corona zu tun hat.","https://www.pharmazeutische-zeitung.de/was-der-zwergfadenwurm-mit-corona-zu-tun-hat-132165/"],
 ["Studie","Reis, G. et al. (2022): Effect of Early Treatment with Ivermectin among Patients with Covid-19. New England Journal of Medicine 386, S. 1721 bis 1731.","https://doi.org/10.1056/NEJMoa2115869"],
 ["Medien","Deutsches Ärzteblatt (2022): COVID-19: Ivermectin bleibt auch in US-Studie ohne relevante Wirkung.","https://www.aerzteblatt.de/nachrichten/135034/COVID-19-Ivermectin-bleibt-auch-in-US-Studie-ohne-relevante-Wirkung"],
-["Studie","Caly, L. et al. (2020): The FDA-approved drug ivermectin inhibits the replication of SARS-CoV-2 in vitro. Antiviral Research 178, 104787.","https://doi.org/10.1016/j.antiviral.2020.104787"],
-["Studie","RECOVERY Collaborative Group (2021): Dexamethasone in Hospitalized Patients with Covid-19. New England Journal of Medicine 384, S. 693 bis 704.","https://doi.org/10.1056/NEJMoa2021436"]
+["Studie","Caly, L. et al. (2020): The FDA-approved drug ivermectin inhibits the replication of SARS-CoV-2 in vitro. Antiviral Research 178, 104787.","https://pmc.ncbi.nlm.nih.gov/articles/7129059"],
+["Studie","RECOVERY Collaborative Group (2021): Dexamethasone in Hospitalized Patients with Covid-19. New England Journal of Medicine 384, S. 693 bis 704.","https://pmc.ncbi.nlm.nih.gov/articles/PMC7383595/"]
 ],
 quiz:[
 ["Warum war die Laborwirkung von Ivermectin kein Beleg für eine Therapie?",["Die nötige Konzentration ist im menschlichen Blut mit zugelassenen Dosen nicht erreichbar","Weil Labore keine Viren untersuchen dürfen","Weil die Zellen von Tieren stammten","Weil die Studie geheim gehalten wurde"],"Was in der Petrischale wirkt, muss im Körper erreichbar sein. Bei Ivermectin lag die wirksame Konzentration weit über dem, was Menschen sicher erreichen."],
@@ -375,11 +398,12 @@ facts:[
 ["Impfungen beweisen die Wirkung","Ein Impfstoff, der gezielt gegen ein Virus gerichtet ist, könnte nicht wirken, wenn es das Virus nicht gäbe. Die Zahl der Masern-Todesfälle sank weltweit von geschätzt 800.000 im Jahr 2000 auf rund 107.500 im Jahr 2023; die Impfung verhinderte in diesem Zeitraum schätzungsweise 60 Millionen Todesfälle."]
 ],
 sources:[
+["Medien","Tagesspiegel: Das Virus gibt es gar nicht? Verschwörungstheorien verbreiten sich schnell und können tödliche Konsequenzen haben.","https://tagesspiegel.de/gesellschaft/das-virus-gibt-es-gar-nicht-verschwoerungstheorien-verbreiten-sich-schnell-und-koennen-toedliche-konsequenzen-haben/25632922.html"],
 ["Faktencheck","Correctiv (2019): Nein, dieses Gerichtsurteil beweist nicht, dass das Masern-Virus nicht existiert.","https://correctiv.org/faktencheck/medizin-und-gesundheit/2019/11/25/nein-dieses-gerichtsurteil-beweist-nicht-dass-das-masern-virus-nicht-existiert/"],
 ["Medien","Legal Tribune Online: Streit um die Existenz des Masernvirus vor dem BGH.","https://www.lto.de/recht/nachrichten/n/streit-existenz-masern-virus-nichtzulassungsbeschwerde-bgh-auslobung-wette"],
 ["Behörde","CDC, MMWR (2024): Progress Toward Measles Elimination, Worldwide, 2000 bis 2023.","https://www.cdc.gov/mmwr/volumes/73/wr/mm7345a4.htm"],
-["Studie","Wrapp, D. et al. (2020): Cryo-EM structure of the 2019-nCoV spike in the prefusion conformation. Science 367, S. 1260 bis 1263.","https://doi.org/10.1126/science.abb2507"],
-["Studie","Enders, J. F., Peebles, T. C. (1954): Propagation in tissue cultures of cytopathogenic agents from patients with measles. Proceedings of the Society for Experimental Biology and Medicine 86(2), S. 277 bis 286.",""]
+["Studie","Wrapp, D. et al. (2020): Cryo-EM structure of the 2019-nCoV spike in the prefusion conformation. Science 367, S. 1260 bis 1263.","https://pmc.ncbi.nlm.nih.gov/articles/7164637"],
+["Studie","Enders, J. F., Peebles, T. C. (1954): Propagation in tissue cultures of cytopathogenic agents from patients with measles. Proceedings of the Society for Experimental Biology and Medicine 86(2), S. 277 bis 286.","https://pubmed.ncbi.nlm.nih.gov/13177653/"]
 ],
 quiz:[
 ["Worüber entschied das Oberlandesgericht Stuttgart im Masern-Prozess 2016?",["Über die Bedingungen der Auslobung: Lanka hatte eine einzige Publikation als Nachweis verlangt","Dass es das Masernvirus nicht gibt","Dass Masernimpfungen verboten werden","Dass Lanka 100.000 Euro zahlen muss"],"Es ging um Vertragsrecht, nicht um Biologie. Wissenschaftliche Fragen klären Gerichte ohnehin nicht."],
@@ -394,25 +418,29 @@ short:"Pharmakonzerne sollen das Heilmittel unterdrücken, Krebs sei ein seelisc
 tags:["Krebs","Pharma","Germanische Neue Medizin","Hamer","Alternativmedizin","Chemotherapie"],
 claim:"Es gebe längst eine einfache Heilung gegen Krebs, etwa durch Vitamine, Natron oder Aprikosenkerne, doch Pharmakonzerne verdienten an der Chemotherapie und hielten sie geheim. Nach der „Germanischen Neuen Medizin“ entstehe Krebs durch seelische Konflikte und heile von selbst, sobald der Konflikt gelöst sei.",
 origin:[
-"Die „Germanische Neue Medizin“ geht auf den Arzt Ryke Geerd Hamer zurück, der 1986 seine Approbation verlor und unter anderem in Deutschland, Österreich und Frankreich zu Haftstrafen verurteilt wurde. Seine Lehre ist mit antisemitischen Verschwörungsmythen durchsetzt. Hamer starb 2017.",
-"Bekannt wurde 1995 der Fall der sechsjährigen Olivia Pilhar aus Österreich, deren Eltern ihren großen Nierentumor nach Hamers Lehre behandeln lassen wollten. Erst eine gerichtlich durchgesetzte Chemotherapie rettete ihr Leben."
+"Die „Germanische Neue Medizin“ geht auf den Arzt Ryke Geerd Hamer zurück, der 1986 seine Approbation verlor und unter anderem in Deutschland, Österreich und Frankreich zu Haftstrafen verurteilt wurde. Seine Lehre ist mit antisemitischen Verschwörungsmythen durchsetzt; die Schulmedizin bezeichnete er als „jüdische Medizin“. Hamer starb am 2. Juli 2017 in Norwegen.",
+"Bekannt wurde 1995 der Fall der sechsjährigen Olivia Pilhar aus Österreich. Sie hatte einen Wilms-Tumor, einen bösartigen Nierentumor, der bei rechtzeitiger Behandlung zu rund 90 Prozent heilbar ist. Ihre Eltern lehnten nach Hamers Lehre Chemotherapie und Operation ab, worauf ihnen das Sorgerecht für ihre Tochter entzogen wurde. Erst die so durchgesetzte Chemotherapie rettete ihr Leben; die Eltern wurden 1997 wegen fahrlässiger Körperverletzung verurteilt."
 ],
 facts:[
-["Krebs ist nicht eine Krankheit","Unter „Krebs“ fasst man mehr als 200 verschiedene Erkrankungen mit unterschiedlichen Ursachen, Mutationen und Verläufen zusammen. Schon deshalb kann es nicht die eine Pille gegen Krebs geben."],
+["Krebs ist nicht eine Krankheit","Unter „Krebs“ fasst man Hunderte verschiedene Erkrankungen mit unterschiedlichen Ursachen, Mutationen und Verläufen zusammen; die Deutsche Krebshilfe spricht von mehr als 300 bekannten Krebsarten. Schon deshalb kann es nicht die eine Pille gegen Krebs geben."],
 ["Fortschritt ist messbar","In den USA sank die Krebssterberate von 1991 bis 2022 um 34 Prozent; dadurch wurden schätzungsweise 4,5 Millionen Todesfälle verhindert (American Cancer Society 2025)."],
-["Viele Krebsarten sind heilbar","Von Kindern mit akuter lymphatischer Leukämie überleben in Ländern mit guter Versorgung heute rund 90 Prozent langfristig. Hodenkrebs zählt zu den am besten heilbaren Krebserkrankungen überhaupt."],
+["Viele Krebsarten sind heilbar","Von Kindern mit akuter lymphatischer Leukämie überleben in Ländern mit guter Versorgung heute rund 90 Prozent langfristig. Bei Hodenkrebs liegen die Heilungschancen bei früher Erkennung bei über 90 Prozent."],
 ["Ein Geheimnis ließe sich nicht halten","Krebsforschung findet weltweit an Universitäten, in Kliniken und in konkurrierenden Firmen und Staaten statt. Wer ein einfaches Heilmittel fände, gewänne Nobelpreis und Milliardenmarkt. Der Physiker David Robert Grimes schätzte, eine Unterdrückung würde mehr als 700.000 Mitwisser erfordern."],
 ["Alternativmedizin kostet Leben","Eine Studie mit Krebspatientinnen und Krebspatienten in den USA ergab: Wer ausschließlich auf alternative Medizin setzte, hatte ein etwa 2,5-fach erhöhtes Sterberisiko (Johnson et al. 2018)."]
 ],
 sources:[
+["Medien","Der Standard (2017): Wunderheiler Ryke Geerd Hamer ist tot (mit Fall Olivia).","https://www.derstandard.at/2000060791912/wunderheiler-ryke-geerd-hamer-ist-tot"],
+["Medien","ORF Wien: „Goldenes Brett“ geht an „germanischen“ Arzt.","https://wien.orf.at/v2/news/stories/2801420/"],
+["Medien","Deutsches Ärzteblatt: Leukämie, Überlebensrate bei Kindern weiter gestiegen.","https://www.aerzteblatt.de/themen/leukaemie/leukaemie-ueberlebensrate-bei-kindern-weiter-gestiegen-1a02a939-6d04-44c8-89e2-186b41e73621"],
+["Medien","Apotheke Adhoc: Krebshilfe im Kampf gegen Krebs (mehr als 300 Krebsarten).","https://www.apotheke-adhoc.de/nachrichten/detail/pharmazie/krebshilfe-im-kampf-gegen-krebs/"],
 ["Studie","Siegel, R. L. et al. (2025): Cancer statistics, 2025. CA: A Cancer Journal for Clinicians 75(1).","https://doi.org/10.3322/caac.21871"],
-["Studie","Johnson, S. B. et al. (2018): Use of Alternative Medicine for Cancer and Its Impact on Survival. Journal of the National Cancer Institute 110(1), S. 121 bis 124.","https://doi.org/10.1093/jnci/djx145"],
+["Studie","Johnson, S. B. et al. (2018): Use of Alternative Medicine for Cancer and Its Impact on Survival. Journal of the National Cancer Institute 110(1), S. 121 bis 124.","https://academic.oup.com/jnci/article/110/1/121/4064136"],
 ["Medien","Apotheken Umschau: Pseudomedizin mit tödlichen Folgen. Was hinter der Germanischen Neuen Medizin steckt.","https://www.apotheken-umschau.de/therapie/germanische-neue-medizin-lebensgefaehrliche-pseudomedizin-und-ihre-folgen-1251777.html"],
 ["Medien","Deutsches Ärzteblatt (2017): Krebsheiler will Approbation zurück, Gericht lehnt ab.","https://www.aerzteblatt.de/nachrichten/73179/Krebsheiler-will-Approbation-zurueck-Gericht-lehnt-ab"],
 ["Studie","Grimes, D. R. (2016): On the Viability of Conspiratorial Beliefs. PLOS ONE 11(1), e0147905.","https://doi.org/10.1371/journal.pone.0147905"]
 ],
 quiz:[
-["Warum gibt es nicht „die eine“ Krebsheilung?",["Weil Krebs mehr als 200 verschiedene Erkrankungen mit unterschiedlichen Ursachen umfasst","Weil die Pharmaindustrie sie versteckt","Weil Krebs ansteckend ist","Weil Krebsforschung verboten ist"],"Leukämie, Melanom und Darmkrebs unterscheiden sich in Ursachen und Biologie grundlegend und brauchen unterschiedliche Therapien."],
+["Warum gibt es nicht „die eine“ Krebsheilung?",["Weil Krebs Hunderte verschiedene Erkrankungen mit unterschiedlichen Ursachen umfasst","Weil die Pharmaindustrie sie versteckt","Weil Krebs ansteckend ist","Weil Krebsforschung verboten ist"],"Leukämie, Melanom und Darmkrebs unterscheiden sich in Ursachen und Biologie grundlegend und brauchen unterschiedliche Therapien."],
 ["Wie stark erhöhte die ausschließliche Nutzung alternativer Medizin das Sterberisiko in einer Studie von 2018?",["Etwa um das 2,5-Fache","Gar nicht","Das Risiko halbierte sich","Um ein Prozent"],"Patientinnen und Patienten, die auf wirksame Therapien verzichteten, starben deutlich häufiger."],
 ["Was rettete der kleinen Olivia Pilhar 1995 das Leben?",["Eine gerichtlich durchgesetzte Chemotherapie","Die Germanische Neue Medizin","Aprikosenkerne","Ein Umzug nach Spanien"],"Ihr Tumor war bereits sehr groß. Erst die Chemotherapie, die gegen den Willen der Eltern durchgesetzt wurde, rettete sie."]
 ]

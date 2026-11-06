@@ -18,6 +18,7 @@ facts:[
 ["Vor Gericht chancenlos","Reichsbürger-Argumente scheitern vor Gericht regelmäßig, „Austrittserklärungen“ sind rechtlich wirkungslos. Verwaltungsgerichte bestätigen zudem, dass Reichsbürger waffenrechtlich als unzuverlässig gelten und ihre Waffen abgeben müssen."]
 ],
 sources:[
+["Behörde","Bundeszentrale für politische Bildung, Lexikon der Wirtschaft: Bundesrepublik Deutschland Finanzagentur GmbH.","https://www.bpb.de/kurz-knapp/lexika/lexikon-der-wirtschaft/18975/bundesrepublik-deutschland-finanzagentur-gmbh/"],
 ["Behörde","Bundeszentrale für politische Bildung: Aus Politik und Zeitgeschichte, Reichsbürger (2025).","https://www.bpb.de/shop/zeitschriften/apuz/reichsbuerger-2025/"],
 ["Medien","ZDFheute: „Tag X“ und „Rat“. Die Verschwörungsmythen der Reichsbürger.","https://www.zdfheute.de/politik/deutschland/reichsbuerger-verschwoerungstheorien-100.html"],
 ["Behörde","Konrad-Adenauer-Stiftung: Reichsbürger.","https://www.kas.de/de/web/extremismus/rechtsextremismus/reichsbuerger"],
@@ -77,10 +78,12 @@ facts:[
 ["Zählfehler sind kein Betrug","Bei Millionen Stimmzetteln kommen Übertragungsfehler vor, und zwar in alle Richtungen. Die Schnellmeldungen am Wahlabend sind vorläufig, das amtliche Endergebnis wird geprüft. Einsprüche prüft zunächst der Bundestag, anschließend kann das Bundesverfassungsgericht angerufen werden."]
 ],
 sources:[
+["Behörde","Bundeszentrale für politische Bildung: Fakten zur Wiederholungswahl zum Berliner Abgeordnetenhaus 2023.","https://www.bpb.de/themen/wahl-o-mat/berlin-2023/517127/fakten-zur-wiederholungswahl-zum-berliner-abgeordnetenhaus-2023/"],
+["Faktencheck","PolitiFact (2022): Zu den mehr als 60 gescheiterten Klagen des Trump-Lagers nach der Wahl 2020.","https://www.politifact.com/factchecks/2022/oct/28/instagram-posts/trump-campaigns-evidence-of-fraud-was-reviewed-bef"],
 ["Gericht","Bundesverfassungsgericht, Urteil vom 3. März 2009, 2 BvC 3/07, 2 BvC 4/07 (Wahlcomputer).","https://www.bundesverfassungsgericht.de/SharedDocs/Entscheidungen/DE/2009/03/cs20090303_2bvc000307.html"],
 ["Behörde","Bundeszentrale für politische Bildung (2023): Bundestagswahl wird in Berlin teilweise wiederholt.","https://www.bpb.de/kurz-knapp/hintergrund-aktuell/523096/bundestagswahl-wird-in-berlin-teilweise-wiederholt/"],
 ["Behörde","Die Bundeswahlleiterin: Bundestagswahl 2021.","https://bundeswahlleiterin.de/bundestagswahlen/2021.html"],
-["Gesetz","§ 31 Bundeswahlgesetz (Öffentlichkeit der Wahlhandlung).","https://www.gesetze-im-internet.de/bwahlg/__31.html"]
+["Gesetz","Bundeswahlgesetz, § 31: „Die Wahlhandlung ist öffentlich.“","https://www.gesetze-im-internet.de/bwahlg/BJNR003830956.html"]
 ],
 quiz:[
 ["Wer darf bei der Stimmauszählung im Wahllokal zuschauen?",["Jede Person, die Auszählung ist öffentlich","Nur die Polizei","Nur Parteivorsitzende","Niemand"],"Die Öffentlichkeit der Wahl ist ein Grundprinzip. Wer Zweifel hat, kann sich selbst ein Bild machen."],
@@ -107,6 +110,7 @@ facts:[
 ["Der „Judenstern“ verhöhnt die Opfer","Ab September 1941 mussten Jüdinnen und Juden im Deutschen Reich einen gelben Stern tragen; er diente ihrer Ausgrenzung, Deportation und Ermordung. Der Zentralrat der Juden in Deutschland kritisierte die Vergleiche mit Ungeimpften scharf als Verharmlosung des Holocaust."]
 ],
 sources:[
+["Medien","Tagesspiegel: „Jana aus Kassel“ und die lange Kette absurder Analogien.","https://www.tagesspiegel.de/politik/jana-aus-kassel-und-die-lange-kette-absurder-analogien-4210873.html"],
 ["Medien","evangelisch.de / epd (2020): Bundestag und Bundesrat verabschieden Infektionsschutzgesetz.","https://www.evangelisch.de/inhalte/178562/18-11-2020/bundestag-und-bundesrat-verabschieden-infektionsschutzgesetz"],
 ["Faktencheck","Mimikama: Problematisch. Infektionsschutzgesetz als Ermächtigungsgesetz?","https://www.mimikama.org/problematisch-infektionsschutzgesetz-als-ermaechtigungsgesetz/"],
 ["Gericht","Bundesverfassungsgericht, Beschluss vom 19. November 2021, 1 BvR 781/21 u. a. (Bundesnotbremse).",""],
@@ -125,18 +129,23 @@ short:"Die Medien würden zentral gesteuert und verschwiegen die Wahrheit. Ein B
 tags:["Lügenpresse","Mainstream","Staatsfunk","ARD","ZDF","Gleichschaltung","Pressefreiheit"],
 claim:"Die etablierten Medien, insbesondere ARD und ZDF, würden von der Regierung gesteuert, seien „gleichgeschaltet“ und verbreiteten gezielt Lügen. Nur alternative Kanäle auf Telegram oder YouTube berichteten die Wahrheit.",
 origin:[
-"Der Begriff „Lügenpresse“ ist alt: Er wurde schon im 19. Jahrhundert verwendet und von den Nationalsozialisten als Kampfbegriff gegen die freie Presse eingesetzt. Ab 2014 skandierten ihn Pegida-Anhänger in Dresden; eine Jury wählte ihn zum Unwort des Jahres 2014.",
+"Der Begriff „Lügenpresse“ ist alt: Laut der Jury der Aktion „Unwort des Jahres“ war er bereits im Ersten Weltkrieg ein zentraler Kampfbegriff, und die Nationalsozialisten setzten ihn gegen die freie Presse ein. Ab 2014 skandierten ihn Pegida-Anhänger in Dresden; eine Jury wählte ihn zum Unwort des Jahres 2014.",
 "„Gleichschaltung“ bezeichnet ursprünglich die Ausschaltung freier Medien durch das NS-Regime ab 1933."
 ],
 kernel:"Auch seriöse Medien machen Fehler, gewichten einseitig oder folgen einem Herdentrieb. Kritik daran ist berechtigt und gehört zur Demokratie. Das ist aber etwas völlig anderes als eine zentrale Steuerung.",
 facts:[
-["Gleichschaltung gab es, 1933","Das NS-Regime machte Journalisten mit dem Schriftleitergesetz vom Oktober 1933 zu staatlich zugelassenen Befehlsempfängern; das Propagandaministerium gab täglich Presseanweisungen aus. Heute garantiert Artikel 5 des Grundgesetzes die Pressefreiheit, eine Zensur findet nicht statt."],
+["Gleichschaltung gab es, 1933","Das NS-Regime machte Journalisten mit dem im Oktober 1933 beschlossenen Schriftleitergesetz zu staatlich zugelassenen Befehlsempfängern; zugelassen wurde nur, wer einen „Ariernachweis“ erbrachte, und das Propagandaministerium steuerte die Berichterstattung mit Presseanweisungen. Heute garantiert Artikel 5 des Grundgesetzes die Pressefreiheit, eine Zensur findet nicht statt."],
 ["Staatsferne per Urteil","Das Bundesverfassungsgericht entschied 2014 im ZDF-Urteil, dass höchstens ein Drittel der Mitglieder in den Aufsichtsgremien staatsnah sein darf. Finanziert wird der öffentlich-rechtliche Rundfunk über den Rundfunkbeitrag, nicht aus dem Staatshaushalt."],
 ["Gute Noten für die Pressefreiheit","In der Rangliste der Pressefreiheit von Reporter ohne Grenzen belegte Deutschland 2025 Platz 11 von 180 Staaten. Als Problem nennt die Organisation unter anderem Angriffe auf Medienschaffende."],
 ["Medien decken auch eigene Skandale auf","Den Skandal um die frühere RBB-Intendantin Patricia Schlesinger machte 2022 das Portal Business Insider öffentlich; die öffentlich-rechtlichen Sender berichteten selbst ausführlich darüber. Gesteuerte Medien würden das verschweigen."],
 ["Kontrolle durch Selbstkontrolle","Der Deutsche Presserat (seit 1956) prüft Beschwerden über Berichte und spricht öffentliche Rügen aus. Wer falsch dargestellt wird, hat ein gesetzliches Recht auf Gegendarstellung."]
 ],
 sources:[
+["Primärquelle","Sprachkritische Aktion Unwort des Jahres: Pressemitteilung zum Unwort 2014 „Lügenpresse“.","https://www.unwortdesjahres.net/wp-content/uploads/2021/06/pressemitteilung_unwort2014.pdf"],
+["Behörde","Bundeszentrale für politische Bildung: NS-Schriftleitergesetz, Journalisten als Staatsdiener.","https://www.bpb.de/kurz-knapp/hintergrund-aktuell/283118/ns-schriftleitergesetz-journalisten-als-staatsdiener/"],
+["Behörde","Bundeszentrale für politische Bildung: BVerfG-Urteil zum ZDF-Staatsvertrag (25.03.2014).","https://www.bpb.de/politik/hintergrund-aktuell/181313/bverfg-urteil-zum-zdf-staatsvertrag-25-03-2014"],
+["Behörde","Bundeszentrale für politische Bildung: Vor 60 Jahren gegründet, der Deutsche Presserat als Ethik-Instanz.","https://www.bpb.de/kurz-knapp/hintergrund-aktuell/237615/vor-60-jahren-gegruendet-der-deutsche-presserat-als-ethik-instanz/"],
+["Medien","Legal Tribune Online (2022): Patricia Schlesinger fristlos entlassen.","https://www.lto.de/recht/nachrichten/n/patricia-schlesinger-rbb-ard-intendantin-fristlose-kuendigung"],
 ["Behörde","Bundeszentrale für politische Bildung (2025): Pressefreiheit. Die Lage verschlechtert sich.","https://www.bpb.de/kurz-knapp/hintergrund-aktuell/561743/pressefreiheit-die-lage-verschlechtert-sich/"],
 ["Medien","evangelisch.de / epd (2025): Pressefreiheit. Deutschland fällt auf Platz 11.","https://www.evangelisch.de/inhalte/242563/02-05-2025/tiefpunkt-fuer-pressefreiheit-pressefreiheit-deutschland-faellt-auf-platz-11"],
 ["Gericht","Bundesverfassungsgericht, Urteil vom 25. März 2014, 1 BvF 1/11 (ZDF-Staatsvertrag).",""],
@@ -166,6 +175,9 @@ facts:[
 ["Warum der Mythos so zäh ist","Der Politikwissenschaftler Michael Barkun beschreibt drei Grundannahmen von Verschwörungsdenken: Nichts geschieht zufällig, nichts ist, wie es scheint, alles ist miteinander verbunden. Eine allmächtige Elite erklärt jedes Ereignis und lässt sich nicht widerlegen, weil jeder Gegenbeweis als Teil der Verschwörung gilt."]
 ],
 sources:[
+["Studie","Universität Erfurt, Forschungszentrum Gotha: Arbeitsstelle Illuminatenforschung.","https://www.uni-erfurt.de/forschungszentrum-gotha/forschung/arbeitsstellen-und-netzwerke/arbeitsstelle-illuminatenforschung"],
+["Primärquelle","Bilderberg Meetings: Frequently Asked Questions.","https://bilderbergmeetings.org/frequently-asked-questions"],
+["Medien","Quarks (WDR): Was du über Verschwörungstheorien wissen solltest.","https://www.quarks.de/gesellschaft/psychologie/was-du-ueber-verschwoerungstheorien-wissen-solltest/"],
 ["Buch","Barkun, M. (2003): A Culture of Conspiracy. Apocalyptic Visions in Contemporary America. University of California Press, Berkeley.",""],
 ["Buch","Butter, M. (2018): „Nichts ist, wie es scheint“. Über Verschwörungstheorien. Suhrkamp, Berlin.",""],
 ["Behörde","International Institute of Social History: The Illuminati.","https://iisg.nl/collections/secretsocieties/illuminati.php"],
@@ -195,8 +207,11 @@ facts:[
 ["Insekten essen muss niemand","Die EU hat einzelne Insektenprodukte als neuartige Lebensmittel zugelassen. Sie müssen gekennzeichnet werden, und niemand ist verpflichtet, sie zu essen."]
 ],
 sources:[
+["Medien","SRF (2025): WEF-Vorsitzender Klaus Schwab erklärt sofortigen Rücktritt.","https://www.srf.ch/news/schweiz/weltwirtschaftsforum-wef-wef-vorsitzender-klaus-schwab-erklaert-sofortigen-ruecktritt"],
+["Faktencheck","Correctiv (2023): EU-Insekten dürfen nicht ohne Kennzeichnung in Lebensmitteln enthalten sein.","https://correctiv.org/faktencheck/2023/01/31/eu-insekten-duerfen-nicht-ohne-kennzeichnung-in-lebensmitteln-enthalten-sein/"],
+["Behörde","Verbraucherzentrale: Insekten als Lebensmittel, diese sind zugelassen.","https://www.verbraucherzentrale.de/wissen/lebensmittel/gesund-ernaehren/insekten-als-lebensmittel-diese-sind-zugelassen-60446"],
 ["Faktencheck","Rappler: Fact check on the claim of no more property ownership and privacy by 2030.","https://www.rappler.com/newsbreak/fact-check/no-more-property-ownership-privacy-2030-world-economic-forum"],
-["Primärquelle","Vereinte Nationen: Transforming our world. The 2030 Agenda for Sustainable Development.","https://sdgs.un.org/2030agenda"],
+["Primärquelle","Vereinte Nationen: Transforming our world. The 2030 Agenda for Sustainable Development.","https://www.un.org/development/desa/socialperspectiveondevelopment/2015/08/26/transforming-our-world-the-2030-agenda-for-sustainable-development"],
 ["Medien","CNN (2023, via WTOP): How 15-minute cities turned into an international conspiracy theory.","https://wtop.com/business-finance/2023/02/how-15-minute-cities-turned-into-an-international-conspiracy-theory/"],
 ["Medien","Cherwell (2023): Oxford councillors receive death threats over false rumours of climate lockdown.","https://www.cherwell.org/2023/01/14/oxford-councillors-receive-death-threats-over-false-rumours-of-climate-lockdown/"],
 ["Medien","ZDF (ZDFinfo): Verschwörungswelten. Plandemie, The Great Reset und QAnon.","https://www.zdf.de/dokus/verschwoerungswelten-100"]
@@ -226,6 +241,9 @@ facts:[
 ["Der antisemitische Kern","Der Mythos braucht einen Drahtzieher. Häufig werden jüdische Personen wie George Soros als Strippenzieher benannt; damit schreibt er den alten Mythos der „jüdischen Weltverschwörung“ fort."]
 ],
 sources:[
+["Medien","Tagesspiegel (2019): Anschlag in Neuseeland, die Verschwörungstheorie des Todesschützen.","https://tagesspiegel.de/kultur/anschlag-in-neuseeland-die-verschwoerungstheorie-des-todesschuetzen/24120366.html"],
+["Medien","Tagesspiegel: Globale Rechte formiert sich. Die Eiskälte der völkischen Ideologie.","https://tagesspiegel.de/politik/globale-rechte-formiert-sich-die-eiskaelte-der-voelkischen-ideologie/24139158.html"],
+["Medien","ORF: Wieder hitzige Debatten über „Umvolkung“-Sager (zur NS-Herkunft des Begriffs).","https://orf.at/stories/3391661/"],
 ["Primärquelle","Vereinte Nationen (2000): Pressemitteilung zum Bericht „Replacement Migration“.","https://press.un.org/en/2000/20000317.dev2234.doc.html"],
 ["Faktencheck","Logically Facts: No, the United Nations hasn’t planned the „Great Replacement“.","https://logicallyfacts.com/en/fact-check/false-no-the-united-nations-hasn-t-planned-the-great-replacement"],
 ["Medien","Voice of America: What Is the „Great Replacement“ Theory?","https://www.voanews.com/a/what-is-the-great-replacement-theory-/6578349.html"],
@@ -254,9 +272,11 @@ facts:[
 ["Ein Gericht nannte sie Fälschung","Ein Berner Gericht urteilte 1935, die Protokolle seien eine Fälschung und „Schundliteratur“. Das Obergericht sprach die Angeklagten 1937 aus rein formalrechtlichen Gründen frei, weil das Gesetz nur „unzüchtige“ Schriften erfasste. Eine Bestätigung der Echtheit war das nicht."],
 ["Die Waterloo-Legende","Die Geschichte, Nathan Rothschild habe dank Vorabwissen über die Schlacht von Waterloo ein Vermögen gemacht, stammt aus einem antisemitischen Pamphlet von 1846, das Georges Dairnvaell unter dem Pseudonym „Satan“ veröffentlichte, 31 Jahre nach der Schlacht. Rothschild war nicht in Waterloo."],
 ["Kritik an Soros ja, Weltverschwörung nein","Der US-Investor George Soros, 1930 in Budapest geboren und Überlebender der NS-Verfolgung in Ungarn, finanziert über die Open Society Foundations offen liberale Organisationen. Das kann man politisch kritisieren. Die Behauptung, er steuere Migration oder Regierungen, folgt jedoch dem alten Muster vom „jüdischen Strippenzieher“."],
-["Ein Mythos mit Blutspur","Der Mythos lieferte die ideologische Grundlage für Pogrome und den Holocaust. Auch der Attentäter, der 2019 die Synagoge in Halle angriff und zwei Menschen ermordete, erklärte Juden zur Wurzel gesellschaftlicher Probleme."]
+["Ein Mythos mit Blutspur","Der Mythos lieferte die ideologische Grundlage für Pogrome und den Holocaust. Auch der Attentäter, der am 9. Oktober 2019 die Synagoge in Halle angriff und zwei Menschen ermordete, leugnete in seinem Livestream den Holocaust und gab „den Juden“ die Schuld an gesellschaftlichen Entwicklungen wie sinkenden Geburtenzahlen und Einwanderung."]
 ],
 sources:[
+["Behörde","Bundeszentrale für politische Bildung, APuZ 2021: Samuel Salzborn, Verschwörungsmythen und Antisemitismus.","https://www.bpb.de/shop/zeitschriften/apuz/verschwoerungstheorien-2021/339288/verschwoerungsmythen-und-antisemitismus/"],
+["Medien","t-online (2020): Halle-Prozess, Angeklagter leugnet in Plädoyer den Holocaust.","https://www.t-online.de/nachrichten/deutschland/id_89089558/urteil-am-21-dezember-halle-prozess-angeklagter-leugnet-in-plaedoyer-den-holocaust.html"],
 ["Behörde","United States Holocaust Memorial Museum: Protocols of the Elders of Zion.","https://encyclopedia.ushmm.org/content/en/article/protocols-of-the-elders-of-zion"],
 ["Primärquelle","United States Holocaust Memorial Museum: The Times, 17. August 1921 (Artikel von Philip Graves).","https://encyclopedia.ushmm.org/content/en/artifact/the-times-august-17-1921"],
 ["Buch","Benz, W. (2007): Die Protokolle der Weisen von Zion. Die Legende von der jüdischen Weltverschwörung. C. H. Beck, München.",""],
@@ -307,7 +327,7 @@ short:"Gestaltwandelnde Echsenwesen an den Schalthebeln der Macht? Was hinter de
 tags:["Reptiloide","Echsenmenschen","David Icke","Gestaltwandler","Aliens"],
 claim:"Außerirdische oder unterirdische Reptilienwesen könnten menschliche Gestalt annehmen und hätten Königshäuser, Regierungen und Banken unterwandert. In Videos erkenne man sie an „Schlangenaugen“ oder flackernden Pupillen.",
 origin:[
-"Populär machte die Idee der frühere britische Sportreporter David Icke, vor allem mit seinem Buch „The Biggest Secret“ (1999). Icke stützt sich ausdrücklich auf die „Protokolle der Weisen von Zion“; Fachleute sehen in den Reptiloiden deshalb eine verkleidete Variante des Mythos von der jüdischen Weltverschwörung.",
+"Populär machte die Idee der frühere britische Sportreporter David Icke, vor allem mit seinem Buch „The Biggest Secret“ (1999). Icke greift in seinen Büchern die gefälschten „Protokolle der Weisen von Zion“ auf; Beobachter wie das französische Portal Conspiracy Watch sehen in den Reptiloiden deshalb eine verkleidete Variante des Mythos von der jüdischen Weltverschwörung.",
 "Die Niederlande verhängten 2022 gegen Icke ein zweijähriges Einreiseverbot für den gesamten Schengen-Raum, weil seine Anwesenheit eine Gefahr für die öffentliche Ordnung darstelle. Niederländische Gerichte bestätigten das Verbot."
 ],
 facts:[
@@ -317,6 +337,7 @@ facts:[
 ["Wie viele glauben das?","In einer US-Umfrage von Public Policy Polling (2013) stimmten 4 Prozent der Aussage zu. Forschende weisen darauf hin, dass ein Teil solcher Zustimmungen auf Scherz- oder Zufallsantworten beruht."]
 ],
 sources:[
+["Medien","Conspiracy Watch: Conspiracy theory book of the month, The Biggest Secret.","https://www.conspiracywatch.info/en/conspiracy-theory-book-of-the-month-2-the-biggest-secret/"],
 ["Medien","Foreign Policy (2013): No, 12 million Americans don’t believe the country is run by shape-shifting lizards.","https://foreignpolicy.com/2013/04/02/no-12-million-americans-dont-believe-the-country-is-run-by-shape-shifting-lizards/"],
 ["Gericht","Rechtbank Noord-Holland (2023): Inreisverbod David Icke blijft van kracht.","https://www.rechtspraak.nl/organisatie-en-contact/organisatie/rechtbanken/rechtbank-noord-holland/nieuws/2023/09/inreisverbod-david-icke-blijft-van-kracht"],
 ["Medien","NL Times (2024): Court upholds conspiracy theorist David Icke’s Schengen ban for third year.","https://nltimes.nl/2024/12/28/court-upholds-conspiracy-theorist-david-ickes-schengen-ban-third-year"],
@@ -324,7 +345,7 @@ sources:[
 ],
 quiz:[
 ["Wer machte den Reptiloiden-Mythos populär?",["Der Brite David Icke","Die NASA","Charles Darwin","Albert Einstein"],"Icke verbreitet seine Thesen seit den 1990er Jahren in Büchern und auf Vortragsreisen."],
-["Worauf stützt sich Icke ausdrücklich, was den antisemitischen Kern seiner Erzählung zeigt?",["Auf die „Protokolle der Weisen von Zion“","Auf Darwins Evolutionstheorie","Auf das Grundgesetz","Auf Satellitenbilder"],"Die „Protokolle“ sind eine Fälschung. Die Echsen ersetzen in Ickes Erzählung die angebliche jüdische Weltregierung."],
+["Welche antisemitische Fälschung greift Icke in seinen Büchern auf?",["Auf die „Protokolle der Weisen von Zion“","Auf Darwins Evolutionstheorie","Auf das Grundgesetz","Auf Satellitenbilder"],"Die „Protokolle“ sind eine Fälschung. Die Echsen ersetzen in Ickes Erzählung die angebliche jüdische Weltregierung."],
 ["Was sind die „flackernden Echsenaugen“ in Videos tatsächlich?",["Kompressionsartefakte digitaler Videos","Beweise für Gestaltwandler","Kontaktlinsen der Elite","Spiegelungen von Ufos"],"Wo Videodaten verlustbehaftet komprimiert werden, entstehen solche Bildfehler, besonders an Kanten wie Augen."]
 ]
 },
@@ -341,19 +362,20 @@ origin:[
 kernel:"US-Behörden hatten vor den Anschlägen Warnhinweise, die nicht ausreichend verfolgt wurden; das dokumentiert der Bericht der 9/11-Kommission selbst. Und die US-Regierung begründete den Irakkrieg 2003 mit falschen Behauptungen über Massenvernichtungswaffen. Behördenversagen und spätere Lügen beweisen aber keine Inszenierung der Anschläge.",
 facts:[
 ["Al-Qaida hat sich bekannt","Osama bin Laden übernahm 2004 in einer Videobotschaft die Verantwortung für die Anschläge. Chalid Scheich Mohammed gestand, sie geplant zu haben."],
-["Stahl muss nicht schmelzen, um zu versagen","Baustahl verliert bei etwa 600 °C rund die Hälfte seiner Festigkeit; die Brände in den Türmen erreichten deutlich höhere Temperaturen. Zusammen mit den durch den Aufprall zerstörten Stützen und abgeschlagenem Brandschutz reichte das für den Einsturz (NIST 2005; Bažant und Zhou 2002)."],
-["Was mit WTC 7 geschah","Trümmer des Nordturms lösten im Gebäude 7 Brände aus, die rund sieben Stunden unkontrolliert wüteten. Das US-Normungsinstitut NIST kam 2008 zu dem Ergebnis, dass die Wärmeausdehnung von Deckenträgern einen Hauptträger von seinem Auflager schob, sodass die Stütze 79 einknickte und ein fortschreitender Einsturz folgte."],
-["Das Pentagon","Augenzeugen, Wrackteile und die Identifizierung der Passagiere anhand ihrer DNA belegen, dass American-Airlines-Flug 77 in das Pentagon stürzte."],
+["Stahl muss nicht schmelzen, um zu versagen","Laut NIST verliert Baustahl oberhalb von etwa 600 °C erheblich an Festigkeit und Steifigkeit; schon zwischen etwa 540 und 600 °C ist rund die Hälfte der Festigkeit verloren. Zusammen mit den durch den Aufprall zerstörten Stützen und abgeschlagenem Brandschutz reichte das für den Einsturz (NIST 2005; Bažant und Zhou 2002)."],
+["Was mit WTC 7 geschah","Trümmer des Nordturms lösten im Gebäude 7 Brände aus, die stundenlang unkontrolliert brannten, weil der Einsturz der Türme die städtische Wasserleitung für die Sprinkler der unteren Stockwerke beschädigt hatte. Das US-Normungsinstitut NIST kam 2008 zu dem Ergebnis, dass die Wärmeausdehnung von Deckenträgern einen Hauptträger von seinem Auflager schob, sodass die Stütze 79 einknickte und ein fortschreitender Einsturz folgte."],
+["Das Pentagon","Augenzeugen, Wrackteile und die Identifizierung fast aller Passagiere anhand ihrer DNA belegen, dass American-Airlines-Flug 77 in das Pentagon stürzte."],
 ["Keine Spur einer Sprengung","Eine kontrollierte Sprengung von Hochhäusern erfordert wochenlange, sichtbare Vorbereitungen und viele Beteiligte. Trotz Tausender Ermittler, Ingenieure und Einsatzkräfte vor Ort ist nie ein belastbarer Beleg dafür aufgetaucht."]
 ],
 sources:[
-["Bericht","National Commission on Terrorist Attacks Upon the United States (2004): The 9/11 Commission Report.","https://www.9-11commission.gov/report/"],
+["Medien","PBS NewsHour: Identifying Victims (DNA-Identifizierung der Opfer).","https://www.pbs.org/newshour/show/identifying-victims"],
+["Bericht","National Commission on Terrorist Attacks Upon the United States (2004): The 9/11 Commission Report.","https://9-11commission.gov/report/"],
 ["Behörde","NIST: Questions and Answers about the NIST WTC 7 Investigation.","https://www.nist.gov/property-fieldsection/questions-and-answers-about-nist-wtc-7-investigation"],
-["Studie","Bažant, Z. P., Zhou, Y. (2002): Why Did the World Trade Center Collapse? Simple Analysis. Journal of Engineering Mechanics 128(1), S. 2 bis 6.","https://doi.org/10.1061/(ASCE)0733-9399(2002)128:1(2)"]
+["Studie","Bažant, Z. P., Zhou, Y. (2002): Why Did the World Trade Center Collapse? Simple Analysis. Journal of Engineering Mechanics 128(1), S. 2 bis 6.","https://ascelibrary.com/doi/10.1061/(ASCE)0733-9399(2002)128:1(2)"]
 ],
 quiz:[
-["Warum musste der Stahl im World Trade Center nicht schmelzen, um zu versagen?",["Baustahl verliert schon bei etwa 600 °C rund die Hälfte seiner Festigkeit","Weil die Türme aus Holz gebaut waren","Weil Kerosin Stahl chemisch auflöst","Weil der Stahl vorher gefroren war"],"Tragwerke versagen lange vor dem Schmelzpunkt, wenn ihre Festigkeit unter die Last sinkt."],
-["Was löste laut NIST den Einsturz von WTC 7 aus?",["Brände, deren Hitze Träger ausdehnte, sodass die Stütze 79 versagte","Eine Rakete","Ein Erdbeben","Eine geplante Sprengung"],"Das Gebäude brannte stundenlang unkontrolliert, weil die Wasserversorgung für die Sprinkleranlage ausgefallen war."],
+["Warum musste der Stahl im World Trade Center nicht schmelzen, um zu versagen?",["Baustahl verliert schon bei rund 600 °C etwa die Hälfte seiner Festigkeit","Weil die Türme aus Holz gebaut waren","Weil Kerosin Stahl chemisch auflöst","Weil der Stahl vorher gefroren war"],"Tragwerke versagen lange vor dem Schmelzpunkt, wenn ihre Festigkeit unter die Last sinkt."],
+["Was löste laut NIST den Einsturz von WTC 7 aus?",["Brände, deren Hitze Träger ausdehnte, sodass die Stütze 79 versagte","Eine Rakete","Ein Erdbeben","Eine geplante Sprengung"],"Das Gebäude brannte stundenlang unkontrolliert, weil der Einsturz der Türme die Wasserleitung für die Sprinkler der unteren Stockwerke beschädigt hatte."],
 ["Wer bekannte sich 2004 in einer Videobotschaft zu den Anschlägen?",["Osama bin Laden","Die US-Regierung","Niemand","Die NASA"],"Bin Laden übernahm die Verantwortung, nachdem er sie zunächst bestritten hatte."]
 ]
 },
@@ -372,13 +394,13 @@ facts:[
 ["Die Labore sind öffentlich bekannt","Es handelt sich um ukrainische Gesundheits- und Veterinärlabore, die die USA im Rahmen eines Programms zur Verringerung biologischer Gefahren unterstützten. Es geht auf das Nunn-Lugar-Programm von 1991 zurück, das nach dem Zerfall der Sowjetunion den sicheren Umgang mit gefährlichen Erregern und Waffenbeständen fördern sollte."],
 ["Die UN sehen keine Hinweise","Im UN-Sicherheitsrat erklärte die UN-Abrüstungsbeauftragte Izumi Nakamitsu im März 2022, den Vereinten Nationen seien keine Biowaffenprogramme in der Ukraine bekannt."],
 ["Wahlergebnisse sprechen eine klare Sprache","Bei der Parlamentswahl 2019 kam der Zusammenschluss rechtsextremer Parteien um Swoboda auf rund 2,2 Prozent und scheiterte an der Fünfprozenthürde."],
-["Ein jüdischer Präsident","Wolodymyr Selenskyj, der aus einer jüdischen Familie stammt, gewann die Stichwahl um das Präsidentenamt 2019 mit 73,22 Prozent der Stimmen. Mehrere Angehörige seiner Familie wurden im Holocaust ermordet."]
+["Ein jüdischer Präsident","Wolodymyr Selenskyj, der aus einer jüdischen Familie stammt, gewann die Stichwahl um das Präsidentenamt 2019 mit 73,22 Prozent der Stimmen."]
 ],
 sources:[
 ["Behörde","UN News (März 2022): Bericht über die Sitzung des UN-Sicherheitsrats zu russischen Biowaffen-Vorwürfen.","https://news.un.org/en/story/2022/03/1114272"],
 ["Primärquelle","UN Press (März 2022): Sitzungsbericht des Sicherheitsrats SC/14835.","https://press.un.org/en/2022/sc14835.doc.htm"],
 ["Medien","Wikipedia (englisch): 2019 Ukrainian parliamentary election (amtliche Ergebnisse mit Quellenangaben).","https://en.wikipedia.org/wiki/2019_Ukrainian_parliamentary_election"],
-["Medien","TASS (2019): Zelensky wins 73.22% of the vote.","https://tass.com/world/1055237"]
+["Medien","TASS (2019): Zelensky wins 73.22% of the vote.","https://tass.com/world/1055237/amp"]
 ],
 quiz:[
 ["Was erklärte die UN-Abrüstungsbeauftragte im März 2022 zu den Biowaffen-Vorwürfen?",["Den Vereinten Nationen seien keine Biowaffenprogramme in der Ukraine bekannt","Sie bestätigte US-Biowaffenlabore","Sie verweigerte jede Aussage","Sie forderte die Zerstörung der Labore"],"Russland legte keine überzeugenden Belege vor. Die Labore sind Teil eines öffentlich dokumentierten Programms."],

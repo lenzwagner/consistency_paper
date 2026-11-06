@@ -18,8 +18,10 @@ facts:[
 ["Leugnung ist strafbar","Nach § 130 Abs. 3 des Strafgesetzbuchs wird mit Freiheitsstrafe bis zu fünf Jahren oder Geldstrafe bestraft, wer den Holocaust öffentlich in einer Weise billigt, leugnet oder verharmlost, die geeignet ist, den öffentlichen Frieden zu stören."]
 ],
 sources:[
+["Studie","Bösch, F. (2026): Die „Auschwitz-Lüge“. Zeitgeschichte digital (zu Thies Christophersens Broschüre von 1973).","https://zeitgeschichte-digital.de/doks/files/2965/radikale-rechte_boesch_auschwitz_luege_v1_de_2026.pdf"],
+["Medien","Tagesspiegel: Der totale Höcke (zur Dresdner Rede 2017).","https://www.tagesspiegel.de/politik/der-totale-hocke-4912966.html"],
 ["Behörde","Bundeszentrale für politische Bildung: Auschwitzlüge (Dossier Antisemitismus).","https://www.bpb.de/themen/antisemitismus/dossier-antisemitismus/504203/auschwitzluege/"],
-["Behörde","United States Holocaust Memorial Museum: Documenting Numbers of Victims of the Holocaust and Nazi Persecution.","https://encyclopedia.ushmm.org/content/en/article/documenting-numbers-of-victims-of-the-holocaust-and-nazi-persecution"],
+["Behörde","United States Holocaust Memorial Museum: How Many People did the Nazis Murder? (Documenting Numbers of Victims).","https://encyclopedia.ushmm.org/content/en/article/documenting-numbers-of-victims-of-the-holocaust-and-nazi-persecution"],
 ["Medien","Der Standard: Der Holocaust in Zahlen. Das Höfle-Telegramm.","https://www.derstandard.at/story/3000000312982/der-holocaust-in-zahlen-das-hoefle-telegramm"],
 ["Medien","The Jewish Chronicle (2025): Yad Vashem recovers names of five million Holocaust victims.","https://www.thejc.com/news/israel/yad-vashem-recovers-names-of-five-million-holocaust-victims-in-historic-milestone-nl3qo26u"],
 ["Gesetz","§ 130 Strafgesetzbuch (Volksverhetzung).","https://www.gesetze-im-internet.de/stgb/__130.html"],
@@ -46,7 +48,7 @@ origin:[
 ],
 facts:[
 ["Kein Ingenieur","Leuchter hatte keinen Ingenieursabschluss. Im Juni 1991 verpflichtete er sich in einer Vereinbarung mit der Ingenieurskammer von Massachusetts, sich nicht mehr als Ingenieur zu bezeichnen und nicht als solcher zu arbeiten."],
-["Untaugliche Probenahme","Cyanidverbindungen reichern sich vor allem in der obersten Schicht einer Wand an. Leuchter schlug große Brocken heraus, die im Labor als Ganzes zermahlen wurden; mögliche Spuren wurden dadurch stark verdünnt. Der Chemiker James Roth, dessen Labor die Proben analysiert hatte, äußerte sich später in Errol Morris’ Dokumentarfilm „Mr. Death“ (1999) entsprechend kritisch über die Aussagekraft."],
+["Untaugliche Probenahme","Cyanidverbindungen reichern sich vor allem in der obersten Schicht einer Wand an. Leuchter schlug große Brocken heraus, die im Labor als Ganzes zermahlen wurden; mögliche Spuren wurden dadurch stark verdünnt. Der Chemiker James Roth, dessen Labor die Proben analysiert hatte, erklärte später in Errol Morris’ Dokumentarfilm „Mr. Death“ (1999), Cyanid dringe nur etwa 10 Mikrometer tief ein; die Analyse ganzer Brocken gleiche dem Versuch, die Farbe einer Wand anhand des Holzes dahinter zu untersuchen."],
 ["Andere Bedingungen, andere Rückstände","Für Menschen tödliche Blausäurekonzentrationen liegen weit unter denen, die nötig waren, um Läuse in Kleidung über viele Stunden abzutöten. In den Gaskammern starben Menschen binnen Minuten, danach wurde gelüftet. Deshalb ist dort deutlich weniger Berliner Blau zu erwarten als in Entlausungskammern."],
 ["Cyanid wurde trotzdem nachgewiesen","Das Krakauer Institut für Gerichtsgutachten wies 1994 mit einer geeigneten Methode Cyanidverbindungen in den Überresten der Gaskammern nach (Markiewicz et al.)."],
 ["Die Bauakten sprechen eine klare Sprache","Unterlagen der SS-Zentralbauleitung erwähnen etwa in einem Schreiben vom 29. Januar 1943 einen „Vergasungskeller“ und belegen Bestellungen gasdichter Türen. Die Firma Topf & Söhne lieferte die Krematoriumsöfen. Ausgewertet haben das unter anderem Jean-Claude Pressac (1989) und Robert Jan van Pelt (2002)."]
@@ -110,6 +112,8 @@ facts:[
 ["Krieg ist kein Völkermord","Die Angriffe waren Teil des alliierten Luftkriegs, den Deutschland mit Angriffen auf Städte wie Warschau, Rotterdam und Coventry selbst entfesselt hatte. Der Begriff „Bombenholocaust“ setzt Kriegsopfer mit dem planmäßigen Mord an sechs Millionen Jüdinnen und Juden gleich und verharmlost diesen."]
 ],
 sources:[
+["Primärquelle","Landeshauptstadt Dresden, Stadtarchiv: Helmut Schnatz zu den angeblichen Tieffliegerangriffen (Historikerkommission).","https://www.dresden.de/media/pdf/stadtarchiv/Schnatz_100403.pdf"],
+["Medien","Tagesspiegel (2005): Demokraten, jetzt die NPD stoppen (zum „Bomben-Holocaust“-Eklat im Landtag).","https://www.tagesspiegel.de/politik/demokraten-jetzt-die-npd-stoppen-1187449.html"],
 ["Behörde","Landeshauptstadt Dresden: Historikerkommission zu den Luftangriffen auf Dresden.","https://dresden.de/en/city/07/03/historical_commission.php"],
 ["Medien","t-online (2020): Interview mit dem Historiker Dietmar Süß zum Dresden-Opfermythos.","https://www.t-online.de/nachrichten/wissen/geschichte/id_87278172/dresden-bombardierung-vor-75-jahren-opfer-mythos-ist-goebbels-letzter-erfolg-.html"],
 ["Faktencheck","Holocaust Denial on Trial (Emory University): Dresden death toll.","https://www.hdot.org/debunking-denial/d2-dresden-death-toll/"],
@@ -168,6 +172,8 @@ facts:[
 ["Vernichtung von Anfang an","Kommissarbefehl, Hungerplan und die Massenmorde der Einsatzgruppen an Jüdinnen und Juden zeigen, dass der Krieg gegen die Sowjetunion von Beginn an als Eroberungs- und Vernichtungskrieg angelegt war."]
 ],
 sources:[
+["Medien","Falter (2019): Die Nacht vor dem Weltkrieg (zum inszenierten Überfall auf den Sender Gleiwitz).","https://www.falter.at/zeitung/20190828/die-nacht-vor-dem-weltkrieg"],
+["Medien","evangelisch.de (2014): Interview mit dem Historiker Wigbert Benz zum Hungerplan.","https://www.evangelisch.de/inhalte/108680/12-10-2014/dass-millionen-verhungerten-sah-er-als-logische-folge"],
 ["Behörde","Bundeszentrale für politische Bildung: Präventivkrieg gegen die Sowjetunion?","https://www.bpb.de/500014/praeventivkrieg-gegen-die-sowjetunion/"],
 ["Buch","Ueberschär, G. R., Bezymenskij, L. A. (Hg.) (1998): Der deutsche Angriff auf die Sowjetunion 1941. Die Kontroverse um die Präventivkriegsthese. Primus, Darmstadt.",""],
 ["Behörde","Bundeszentrale für politische Bildung: Revisionismus (Dossier Rechtsextremismus).","https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/500811/revisionismus/"]
@@ -191,11 +197,14 @@ origin:[
 facts:[
 ["Verbrecherische Befehle von oben","Der Kriegsgerichtsbarkeitserlass vom 13. Mai 1941 stellte Gewalt gegen sowjetische Zivilisten weitgehend straffrei. Der Kommissarbefehl vom 6. Juni 1941 ordnete die Erschießung gefangener politischer Kommissare der Roten Armee an. Beide kamen aus der Führung der Wehrmacht."],
 ["Millionen tote Kriegsgefangene","Von rund 5,7 Millionen sowjetischen Soldaten in deutscher Gefangenschaft starben mehr als drei Millionen, vor allem durch Hunger, Kälte und Krankheit (USHMM; Christian Streit, „Keine Kameraden“, 1978)."],
-["Beteiligung am Holocaust","Wehrmachteinheiten unterstützten die Einsatzgruppen bei Massenerschießungen, etwa beim Massaker von Babyn Jar bei Kiew Ende September 1941, bei dem über 33.000 Jüdinnen und Juden ermordet wurden."],
+["Beteiligung am Holocaust","Die Wehrmacht war an Massenmorden beteiligt, etwa beim Massaker von Babyn Jar bei Kiew am 29. und 30. September 1941: Das Sonderkommando 4a meldete 33.771 ermordete Jüdinnen und Juden, Wehrmachtsoldaten halfen, das Gelände abzuriegeln und zu sichern."],
 ["„Bandenbekämpfung“ als Vorwand","Unter dem Etikett der Partisanenbekämpfung zerstörten deutsche Truppen in den besetzten Gebieten, etwa in Belarus, ganze Dörfer und ermordeten deren Bewohner."],
-["Die Ausstellungen","Die Wanderausstellungen des Hamburger Instituts für Sozialforschung („Vernichtungskrieg. Verbrechen der Wehrmacht 1941 bis 1944“ ab 1995, überarbeitete Fassung ab 2001) machten die Forschung einem breiten Publikum bekannt. Eine Kommission fand in der ersten Ausstellung Fehler bei einzelnen Bildzuordnungen, bestätigte aber deren Grundaussagen."]
+["Die Ausstellungen","Die Wanderausstellungen des Hamburger Instituts für Sozialforschung („Vernichtungskrieg. Verbrechen der Wehrmacht 1941 bis 1944“ ab 1995, überarbeitete Fassung ab 2001) machten die Forschung einem breiten Publikum bekannt. Eine Historikerkommission fand im November 2000 in der ersten Ausstellung Fehler und Ungenauigkeiten, aber keine Fälschungen: Von 1.433 Bildern mussten weniger als 20 entfernt werden, die Kernaussagen seien in der Sache zutreffend."]
 ],
 sources:[
+["Behörde","Bundeszentrale für politische Bildung: Vor 80 Jahren, Massaker von Babyn Jar.","https://www.bpb.de/kurz-knapp/hintergrund-aktuell/340854/vor-80-jahren-massaker-von-babyn-jar/"],
+["Behörde","Deutsches Historisches Museum, LeMO: Massenmorde von Babi Jar 1941.","https://www.dhm.de/lemo/kapitel/der-zweite-weltkrieg/voelkermord/massenmorde-von-babi-jar-1941"],
+["Primärquelle","German History in Documents and Images: Richtlinien für die Behandlung politischer Kommissare (Kommissarbefehl), 6. Juni 1941.","https://germanhistorydocs.org/de/deutschland-nationalsozialismus-1933-1945/richtlinien-fuer-die-behandlung-politischer-kommissare-kommissarbefehl-6-juni-1941"],
 ["Behörde","United States Holocaust Memorial Museum: Soviet Prisoners of War.","https://encyclopedia.ushmm.org/content/en/gallery/soviet-prisoners-of-war"],
 ["Buch","Streit, C. (1978): Keine Kameraden. Die Wehrmacht und die sowjetischen Kriegsgefangenen 1941 bis 1945. DVA, Stuttgart.",""],
 ["Buch","Hamburger Institut für Sozialforschung (Hg.) (2002): Verbrechen der Wehrmacht. Dimensionen des Vernichtungskrieges 1941 bis 1944. Ausstellungskatalog. Hamburger Edition, Hamburg.",""],
@@ -225,6 +234,8 @@ facts:[
 ["Heute offizielle Forschung vor Ort","Deutschland forscht heute ganz öffentlich in derselben Region: Die Neumayer-Station III des Alfred-Wegener-Instituts steht auf dem Ekström-Schelfeis im Königin-Maud-Land."]
 ],
 sources:[
+["Behörde","Alfred-Wegener-Institut: Über die Neumayer-Station III.","https://onexpedition.awi.de/page/uber-neumayer-station-iii/"],
+["Medien","Areo Magazine (2023): Unidentified Fascist Objects. Flying Saucers, Holocaust Deniers and Nazi UFOs.","https://areomagazine.com/2023/01/11/unidentified-fascist-objects-flying-saucers-holocaust-deniers-and-nazi-ufos/"],
 ["Studie","Charlier, P. et al. (2018): The remains of Adolf Hitler. A biomedical analysis and definitive identification. European Journal of Internal Medicine 54, S. 10 bis 12.","https://doi.org/10.1016/j.ejim.2018.05.014"],
 ["Medien","History.com (2018): Bericht über die Untersuchung von Hitlers Zähnen.","https://history.com/news/hitler-death-cause-teeth-analysis"],
 ["Buch","Lüdecke, C., Summerhayes, C. (2012): The Third Reich in Antarctica. The German Antarctic Expedition 1938 bis 39. Erskine Press und Bluntisham Books.",""],
