@@ -107,7 +107,7 @@ facts:[
 ["Was 2020 geschah","Der Bundestag beschloss die Änderung selbst. Sie legte erstmals im Gesetz fest, welche Schutzmaßnahmen überhaupt zulässig sind (§ 28a), und band sie an eine vom Bundestag festgestellte epidemische Lage, die er jederzeit wieder aufheben konnte."],
 ["Gerichte kontrollierten in beide Richtungen","Verwaltungsgerichte kippten zahlreiche Maßnahmen, etwa Beherbergungsverbote im Oktober 2020. Das Bundesverfassungsgericht prüfte die „Bundesnotbremse“ und hielt sie im November 2021 für verfassungsgemäß. Unabhängige Kontrolle ist das Gegenteil einer Diktatur."],
 ["Opposition war jederzeit möglich","Es gab Tausende Demonstrationen, Parteien, die Maßnahmen ablehnten, zogen in Parlamente ein, Medien berichteten kritisch. In einer Diktatur wäre all das unmöglich gewesen."],
-["Der „Judenstern“ verhöhnt die Opfer","Ab September 1941 mussten Jüdinnen und Juden im Deutschen Reich einen gelben Stern tragen; er diente ihrer Ausgrenzung, Deportation und Ermordung. Der Zentralrat der Juden in Deutschland kritisierte die Vergleiche mit Ungeimpften scharf als Verharmlosung des Holocaust."]
+["Der „Judenstern“ verhöhnt die Opfer","Ab September 1941 mussten Jüdinnen und Juden im Deutschen Reich einen gelben Stern tragen; er diente ihrer Ausgrenzung, Deportation und Ermordung. Josef Schuster, Präsident des Zentralrats der Juden in Deutschland, nannte Vergleiche der Corona-Lage mit der Situation der Juden in der NS-Zeit „unsäglich“."]
 ],
 sources:[
 ["Medien","Tagesspiegel: „Jana aus Kassel“ und die lange Kette absurder Analogien.","https://www.tagesspiegel.de/politik/jana-aus-kassel-und-die-lange-kette-absurder-analogien-4210873.html"],
@@ -179,7 +179,7 @@ sources:[
 ["Primärquelle","Bilderberg Meetings: Frequently Asked Questions.","https://bilderbergmeetings.org/frequently-asked-questions"],
 ["Medien","Quarks (WDR): Was du über Verschwörungstheorien wissen solltest.","https://www.quarks.de/gesellschaft/psychologie/was-du-ueber-verschwoerungstheorien-wissen-solltest/"],
 ["Buch","Barkun, M. (2003): A Culture of Conspiracy. Apocalyptic Visions in Contemporary America. University of California Press, Berkeley.",""],
-["Buch","Butter, M. (2018): „Nichts ist, wie es scheint“. Über Verschwörungstheorien. Suhrkamp, Berlin.",""],
+["Buch","Butter, M. (2018): „Nichts ist, wie es scheint“. Über Verschwörungstheorien. Suhrkamp, Berlin.","https://d-nb.info/1141700190"],
 ["Behörde","International Institute of Social History: The Illuminati.","https://iisg.nl/collections/secretsocieties/illuminati.php"],
 ["Medien","ZDF Terra X History: Gefährliche Mächte? Die großen Verschwörungstheorien.","https://www.zdf.de/video/dokus/terra-x-history-102/gefaehrliche-maechte-die-grossen-verschwoerungstheorien-100"]
 ],
@@ -279,8 +279,8 @@ sources:[
 ["Medien","t-online (2020): Halle-Prozess, Angeklagter leugnet in Plädoyer den Holocaust.","https://www.t-online.de/nachrichten/deutschland/id_89089558/urteil-am-21-dezember-halle-prozess-angeklagter-leugnet-in-plaedoyer-den-holocaust.html"],
 ["Behörde","United States Holocaust Memorial Museum: Protocols of the Elders of Zion.","https://encyclopedia.ushmm.org/content/en/article/protocols-of-the-elders-of-zion"],
 ["Primärquelle","United States Holocaust Memorial Museum: The Times, 17. August 1921 (Artikel von Philip Graves).","https://encyclopedia.ushmm.org/content/en/artifact/the-times-august-17-1921"],
-["Buch","Benz, W. (2007): Die Protokolle der Weisen von Zion. Die Legende von der jüdischen Weltverschwörung. C. H. Beck, München.",""],
-["Buch","Hofer, S. (2011): Richter zwischen den Fronten. Die Urteile des Berner Prozesses um die „Protokolle der Weisen von Zion“ 1933 bis 1937. Helbing Lichtenhahn, Basel.",""],
+["Buch","Benz, W. (2007): Die Protokolle der Weisen von Zion. Die Legende von der jüdischen Weltverschwörung. C. H. Beck, München.","https://d-nb.info/982061862"],
+["Buch","Hofer, S. (2011): Richter zwischen den Fronten. Die Urteile des Berner Prozesses um die „Protokolle der Weisen von Zion“ 1933 bis 1937. Helbing Lichtenhahn, Basel.","https://d-nb.info/1015056393"],
 ["Medien","Encyclopaedia Britannica: Where Do Anti-Semitic Conspiracy Theories About the Rothschild Family Come From?","https://www.britannica.com/story/where-do-anti-semitic-conspiracy-theories-about-the-rothschild-family-come-from"],
 ["Primärquelle","The Rothschild Archive: Nathan Rothschild and the Battle of Waterloo (Brian Cathcart).","https://www.rothschildarchive.org/materials/nathan_and_waterloo.pdf"]
 ],
@@ -312,7 +312,7 @@ sources:[
 ["Medien","Engadget (2022): QAnon founder may have been identified thanks to machine learning.","https://www.engadget.com/qanon-machine-learning-205618665.html"],
 ["Medien","Encyclopaedia Britannica: Pizzagate.","https://britannica.com/topic/Pizzagate"],
 ["Medien","ZDF Schule: QAnon und Verschwörungsmythen.","https://schule.zdf.de/video/qanon-und-verschwoerungsmythen-creative-commons-clip-100"],
-["Buch","Rothschild, M. (2021): The Storm Is Upon Us. How QAnon Became a Movement, Cult, and Conspiracy Theory of Everything. Melville House, New York.",""]
+["Buch","Rothschild, M. (2021): The Storm Is Upon Us. How QAnon Became a Movement, Cult, and Conspiracy Theory of Everything. Melville House.",""]
 ],
 quiz:[
 ["Was ist Adrenochrom tatsächlich?",["Ein Oxidationsprodukt von Adrenalin ohne verjüngende Wirkung","Ein geheimes Elixier der Elite","Ein Impfstoff","Ein Stoff aus Kinderblut, der unsterblich macht"],"Die Substanz ist chemisch gut bekannt und lässt sich im Labor herstellen. Die Geschichte dahinter ist frei erfunden."],

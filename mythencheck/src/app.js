@@ -38,7 +38,7 @@ function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'
 function catStyle(cat){ return '--c1:var(--' + cat + '-1);--c2:var(--' + cat + '-2)'; }
 function norm(s){ return String(s).toLowerCase().replace(/ß/g, 'ss').normalize('NFD').replace(/[̀-ͯ]/g, ''); }
 function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
-function host(u){ try { return new URL(u).hostname.replace(/^www\./, ''); } catch(e){ return u; } }
+function host(u){ try { var h = new URL(u).hostname.replace(/^www\./, ''); return h === 'd-nb.info' ? 'Katalog der DNB' : h; } catch(e){ return u; } }
 function num(n){ return n.toLocaleString('de-DE'); }
 
 TOPICS.forEach(function(t){

@@ -16,8 +16,8 @@ kernel:"Das Klima hat sich in der Erdgeschichte tatsächlich immer wieder gewand
 facts:[
 ["Der Weltklimarat ist eindeutig","„Es ist eindeutig, dass der Einfluss des Menschen die Atmosphäre, den Ozean und die Landflächen erwärmt hat“, heißt es im Sechsten Sachstandsbericht des IPCC (2021). Die beste Schätzung für den menschengemachten Anteil an der Erwärmung von 1850 bis 1900 bis zum Zeitraum 2010 bis 2019 lautet 1,07 °C (wahrscheinliche Spanne 0,8 bis 1,3 °C). Natürliche Einflüsse wie Sonne und Vulkane trugen nur zwischen minus 0,1 und plus 0,1 °C bei."],
 ["Über 99 Prozent Konsens","Eine Auswertung von 88.125 klimabezogenen Fachartikeln, die seit 2012 erschienen sind, ergab: Der Konsens über den menschengemachten Klimawandel liegt in der begutachteten Fachliteratur bei über 99 Prozent (Lynas et al. 2021)."],
-["Die Sonne scheidet als Ursache aus","Die Sonnenaktivität ist seit etwa 1980 leicht gesunken, während die Temperaturen stark gestiegen sind. Zudem kühlt die Stratosphäre ab, während sich die untere Atmosphäre erwärmt. Genau dieses Muster erzeugen Treibhausgase; eine stärkere Sonne würde beide Schichten erwärmen."],
-["Wenig Gas, große Wirkung","CO₂ macht nur rund 0,04 Prozent der Luft aus, absorbiert aber Wärmestrahlung sehr wirksam. Diesen Effekt beschrieben schon John Tyndall (1859) und Svante Arrhenius (1896). Die Konzentration stieg von etwa 280 ppm vor der Industrialisierung auf rund 430 ppm im Mai 2025, also um mehr als die Hälfte. Die Isotopenzusammensetzung des zusätzlichen CO₂ verrät seine Herkunft aus fossilen Brennstoffen."],
+["Die Sonne scheidet als Ursache aus","Die Sonnenaktivität zeigt seit Jahrzehnten einen leicht fallenden Trend, während die Temperaturen stark gestiegen sind. Zudem kühlt die Stratosphäre ab, während sich die untere Atmosphäre erwärmt. Genau dieses Muster erzeugen Treibhausgase; eine stärkere Sonne würde beide Schichten erwärmen."],
+["Wenig Gas, große Wirkung","CO₂ macht nur rund 0,04 Prozent der Luft aus, absorbiert aber Wärmestrahlung sehr wirksam. Diesen Effekt beschrieben schon John Tyndall (1859) und Svante Arrhenius (1896). Die Konzentration stieg von etwa 280 ppm vor der Industrialisierung auf rund 430 ppm im Jahr 2025 (Messstation Mauna Loa), also um mehr als die Hälfte. Die Isotopenzusammensetzung des zusätzlichen CO₂ verrät seine Herkunft aus fossilen Brennstoffen."],
 ["Früher wärmer? Nicht überall zugleich","Mittelalterliche Warmzeit und Kleine Eiszeit verliefen regional und zeitlich versetzt. Die heutige Erwärmung erfasst dagegen fast den ganzen Globus: Für mehr als 98 Prozent der Erdoberfläche war das 20. Jahrhundert die wärmste Periode der letzten 2000 Jahre (Neukom et al. 2019)."],
 ["Neue Rekorde","2024 war mit 1,60 °C über dem vorindustriellen Niveau das bisher wärmste Jahr der Messgeschichte. Im Dreijahresmittel 2023 bis 2025 lag die globale Temperatur erstmals über der 1,5-Grad-Marke (Copernicus-Klimadienst)."]
 ],
@@ -27,12 +27,12 @@ sources:[
 ["Studie","Neukom, R. et al. (2019): No evidence for globally coherent warm and cold periods over the preindustrial Common Era. Nature 571, S. 550 bis 554.","https://link.springer.com/10.1038/s41586-019-1401-2"],
 ["Behörde","Copernicus-Klimadienst / ECMWF (Januar 2026): 2025 was the third-warmest year on record.","https://www.ecmwf.int/node/31031"],
 ["Faktencheck","Klimafakten.de: Faktencheck zum Grundsatzprogramm der AfD.","https://www.klimafakten.de/sites/default/files/downloads/faktencheckafd-grundsatzprogramm.pdf"],
-["Buch","Rahmstorf, S., Schellnhuber, H. J.: Der Klimawandel. Diagnose, Prognose, Therapie. C. H. Beck, München (Reihe C. H. Beck Wissen).",""],
-["Buch","Oreskes, N., Conway, E. M. (2010): Merchants of Doubt. Bloomsbury, New York. Deutsche Ausgabe: Die Machiavellis der Wissenschaft (2014).",""]
+["Buch","Rahmstorf, S., Schellnhuber, H. J. (2019): Der Klimawandel. Diagnose, Prognose, Therapie. 9. Auflage. C. H. Beck, München.","https://d-nb.info/1189939045"],
+["Buch","Oreskes, N., Conway, E. M. (2010): Merchants of Doubt. Bloomsbury Press. Deutsche Ausgabe: Die Machiavellis der Wissenschaft. Das Netzwerk des Leugnens. Wiley-VCH, Weinheim 2014.","https://d-nb.info/1049503333"]
 ],
 quiz:[
 ["Wie groß ist laut Weltklimarat die beste Schätzung des menschengemachten Anteils an der Erwärmung (Zeitraum 2010 bis 2019 gegenüber 1850 bis 1900)?",["1,07 °C","0,1 °C","0,4 °C","2,5 °C"],"Der IPCC beziffert den menschengemachten Anteil auf 1,07 °C. Das entspricht praktisch der gesamten beobachteten Erwärmung; natürliche Faktoren lagen nahe null."],
-["Welcher Befund spricht klar gegen die Sonne als Hauptursache der Erwärmung?",["Die Stratosphäre kühlt ab, während sich die untere Atmosphäre erwärmt","Die Sonne ist seit 1980 deutlich heller geworden","Sonnenflecken erzeugen CO₂","Die Erwärmung betrifft nur die Südhalbkugel"],"Eine stärkere Sonne würde alle Schichten der Atmosphäre erwärmen. Die Abkühlung der Stratosphäre ist der Fingerabdruck von Treibhausgasen. Außerdem ist die Sonnenaktivität seit etwa 1980 leicht gesunken."],
+["Welcher Befund spricht klar gegen die Sonne als Hauptursache der Erwärmung?",["Die Stratosphäre kühlt ab, während sich die untere Atmosphäre erwärmt","Die Sonne ist seit 1980 deutlich heller geworden","Sonnenflecken erzeugen CO₂","Die Erwärmung betrifft nur die Südhalbkugel"],"Eine stärkere Sonne würde alle Schichten der Atmosphäre erwärmen. Die Abkühlung der Stratosphäre ist der Fingerabdruck von Treibhausgasen. Außerdem ist die Sonnenaktivität seit Jahrzehnten leicht rückläufig."],
 ["Warum kann ein Gas mit nur rund 0,04 Prozent Anteil das Klima verändern?",["Weil CO₂ Wärmestrahlung absorbiert und wieder abstrahlt","Weil CO₂ schwerer als Luft ist und Hitze am Boden staut","Weil CO₂ die Ozonschicht zerstört","Gar nicht, die Wirkung ist erfunden"],"Entscheidend ist nicht die Menge, sondern die physikalische Eigenschaft: CO₂ absorbiert Infrarotstrahlung. Das ist seit dem 19. Jahrhundert im Labor gemessen."]
 ]
 },
@@ -43,27 +43,27 @@ short:"Die Antarktis als Eiswall, NASA-Fotos als Fälschung: Was Flacherdler gla
 tags:["Flat Earth","Flacherde","Scheibe","NASA","Eiswall"],
 claim:"Die Erde sei eine flache Scheibe, umgeben von einem Eiswall, den wir Antarktis nennen. Die Kugelgestalt sei eine Lüge von NASA und Regierungen, Satellitenbilder seien gefälscht, und die Schwerkraft gebe es in dieser Form nicht.",
 origin:[
-"Die moderne Flacherde-Bewegung geht auf den Engländer Samuel Rowbotham zurück, der ab Mitte des 19. Jahrhunderts seine „Zetetische Astronomie“ verbreitete. 1956 gründete Samuel Shenton die Flat Earth Society. Einen enormen Aufschwung erlebte die Idee ab etwa 2014 durch Videos auf YouTube.",
+"Die moderne Flacherde-Bewegung geht auf den Engländer Samuel Rowbotham zurück, der ab Mitte des 19. Jahrhunderts seine „Zetetische Astronomie“ verbreitete. 1956 gründete Samuel Shenton die Flat Earth Society. Einen enormen Aufschwung erlebte die Idee seit Mitte der 2010er-Jahre durch Videos auf YouTube und in sozialen Netzwerken.",
 "Pikant: Der verbreitete Glaube, die Menschen des Mittelalters hätten die Erde für eine Scheibe gehalten, ist selbst eine Legende des 19. Jahrhunderts. Gebildete wussten seit der Antike, dass die Erde eine Kugel ist."
 ],
 facts:[
-["Seit über 2000 Jahren vermessen","Eratosthenes von Kyrene bestimmte um 240 v. Chr. aus dem unterschiedlichen Sonnenstand in Syene und Alexandria den Erdumfang erstaunlich genau. Heute kennen wir ihn präzise: rund 40.075 Kilometer am Äquator. Schon Aristoteles verwies auf den stets runden Erdschatten bei Mondfinsternissen."],
+["Seit über 2000 Jahren vermessen","Eratosthenes von Kyrene berechnete im 3. Jahrhundert v. Chr. aus dem unterschiedlichen Sonnenstand in Syene und Alexandria den Erdumfang. Heute kennen wir ihn präzise: rund 40.075 Kilometer am Äquator. Schon Aristoteles bemerkte, dass man von Ägypten aus Sterne sieht, die in Europa nie zu sehen sind, und der Erdschatten auf dem Mond ist bei jeder Mondfinsternis rund."],
 ["Der Horizont verschluckt Schiffe","Schiffe verschwinden hinter dem Horizont von unten nach oben: zuerst der Rumpf, zuletzt die Mastspitze. Wer höher steht, sieht weiter. Beides folgt direkt aus der Krümmung der Erdoberfläche."],
 ["Zeitzonen und fremde Sterne","Wenn in Berlin Mittag ist, herrscht in Sydney tiefe Nacht. Auf der Südhalbkugel sieht man Sternbilder wie das Kreuz des Südens, die von Mitteleuropa aus nie aufgehen. Unter einer gemeinsamen Himmelskuppel über einer Scheibe wäre beides nicht erklärbar."],
 ["Flugrouten über den Süden","Es gibt Nonstop-Flüge von Sydney nach Santiago de Chile. Auf der üblichen Flacherde-Karte mit dem Nordpol in der Mitte wäre diese Strecke mehr als doppelt so lang wie in Wirklichkeit; kein heutiges Verkehrsflugzeug hätte dafür die nötige Reichweite."],
 ["Ihr eigenes Experiment","In der Dokumentation „Behind the Curve“ (2018) prüfte ein Flacherdler mit einem rund 20.000 Dollar teuren Ringlaser-Kreisel, ob sich die Erde dreht. Das Gerät zeigte eine Drift von 15 Grad pro Stunde: exakt die Erdrotation von 360 Grad in 24 Stunden."],
-["Mit bloßem Auge sichtbar","Die Internationale Raumstation ISS umrundet die Erde etwa alle 90 Minuten. Ihre Überflüge lassen sich vorausberechnen und vom eigenen Balkon aus beobachten."]
+["Mit bloßem Auge sichtbar","Die Internationale Raumstation ISS umrundet die Erde in rund 400 Kilometern Höhe etwa alle 93 Minuten. Ihre Überflüge lassen sich vorausberechnen und vom eigenen Balkon aus beobachten."]
 ],
 sources:[
 ["Medien","Quarks (WDR), Science Cops Folge 88: Die Akte Flache Erde.","https://www.quarks.de/podcast/quarks-science-cops-folge-88-die-akte-flache-erde/"],
 ["Medien","Executive Traveller: Qantas’ Sydney to Santiago flights make triumphant return (Nonstop-Verbindung).","https://www.executivetraveller.com/news/qantas-restarts-sydney-santiago-chile"],
-["Buch","Garwood, C. (2007): Flat Earth. The History of an Infamous Idea. Macmillan, London.",""],
-["Buch","Russell, J. B. (1991): Inventing the Flat Earth. Columbus and Modern Historians. Praeger, New York.",""],
+["Buch","Garwood, C. (2007): Flat Earth. The History of an Infamous Idea. Pan Books. ISBN 978-1-4050-4702-9.",""],
+["Buch","Russell, J. B. (1991): Inventing the Flat Earth. Columbus and Modern Historians.",""],
 ["Medien","Newsweek (2019): Bericht über die Experimente in der Netflix-Dokumentation „Behind the Curve“.","https://newsweek.com/behind-curve-netflix-ending-light-experiment-mark-sargent-documentary-movie-1343362"],
 ["Behörde","Bundeszentrale für politische Bildung: Reichsbürger, Mondlandung, Reptiloide, Flacherde.","https://www.bpb.de/themen/medien-journalismus/wahre-welle/270429/reichsbuerger-mondlandung-reptiloide-flacherde/"]
 ],
 quiz:[
-["Wer bestimmte schon um 240 v. Chr. den Umfang der Erde?",["Eratosthenes von Kyrene","Galileo Galilei","Isaac Newton","Nikolaus Kopernikus"],"Eratosthenes verglich den Sonnenstand in Syene und Alexandria und berechnete daraus den Erdumfang, fast 1800 Jahre vor Kopernikus."],
+["Wer berechnete schon im 3. Jahrhundert v. Chr. den Umfang der Erde?",["Eratosthenes von Kyrene","Galileo Galilei","Isaac Newton","Nikolaus Kopernikus"],"Eratosthenes verglich den Sonnenstand in Syene und Alexandria und berechnete daraus den Erdumfang, fast 1800 Jahre vor Kopernikus."],
 ["Welches Ergebnis lieferte der Kreiselversuch eines Flacherdlers in der Doku „Behind the Curve“?",["Eine Drift von 15 Grad pro Stunde, also genau die Erdrotation","Keinerlei Bewegung","Eine Drift von 1 Grad pro Tag","Das Gerät ging kaputt"],"15 Grad pro Stunde ergeben 360 Grad in 24 Stunden. Der Versuch bestätigte unfreiwillig die Rotation der Erde."],
 ["Was wussten Gelehrte im Mittelalter über die Form der Erde?",["Dass die Erde eine Kugel ist","Sie hielten sie mehrheitlich für eine Scheibe","Sie hielten sie für einen Würfel","Sie hatten keinerlei Vorstellung davon"],"Die Kugelgestalt war seit der Antike Lehrstoff. Die Idee vom „Scheiben-Mittelalter“ ist eine Legende des 19. Jahrhunderts."]
 ]
@@ -76,13 +76,13 @@ tags:["Apollo","Mond","NASA","Moon Hoax","Kubrick"],
 claim:"Die USA hätten die Mondlandungen von 1969 bis 1972 in einem Filmstudio inszeniert, um den Wettlauf ins All gegen die Sowjetunion zu gewinnen. Belege seien die „wehende“ Flagge, fehlende Sterne auf den Fotos und die tödliche Strahlung der Van-Allen-Gürtel.",
 origin:[
 "Populär wurde die Idee durch Bill Kaysings Buch „We Never Went to the Moon“ von 1976. Eine Fernsehsendung des US-Senders Fox brachte sie 2001 einem Millionenpublikum nahe.",
-"Bemerkenswert: Die Sowjetunion, die die Missionen mit eigenen Mitteln verfolgte und jeden Grund gehabt hätte, einen Betrug ihres Rivalen zu entlarven, hat die Landungen nie bestritten."
+"Bemerkenswert: Die Sowjetunion verfolgte die Missionen mit eigener Überwachungstechnik und hätte jeden Grund gehabt, einen Betrug ihres Rivalen zu entlarven. Stattdessen berichtete die Große Sowjetische Enzyklopädie die Landungen als Tatsache."
 ],
 facts:[
 ["Zwölf Menschen auf dem Mond","Bei sechs Landungen (Apollo 11, 12, 14, 15, 16 und 17) betraten zwischen 1969 und 1972 zwölf Astronauten den Mond. Sie brachten rund 382 Kilogramm Gestein mit, das bis heute in Laboren auf der ganzen Welt untersucht wird und sich deutlich von irdischem Gestein unterscheidet."],
 ["Spiegel auf dem Mond","An den Landestellen von Apollo 11, 14 und 15 stehen Retroreflektoren. Observatorien schießen bis heute Laserpulse darauf und messen so die Entfernung zwischen Erde und Mond auf Zentimeter genau."],
 ["Fotos aus dem Orbit","Die NASA-Sonde Lunar Reconnaissance Orbiter fotografiert seit 2009 die Landestellen. Auf Aufnahmen von 2011 sind Abstiegsstufen, zurückgelassene Geräte, Fußpfade der Astronauten und die Spuren des Mondautos zu erkennen."],
-["Flagge und Sterne","Die Flagge hing an einer waagrechten Querstange. Sie bewegte sich nur, wenn die Astronauten den Mast drehten, und schwang im Vakuum ohne bremsende Luft lange nach. Sterne fehlen auf den Fotos, weil die Kameras auf die grell beleuchtete Mondoberfläche belichtet waren."],
+["Flagge und Sterne","Die Flagge hing an einer Stange mit waagrechtem Querstück am oberen Ende. Sie bewegte sich nur, wenn die Astronauten den Mast drehten, und schwang im Vakuum ohne bremsende Luft lange nach. Sterne fehlen auf den Fotos, weil die Kameras auf die grell beleuchtete Mondoberfläche belichtet waren."],
 ["Die Strahlung war beherrschbar","Die Crews durchquerten die Van-Allen-Gürtel binnen weniger Stunden. Die gemessenen Hautdosen lagen je nach Mission bei etwa 0,2 bis gut 1 rad und damit unter den empfohlenen Jahreshöchstwerten für beruflich strahlenexponierte Personen."],
 ["Zu viele Mitwisser","Der Physiker David Robert Grimes schätzte 2016, dass rund 411.000 Menschen (die Zahl der NASA-Beschäftigten 1965) hätten schweigen müssen. Eine solche Verschwörung wäre seinem Modell zufolge nach etwa 3,7 Jahren aufgeflogen."]
 ],
@@ -99,7 +99,7 @@ sources:[
 quiz:[
 ["Was messen Observatorien bis heute mit Hilfe der Apollo-Retroreflektoren?",["Die Entfernung zwischen Erde und Mond","Die Temperatur auf dem Mond","Die Strahlung im All","Nichts, es gibt dort keine Reflektoren"],"Laserpulse werden von den Spiegeln zurückgeworfen. Aus der Laufzeit ergibt sich die Entfernung auf Zentimeter genau."],
 ["Warum sind auf vielen Apollo-Fotos keine Sterne zu sehen?",["Die Kameras waren auf die hell beleuchtete Oberfläche belichtet","Weil die Fotos im Studio entstanden","Weil es vom Mond aus keine Sterne gibt","Weil die NASA sie wegretuschierte"],"Bei kurzer Belichtungszeit für helle Motive bleiben schwache Lichtquellen wie Sterne unsichtbar. Das kennt jeder, der nachts eine beleuchtete Straße fotografiert."],
-["Welcher Staat hätte am meisten Interesse gehabt, einen Betrug aufzudecken, und hat die Landungen nie bestritten?",["Die Sowjetunion","Kanada","Frankreich","Japan"],"Die Sowjetunion war der direkte Konkurrent im Wettlauf zum Mond und verfolgte die Flüge mit eigenen Mitteln. Einen Betrug hätte sie propagandistisch ausgeschlachtet."]
+["Welcher Staat hätte am meisten Interesse gehabt, einen Betrug aufzudecken, und berichtete die Landungen trotzdem als Tatsache?",["Die Sowjetunion","Kanada","Frankreich","Japan"],"Die Sowjetunion war der direkte Konkurrent im Wettlauf zum Mond und verfolgte die Flüge mit eigener Technik. Einen Betrug hätte sie propagandistisch ausgeschlachtet; ihre Staatsenzyklopädie beschrieb die Landungen dagegen als Tatsache."]
 ]
 },
 {
@@ -144,8 +144,8 @@ origin:[
 "Nach nahezu jedem Extremwetter tauchen in sozialen Netzwerken HAARP-Behauptungen auf, so auch nach der Flut im Juli 2021 in Rheinland-Pfalz und Nordrhein-Westfalen."
 ],
 facts:[
-["Forschung an der Ionosphäre","HAARP sendet Kurzwellen in die Ionosphäre, die elektrisch leitende Schicht der Hochatmosphäre ab etwa 60 bis 80 Kilometern Höhe. Untersucht wird deren Physik, die zum Beispiel für Funkverbindungen und Satellitennavigation wichtig ist."],
-["Wetter entsteht viel weiter unten","Wolken, Regen und Stürme entstehen in der Troposphäre, also in den untersten etwa 10 bis 15 Kilometern. Die Sendeleistung von HAARP (rund 3,6 Megawatt) ist winzig im Vergleich zu den Energiemengen eines einzigen Gewitters, die um viele Größenordnungen größer sind."],
+["Forschung an der Ionosphäre","HAARP sendet Kurzwellen in die Ionosphäre, die elektrisch leitende Schicht der Hochatmosphäre ab etwa 70 bis 80 Kilometern Höhe. Untersucht wird deren Physik, die zum Beispiel für Funkverbindungen und Satellitennavigation wichtig ist."],
+["Wetter entsteht viel weiter unten","Wolken, Regen und Stürme entstehen in der Troposphäre, also in der untersten Schicht der Atmosphäre, die an den Polen etwa 8 und am Äquator etwa 18 Kilometer hoch reicht. Die Sendeleistung von HAARP (rund 3,6 Megawatt) ist winzig im Vergleich zu den Energiemengen eines einzigen Gewitters, die um viele Größenordnungen größer sind."],
 ["Offen für Besucher","Seit August 2015 betreibt die University of Alaska Fairbanks die Anlage. Forschende aus aller Welt können dort Experimente durchführen, und es gibt regelmäßig Tage der offenen Tür."],
 ["Die Ahrtal-Flut ist erklärbar","Im Juli 2021 blieb das Tief „Bernd“ tagelang fast ortsfest und lud enorme Regenmengen ab. Die Forschungsgruppe World Weather Attribution kam zu dem Ergebnis, dass der Klimawandel solche Starkregen in der Region 1,2- bis 9-mal wahrscheinlicher und 3 bis 19 Prozent intensiver gemacht hat."],
 ["Erdbeben entstehen im Gestein","Erdbeben entstehen durch Spannungen in der Erdkruste in Kilometern Tiefe. Radiowellen dringen nicht ins Gestein ein und können dort keine Spannungen erzeugen."]
@@ -157,7 +157,7 @@ sources:[
 ["Studie","World Weather Attribution (2021): Heavy rainfall which led to severe flooding in Western Europe made more likely by climate change.","https://www.worldweatherattribution.org/heavy-rainfall-which-led-to-severe-flooding-in-western-europe-made-more-likely-by-climate-change"]
 ],
 quiz:[
-["In welcher Schicht der Atmosphäre forscht HAARP?",["In der Ionosphäre, ab etwa 60 bis 80 Kilometern Höhe","In der Troposphäre, wo das Wetter entsteht","Im Erdmantel","Jenseits der Mondumlaufbahn"],"HAARP untersucht die Ionosphäre. Das Wetter spielt sich dagegen in der viel tiefer liegenden Troposphäre ab."],
+["In welcher Schicht der Atmosphäre forscht HAARP?",["In der Ionosphäre, ab etwa 70 bis 80 Kilometern Höhe","In der Troposphäre, wo das Wetter entsteht","Im Erdmantel","Jenseits der Mondumlaufbahn"],"HAARP untersucht die Ionosphäre. Das Wetter spielt sich dagegen in der viel tiefer liegenden Troposphäre ab."],
 ["Wer betreibt HAARP seit 2015?",["Die University of Alaska Fairbanks","Die NATO","Die Vereinten Nationen","Ein privater Ölkonzern"],"Die US-Luftwaffe übergab die Anlage im August 2015 an die Universität, die dort zivile Forschung betreibt."],
 ["Was führte im Juli 2021 zu den extremen Regenmengen im Ahrtal?",["Ein nahezu ortsfestes Tiefdruckgebiet, dessen Starkregen durch den Klimawandel wahrscheinlicher wurde","Radiowellen aus Alaska","Ein Dammbruch in Belgien","Versprühte Chemikalien"],"Tief „Bernd“ blieb tagelang über der Region. Attributionsstudien zeigen, dass der Klimawandel solche Ereignisse wahrscheinlicher und heftiger macht."]
 ]
@@ -174,7 +174,7 @@ origin:[
 ],
 facts:[
 ["Viren funken nicht","Viren sind biologische Partikel, die sich nur in lebenden Zellen vermehren und von Mensch zu Mensch über Tröpfchen und Aerosole übertragen werden. Radiowellen können sie weder erzeugen noch transportieren."],
-["Pandemie ohne 5G","Das Coronavirus verbreitete sich 2020 auch in Ländern, die damals noch gar kein 5G-Netz hatten, etwa in großen Teilen Afrikas."],
+["Pandemie ohne 5G","Das Coronavirus verbreitete sich auch in vielen Ländern, die gar kein 5G-Netz hatten. Zudem können Viren nicht über Funkwellen übertragen werden."],
 ["Zu wenig Energie für Schäden am Erbgut","Mobilfunk nutzt nichtionisierende Strahlung. Ihre Energie reicht nicht aus, um chemische Bindungen oder das Erbgut zu schädigen. Der einzige gesicherte biologische Effekt ist eine leichte Gewebeerwärmung, und die Grenzwerte liegen deutlich darunter."],
 ["Keine Belege unterhalb der Grenzwerte","Nach Angaben der Bundesregierung und des Bundesamts für Strahlenschutz sind sich die Expertengremien einig: Es gibt keine Nachweise schädlicher Wirkungen unterhalb der geltenden Grenzwerte."],
 ["Keine exotischen Frequenzen","5G nutzt in Deutschland vor allem Frequenzen um 3,6 Gigahertz, also in einem ähnlichen Bereich wie WLAN mit 2,4 und 5 Gigahertz."]
@@ -331,7 +331,7 @@ origin:[
 facts:[
 ["Das Zitat im Zusammenhang","In einem TED-Vortrag über CO₂-Emissionen sagte Gates 2010, mit sehr guter Arbeit bei Impfstoffen, Gesundheitsversorgung und reproduktiver Gesundheit ließe sich das Bevölkerungswachstum um „vielleicht 10 oder 15 Prozent“ senken. Gemeint ist ein bekannter Effekt: Wenn weniger Kinder sterben, bekommen Familien weniger Kinder. Es geht um langsameres Wachstum, nicht um Tote."],
 ["Tinte statt Chip","Mit Geld der Gates-Stiftung entwickelten Forschende einen unsichtbaren Farbstoff aus Quantenpunkten, der per Mikronadel-Pflaster unter die Haut gebracht wird und einen Impfnachweis speichern kann (McHugh et al. 2019). Er ist nur mit einer angepassten Smartphone-Kamera aus nächster Nähe lesbar, sendet nichts, kann nicht orten, wurde an Ratten und isolierter Haut getestet und war nie Teil eines COVID-19-Impfstoffs."],
-["Die Physik spricht dagegen","Ein Ortungschip bräuchte eine Stromquelle, eine Antenne und eine Funkverbindung. Nichts davon passt durch eine Impfkanüle mit einem Innendurchmesser von wenigen Zehntelmillimetern."],
+["Die Physik spricht dagegen","Ein Ortungschip bräuchte eine Stromquelle, eine Antenne und eine Funkverbindung. Nichts davon passt unbemerkt durch die feine Kanüle einer Impfspritze, und ein Funksender ohne Energiequelle kann nichts senden."],
 ["Die „666“-Patentnummer","Eine Microsoft-Patentanmeldung zu einem Kryptowährungssystem trägt die fortlaufende Nummer WO2020060606. Die Ziffernfolge ist Zufall der Nummerierung und hat mit Impfstoffen nichts zu tun."],
 ["Was tatsächlich finanziert wird","Die Gates-Stiftung ist Gründungspartner der Impfallianz Gavi, die nach eigenen Angaben dazu beigetragen hat, seit 2000 mehr als eine Milliarde Kinder zu impfen."]
 ],
@@ -394,7 +394,7 @@ origin:[
 facts:[
 ["Ein Streit um Formulierungen","Das Oberlandesgericht entschied ausschließlich über die Bedingungen der Auslobung. Über die Existenz des Masernvirus hat kein Gericht geurteilt."],
 ["Seit 1954 im Labor gezüchtet","John Enders und Thomas Peebles züchteten das Masernvirus 1954 in Zellkultur. Daraus entstand der erste Masernimpfstoff, der 1963 zugelassen wurde."],
-["Sichtbar und vermessen","Mit dem Elektronenmikroskop wurden Viren bereits 1939 sichtbar gemacht. Heute bestimmen Forschende ihre Struktur bis auf atomare Ebene, etwa das Spike-Protein von SARS-CoV-2 (Wrapp et al. 2020), und entschlüsseln ihr Erbgut durch Sequenzierung."],
+["Sichtbar und vermessen","Mit dem Elektronenmikroskop wurden Viren schon Ende der 1930er-Jahre sichtbar gemacht, zuerst das Tabakmosaikvirus. Heute bestimmen Forschende ihre Struktur bis auf atomare Ebene, etwa das Spike-Protein von SARS-CoV-2 (Wrapp et al. 2020), und entschlüsseln ihr Erbgut durch Sequenzierung."],
 ["Impfungen beweisen die Wirkung","Ein Impfstoff, der gezielt gegen ein Virus gerichtet ist, könnte nicht wirken, wenn es das Virus nicht gäbe. Die Zahl der Masern-Todesfälle sank weltweit von geschätzt 800.000 im Jahr 2000 auf rund 107.500 im Jahr 2023; die Impfung verhinderte in diesem Zeitraum schätzungsweise 60 Millionen Todesfälle."]
 ],
 sources:[

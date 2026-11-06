@@ -14,7 +14,7 @@ facts:[
 ["Dokumente der Täter","Das Protokoll der Wannsee-Konferenz vom 20. Januar 1942 hält die Organisation der „Endlösung der Judenfrage“ fest und listet über elf Millionen Jüdinnen und Juden in Europa auf. Das Höfle-Telegramm vom 11. Januar 1943 meldet für das Jahr 1942 allein 1.274.166 Deportierte in die Lager der „Aktion Reinhardt“. Der britische Geheimdienst hatte es abgefangen; Historiker fanden es im Jahr 2000 in britischen Archiven."],
 ["Täter haben gestanden","Heinrich Himmler sprach in seiner Posener Rede vom 4. Oktober 1943 vor SS-Führern offen von der „Ausrottung des jüdischen Volkes“. Der Auschwitz-Kommandant Rudolf Höß schilderte die Massenvergasungen 1946 als Zeuge in Nürnberg und in seinen Aufzeichnungen."],
 ["Gerichte haben es festgestellt","Der Nürnberger Prozess (1945/46), der Eichmann-Prozess (1961) und die Frankfurter Auschwitz-Prozesse (1963 bis 1965) dokumentierten die Verbrechen umfassend. 2000 stellte ein Londoner Gericht im Verfahren Irving gegen Lipstadt fest, dass der britische Autor David Irving ein aktiver Holocaustleugner ist, der historische Belege bewusst verfälscht."],
-["Die Zahl ist belegt","Die Forschung kommt mit unterschiedlichen Methoden auf 5,29 bis rund 6,2 Millionen ermordete Jüdinnen und Juden (Benz 1991), Raul Hilberg auf rund 5,1 Millionen. Die Gedenkstätte Yad Vashem hat bis 2025 die Namen von fünf Millionen Opfern dokumentiert. Allein in Auschwitz-Birkenau wurden rund 1,1 Millionen Menschen ermordet, die allermeisten von ihnen Juden."],
+["Die Zahl ist belegt","Die Forschung kommt mit unterschiedlichen Methoden auf 5,29 bis rund 6,2 Millionen ermordete Jüdinnen und Juden (Benz 1991), Raul Hilberg auf rund 5,1 Millionen. Die Gedenkstätte Yad Vashem hat bis 2025 die Namen von fünf Millionen Opfern dokumentiert. Allein im Lagerkomplex Auschwitz kamen rund 1,1 Millionen Menschen ums Leben, darunter etwa 960.000 Juden."],
 ["Leugnung ist strafbar","Nach § 130 Abs. 3 des Strafgesetzbuchs wird mit Freiheitsstrafe bis zu fünf Jahren oder Geldstrafe bestraft, wer den Holocaust öffentlich in einer Weise billigt, leugnet oder verharmlost, die geeignet ist, den öffentlichen Frieden zu stören."]
 ],
 sources:[
@@ -26,9 +26,9 @@ sources:[
 ["Medien","The Jewish Chronicle (2025): Yad Vashem recovers names of five million Holocaust victims.","https://www.thejc.com/news/israel/yad-vashem-recovers-names-of-five-million-holocaust-victims-in-historic-milestone-nl3qo26u"],
 ["Gesetz","§ 130 Strafgesetzbuch (Volksverhetzung).","https://www.gesetze-im-internet.de/stgb/__130.html"],
 ["Medien","ZDF Schule: Holocaustleugnung. Welche Lügen kursieren und wie ihr sie erkennt.","https://schule.zdf.de/video/mw2gg-holocaustleugnung-102"],
-["Buch","Hilberg, R.: Die Vernichtung der europäischen Juden. 3 Bände. Fischer, Frankfurt am Main.",""],
+["Buch","Hilberg, R. (1990): Die Vernichtung der europäischen Juden. 3 Bände. Fischer Taschenbuch Verlag, Frankfurt am Main.","https://d-nb.info/901331147"],
 ["Buch","Benz, W. (Hg.) (1991): Dimension des Völkermords. Die Zahl der jüdischen Opfer des Nationalsozialismus. Oldenbourg, München.",""],
-["Buch","Evans, R. J. (2001): Der Geschichtsfälscher. Holocaust und historische Wahrheit im David-Irving-Prozess. Campus, Frankfurt am Main.",""]
+["Buch","Evans, R. J. (2001): Der Geschichtsfälscher. Holocaust und historische Wahrheit im David-Irving-Prozess. Campus, Frankfurt am Main.","https://d-nb.info/961517646"]
 ],
 quiz:[
 ["Was dokumentiert das Höfle-Telegramm vom Januar 1943?",["1.274.166 Deportierte in die Lager der „Aktion Reinhardt“ allein im Jahr 1942","Die Kapitulation der Wehrmacht","Einen Befehl zur Auflösung der Lager","Die Zahl deutscher Kriegsgefangener"],"Das Telegramm ist eine interne SS-Meldung. Es wurde vom britischen Geheimdienst abgefangen und erst im Jahr 2000 in Archiven entdeckt."],
@@ -56,7 +56,7 @@ facts:[
 sources:[
 ["Faktencheck","Holocaust Denial on Trial (Emory University): The Leuchter Report.","https://www.hdot.org/debunking-denial/ab12-leuchter-report/"],
 ["Behörde","Bundeszentrale für politische Bildung: Auschwitzlüge.","https://www.bpb.de/themen/antisemitismus/dossier-antisemitismus/504203/auschwitzluege/"],
-["Buch","van Pelt, R. J. (2002): The Case for Auschwitz. Evidence from the Irving Trial. Indiana University Press, Bloomington.",""],
+["Buch","van Pelt, R. J. (2002): The Case for Auschwitz. Evidence from the Irving Trial. Indiana University Press, Bloomington.","https://d-nb.info/96729665X"],
 ["Buch","Pressac, J.-C. (1989): Auschwitz. Technique and Operation of the Gas Chambers. Beate Klarsfeld Foundation, New York.",""],
 ["Medien","Morris, E. (1999): Mr. Death. The Rise and Fall of Fred A. Leuchter, Jr. Dokumentarfilm.",""]
 ],
@@ -86,7 +86,7 @@ sources:[
 ["Behörde","Anne Frank Haus: Die Echtheit des Tagebuchs von Anne Frank.","https://www.annefrank.org/en/anne-frank/go-in-depth/authenticity-diary-anne-frank/"],
 ["Faktencheck","Full Fact: Diary of Anne Frank not written by American novelist after WW2.","https://fullfact.org/online/anne-frank-diary-ballpoint-pen-meyer-levin-false-claim/"],
 ["Faktencheck","Holocaust Denial on Trial (Emory University): Ballpoint pen.","https://www.hdot.org/debunking-denial/af3-ballpoint-pen/"],
-["Buch","NIOD (Hg.) (1986): De Dagboeken van Anne Frank. Kritische Ausgabe. Deutsch: Die Tagebücher der Anne Frank. Fischer, Frankfurt am Main.",""]
+["Buch","NIOD (Hg.) (1986): De Dagboeken van Anne Frank. Kritische Ausgabe. Deutsch: Die Tagebücher der Anne Frank. S. Fischer, Frankfurt am Main 1988.",""]
 ],
 quiz:[
 ["Womit schrieb Anne Frank ihr Tagebuch laut forensischer Untersuchung überwiegend?",["Mit Füllfederhalter und Bleistift","Mit Kugelschreiber","Mit Schreibmaschine","Mit Filzstift"],"Das Niederländische Forensische Institut fand überwiegend graublaue Füllfederhalter-Tinte und Bleistift, zeitgemäßes Material."],
@@ -117,7 +117,7 @@ sources:[
 ["Behörde","Landeshauptstadt Dresden: Historikerkommission zu den Luftangriffen auf Dresden.","https://dresden.de/en/city/07/03/historical_commission.php"],
 ["Medien","t-online (2020): Interview mit dem Historiker Dietmar Süß zum Dresden-Opfermythos.","https://www.t-online.de/nachrichten/wissen/geschichte/id_87278172/dresden-bombardierung-vor-75-jahren-opfer-mythos-ist-goebbels-letzter-erfolg-.html"],
 ["Faktencheck","Holocaust Denial on Trial (Emory University): Dresden death toll.","https://www.hdot.org/debunking-denial/d2-dresden-death-toll/"],
-["Buch","Taylor, F. (2004): Dresden. Dienstag, 13. Februar 1945. Siedler, München.",""]
+["Buch","Taylor, F. (2004): Dresden, Dienstag, 13. Februar 1945. Militärische Logik oder blanker Terror? Bertelsmann, München.","https://d-nb.info/972383751"]
 ],
 quiz:[
 ["Wie viele Todesopfer ermittelte die Dresdner Historikerkommission 2010?",["Bis zu 25.000","Rund 250.000","Rund 500.000","Rund 2.000"],"Die Kommission prüfte alle verfügbaren Quellen. Die Zahl deckt sich mit der Zählung der Behörden von 1945."],
@@ -143,8 +143,8 @@ facts:[
 ["Eine Million fiele auf","Eine Million zusätzliche Tote hätte sich in Vermisstenstatistiken, Suchdienst-Unterlagen und Gräbern niederschlagen müssen. Dafür gibt es keine Belege."]
 ],
 sources:[
-["Buch","Bischof, G., Ambrose, S. E. (Hg.) (1992): Eisenhower and the German POWs. Facts Against Falsehood. Louisiana State University Press, Baton Rouge.",""],
-["Buch","Overmans, R. (2000): Soldaten hinter Stacheldraht. Deutsche Kriegsgefangene des Zweiten Weltkriegs. Berlin, München.",""],
+["Buch","Bischof, G., Ambrose, S. E. (Hg.) (1992): Eisenhower and the German POWs. Facts Against Falsehood. Louisiana State University Press.",""],
+["Buch","Overmans, R. (2000): Soldaten hinter Stacheldraht. Deutsche Kriegsgefangene des Zweiten Weltkriegs. Propyläen, Berlin und München.",""],
 ["Medien","Wikipedia: Kriegsgefangenenlager Rheinberg (Überblick mit Quellenangaben).","https://de.wikipedia.org/wiki/Kriegsgefangenenlager_Rheinberg"],
 ["Medien","Wikipedia (englisch): Other Losses (Darstellung der Kontroverse mit Quellenangaben).","https://en.wikipedia.org/wiki/Other_Losses"]
 ],
@@ -175,7 +175,7 @@ sources:[
 ["Medien","Falter (2019): Die Nacht vor dem Weltkrieg (zum inszenierten Überfall auf den Sender Gleiwitz).","https://www.falter.at/zeitung/20190828/die-nacht-vor-dem-weltkrieg"],
 ["Medien","evangelisch.de (2014): Interview mit dem Historiker Wigbert Benz zum Hungerplan.","https://www.evangelisch.de/inhalte/108680/12-10-2014/dass-millionen-verhungerten-sah-er-als-logische-folge"],
 ["Behörde","Bundeszentrale für politische Bildung: Präventivkrieg gegen die Sowjetunion?","https://www.bpb.de/500014/praeventivkrieg-gegen-die-sowjetunion/"],
-["Buch","Ueberschär, G. R., Bezymenskij, L. A. (Hg.) (1998): Der deutsche Angriff auf die Sowjetunion 1941. Die Kontroverse um die Präventivkriegsthese. Primus, Darmstadt.",""],
+["Buch","Ueberschär, G. R., Bezymenskij, L. A. (Hg.) (1998): Der deutsche Angriff auf die Sowjetunion 1941. Die Kontroverse um die Präventivkriegsthese. Primus, Darmstadt.","https://d-nb.info/953515540"],
 ["Behörde","Bundeszentrale für politische Bildung: Revisionismus (Dossier Rechtsextremismus).","https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/500811/revisionismus/"]
 ],
 quiz:[
@@ -207,7 +207,7 @@ sources:[
 ["Primärquelle","German History in Documents and Images: Richtlinien für die Behandlung politischer Kommissare (Kommissarbefehl), 6. Juni 1941.","https://germanhistorydocs.org/de/deutschland-nationalsozialismus-1933-1945/richtlinien-fuer-die-behandlung-politischer-kommissare-kommissarbefehl-6-juni-1941"],
 ["Behörde","United States Holocaust Memorial Museum: Soviet Prisoners of War.","https://encyclopedia.ushmm.org/content/en/gallery/soviet-prisoners-of-war"],
 ["Buch","Streit, C. (1978): Keine Kameraden. Die Wehrmacht und die sowjetischen Kriegsgefangenen 1941 bis 1945. DVA, Stuttgart.",""],
-["Buch","Hamburger Institut für Sozialforschung (Hg.) (2002): Verbrechen der Wehrmacht. Dimensionen des Vernichtungskrieges 1941 bis 1944. Ausstellungskatalog. Hamburger Edition, Hamburg.",""],
+["Buch","Hamburger Institut für Sozialforschung (Hg.) (2002): Verbrechen der Wehrmacht. Dimensionen des Vernichtungskrieges 1941 bis 1944. Ausstellungskatalog. Hamburger Edition, Hamburg.","https://d-nb.info/961922583"],
 ["Medien","Berliner Zeitung (2018): „Vogelschiss“-Äußerung. Gauland denkt nicht an Entschuldigung.","https://www.berliner-zeitung.de/article/vogelschiss-aeusserung-gauland-denkt-nicht-an-entschuldigung-29043"],
 ["Behörde","Bundeszentrale für politische Bildung: Rechtsextremer Geschichtsrevisionismus.","https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/576903/rechtsextremer-geschichtsrevisionismus/"]
 ],
@@ -238,7 +238,7 @@ sources:[
 ["Medien","Areo Magazine (2023): Unidentified Fascist Objects. Flying Saucers, Holocaust Deniers and Nazi UFOs.","https://areomagazine.com/2023/01/11/unidentified-fascist-objects-flying-saucers-holocaust-deniers-and-nazi-ufos/"],
 ["Studie","Charlier, P. et al. (2018): The remains of Adolf Hitler. A biomedical analysis and definitive identification. European Journal of Internal Medicine 54, S. 10 bis 12.","https://doi.org/10.1016/j.ejim.2018.05.014"],
 ["Medien","History.com (2018): Bericht über die Untersuchung von Hitlers Zähnen.","https://history.com/news/hitler-death-cause-teeth-analysis"],
-["Buch","Lüdecke, C., Summerhayes, C. (2012): The Third Reich in Antarctica. The German Antarctic Expedition 1938 bis 39. Erskine Press und Bluntisham Books.",""],
+["Buch","Lüdecke, C., Summerhayes, C. (2012): The Third Reich in Antarctica. The German Antarctic Expedition 1938 bis 39. Erskine Press, Norwich.","https://d-nb.info/1416932720"],
 ["Behörde","Bundeszentrale für politische Bildung: Reichsbürger, Mondlandung, Reptiloide, Flacherde.","https://www.bpb.de/themen/medien-journalismus/wahre-welle/270429/reichsbuerger-mondlandung-reptiloide-flacherde/"]
 ],
 quiz:[
