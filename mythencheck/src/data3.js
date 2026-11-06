@@ -342,7 +342,8 @@ tags:["Reptiloide","Echsenmenschen","David Icke","Gestaltwandler","Aliens"],
 claim:"Außerirdische oder unterirdische Reptilienwesen könnten menschliche Gestalt annehmen und hätten Königshäuser, Regierungen und Banken unterwandert. In Videos erkenne man sie an „Schlangenaugen“ oder flackernden Pupillen.",
 origin:[
 "Populär machte die Idee der frühere britische Sportreporter David Icke, vor allem mit seinem Buch „The Biggest Secret“ (1999). Icke greift in seinen Büchern die gefälschten „Protokolle der Weisen von Zion“ auf; Beobachter wie das französische Portal Conspiracy Watch sehen in den Reptiloiden deshalb eine verkleidete Variante des Mythos von der jüdischen Weltverschwörung.",
-"Die Niederlande verhängten 2022 gegen Icke ein zweijähriges Einreiseverbot für den gesamten Schengen-Raum, weil seine Anwesenheit eine Gefahr für die öffentliche Ordnung darstelle. Niederländische Gerichte bestätigten das Verbot."
+"Die Niederlande verhängten 2022 gegen Icke ein zweijähriges Einreiseverbot für den gesamten Schengen-Raum, weil seine Anwesenheit eine Gefahr für die öffentliche Ordnung darstelle. Niederländische Gerichte bestätigten das Verbot.",
+"Auch in Deutschland ist der Mythos angekommen: In der Gruppe um Heinrich XIII. Prinz Reuß, gegen die im Dezember 2022 eine bundesweite Razzia lief, kursierte laut tagesschau die Vorstellung, „Reptiloide“ und satanistische „Eliten“ folterten Kinder in unterirdischen Tunnelsystemen."
 ],
 facts:[
 ["Biologisch unmöglich","Die Entwicklungslinien von Reptilien und Säugetieren trennten sich vor über 300 Millionen Jahren. Ein Wesen, das zwischen beiden Körperbauplänen hin- und herwechselt, widerspricht allem, was über Anatomie, Stoffwechsel und Genetik bekannt ist."],
@@ -355,7 +356,8 @@ sources:[
 ["Medien","Foreign Policy (2013): No, 12 million Americans don’t believe the country is run by shape-shifting lizards.","https://foreignpolicy.com/2013/04/02/no-12-million-americans-dont-believe-the-country-is-run-by-shape-shifting-lizards/"],
 ["Gericht","Rechtbank Noord-Holland (2023): Inreisverbod David Icke blijft van kracht.","https://www.rechtspraak.nl/organisatie-en-contact/organisatie/rechtbanken/rechtbank-noord-holland/nieuws/2023/09/inreisverbod-david-icke-blijft-van-kracht"],
 ["Medien","NL Times (2024): Court upholds conspiracy theorist David Icke’s Schengen ban for third year.","https://nltimes.nl/2024/12/28/court-upholds-conspiracy-theorist-david-ickes-schengen-ban-third-year"],
-["Behörde","Bundeszentrale für politische Bildung: Reichsbürger, Mondlandung, Reptiloide, Flacherde.","https://www.bpb.de/themen/medien-journalismus/wahre-welle/270429/reichsbuerger-mondlandung-reptiloide-flacherde/"]
+["Behörde","Bundeszentrale für politische Bildung: Reichsbürger, Mondlandung, Reptiloide, Flacherde.","https://www.bpb.de/themen/medien-journalismus/wahre-welle/270429/reichsbuerger-mondlandung-reptiloide-flacherde/"],
+["Medien","tagesschau.de (NDR): Mutmaßliche „Reichsbürger“-Terroristen: Die Wahnwelt der Verschwörer.","https://www.tagesschau.de/investigativ/ndr/reichsbuerger-prinz-reuss-102.html"]
 ],
 quiz:[
 ["Wer machte den Reptiloiden-Mythos populär?",["Der Brite David Icke","Die NASA","Charles Darwin","Albert Einstein"],"Icke verbreitet seine Thesen seit den 1990er Jahren in Büchern und auf Vortragsreisen."],

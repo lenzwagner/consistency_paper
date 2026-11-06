@@ -29,7 +29,8 @@ sources:[
 ["Buch","Hilberg, R. (1990): Die Vernichtung der europäischen Juden. 3 Bände. Fischer Taschenbuch Verlag, Frankfurt am Main.","https://d-nb.info/901331147"],
 ["Buch","Benz, W. (Hg.) (1991): Dimension des Völkermords. Die Zahl der jüdischen Opfer des Nationalsozialismus. Oldenbourg, München.",""],
 ["Buch","Evans, R. J. (2001): Der Geschichtsfälscher. Holocaust und historische Wahrheit im David-Irving-Prozess. Campus, Frankfurt am Main.","https://d-nb.info/961517646"],
-["Medien","DER SPIEGEL (2018): Holocaust-Leugnerin Haverbeck scheitert mit Klage gegen Haft.","https://www.spiegel.de/panorama/justiz/ursula-haverbeck-inhaftierte-holocaust-leugnerin-scheitert-mit-verfassungsklage-a-1221509.html"]
+["Medien","DER SPIEGEL (2018): Holocaust-Leugnerin Haverbeck scheitert mit Klage gegen Haft.","https://www.spiegel.de/panorama/justiz/ursula-haverbeck-inhaftierte-holocaust-leugnerin-scheitert-mit-verfassungsklage-a-1221509.html"],
+["Gedenkstätte","Gedenkstätte Auschwitz-Birkenau: Overall numbers by ethnicity or category of deportee (rund 1,1 Millionen Opfer, die große Mehrheit Juden).","https://www.auschwitz.org/en/history/the-number-of-victims/overall-numbers-by-ethnicity-or-category-of-deportee/"]
 ],
 quiz:[
 ["Was dokumentiert das Höfle-Telegramm vom Januar 1943?",["1.274.166 Deportierte in die Lager der „Aktion Reinhardt“ allein im Jahr 1942","Die Kapitulation der Wehrmacht","Einen Befehl zur Auflösung der Lager","Die Zahl deutscher Kriegsgefangener"],"Das Telegramm ist eine interne SS-Meldung. Es wurde vom britischen Geheimdienst abgefangen und erst im Jahr 2000 in Archiven entdeckt."],
@@ -76,7 +77,7 @@ tags:["Anne Frank","Tagebuch","Kugelschreiber","Otto Frank","Fälschung"],
 claim:"Das Tagebuch der Anne Frank sei nach dem Krieg geschrieben worden, etwa von ihrem Vater Otto Frank oder einem Schriftsteller. Beweis seien Einträge mit Kugelschreiber, den es damals noch nicht gegeben habe.",
 origin:[
 "Holocaustleugner streuen seit den späten 1950er Jahren Zweifel an der Echtheit, weil das Tagebuch für Millionen Leserinnen und Leser zum Gesicht des Holocaust wurde. Die Kugelschreiber-Behauptung verbreitete unter anderem eine 1978 erschienene Schrift des Holocaustleugners Ditlieb Felderer.",
-"Anlass waren auch zwei lose Zettel mit Kugelschreiber-Notizen, die sich bei den Tagebuchunterlagen fanden."
+"Anlass waren auch zwei lose Zettel mit Kugelschreiber-Notizen, die sich bei den Tagebuchunterlagen fanden. 1980 berichtete DER SPIEGEL unter dem Titel „Blaue Paste“ über ein Gutachten des Bundeskriminalamts, das Kugelschreiber-Tinte bei den Unterlagen festgestellt hatte; auf diesen Befund berufen sich Leugner seither."
 ],
 facts:[
 ["Forensisch geprüft","Im Auftrag des Niederländischen Instituts für Kriegsdokumentation (NIOD) untersuchte das Niederländische Forensische Institut Papier, Tinte, Leim und Handschrift. Ergebnis: Das Material stammt aus der damaligen Zeit, die Handschrift ist mit an Sicherheit grenzender Wahrscheinlichkeit die von Anne Frank. Geschrieben ist das Tagebuch überwiegend mit Füllfederhalter und mit Bleistift."],
@@ -88,7 +89,8 @@ sources:[
 ["Behörde","Anne Frank Haus: Die Echtheit des Tagebuchs von Anne Frank.","https://www.annefrank.org/en/anne-frank/go-in-depth/authenticity-diary-anne-frank/"],
 ["Faktencheck","Full Fact: Diary of Anne Frank not written by American novelist after WW2.","https://fullfact.org/online/anne-frank-diary-ballpoint-pen-meyer-levin-false-claim/"],
 ["Faktencheck","Holocaust Denial on Trial (Emory University): Ballpoint pen.","https://www.hdot.org/debunking-denial/af3-ballpoint-pen/"],
-["Buch","NIOD (Hg.) (1986): De Dagboeken van Anne Frank. Kritische Ausgabe. Deutsch: Die Tagebücher der Anne Frank. S. Fischer, Frankfurt am Main 1988.",""]
+["Buch","NIOD (Hg.) (1986): De Dagboeken van Anne Frank. Kritische Ausgabe. Deutsch: Die Tagebücher der Anne Frank. S. Fischer, Frankfurt am Main 1988.",""],
+["Medien","DER SPIEGEL (1980): Blaue Paste (Bericht über das BKA-Gutachten, auf das sich die Kugelschreiber-Behauptung stützt).","https://www.spiegel.de/politik/blaue-paste-a-38ec327f-0002-0001-0000-000014317313?context=issue"]
 ],
 quiz:[
 ["Womit schrieb Anne Frank ihr Tagebuch laut forensischer Untersuchung überwiegend?",["Mit Füllfederhalter und Bleistift","Mit Kugelschreiber","Mit Schreibmaschine","Mit Filzstift"],"Das Niederländische Forensische Institut fand überwiegend graublaue Füllfederhalter-Tinte und Bleistift, zeitgemäßes Material."],
@@ -171,6 +173,7 @@ facts:[
 ["Ein inszenierter Vorwand","Am 31. August 1939 überfiel ein als polnische Angreifer getarntes SS-Kommando den Sender Gleiwitz, um einen polnischen Angriff vorzutäuschen. Hitler nutzte solche Inszenierungen zur Rechtfertigung des Überfalls auf Polen am 1. September 1939."],
 ["Der Krieg war abgesprochen","Am 23. August 1939 teilten Deutschland und die Sowjetunion im geheimen Zusatzprotokoll zum Hitler-Stalin-Pakt Osteuropa in Interessensphären auf."],
 ["Lange geplanter Eroberungskrieg","Hitler unterzeichnete die Weisung Nr. 21 für den „Fall Barbarossa“ am 18. Dezember 1940. Das Ziel „Lebensraum im Osten“ hatte er schon in „Mein Kampf“ formuliert. Planungen von Mai 1941 kalkulierten ausdrücklich ein, dass „zig Millionen Menschen verhungern“ würden (Hungerplan)."],
+["Der „Schukow-Plan“ ist kein Angriffsbefehl","Ein Papier des sowjetischen Generalstabs, entstanden nicht vor dem 15. Mai 1941, rechnete mit einem deutschen Überfall und schlug vor, dem deutschen Aufmarsch mit einem Präventivschlag zuvorzukommen. Weder Generalstabschef Schukow noch Verteidigungsminister Timoschenko noch Stalin unterzeichneten es; sein Einfluss auf die sowjetischen Planungen ist umstritten. Hitlers Weisung für den Überfall lag zu diesem Zeitpunkt bereits fast fünf Monate vor."],
 ["Kein Beleg für einen sowjetischen Angriff","Auswertungen russischer Archive durch deutsche und russische Historiker (Ueberschär und Bezymenskij 1998) liefern keinen überzeugenden Beleg für eine sowjetische Angriffsabsicht im Sommer 1941. Der Historiker Hermann Graml urteilte, von Suworow angeführte Memoirenzitate erwiesen sich bei näherer Prüfung als Verfälschungen."],
 ["Vernichtung von Anfang an","Kommissarbefehl, Hungerplan und die Massenmorde der Einsatzgruppen an Jüdinnen und Juden zeigen, dass der Krieg gegen die Sowjetunion von Beginn an als Eroberungs- und Vernichtungskrieg angelegt war."]
 ],
@@ -179,7 +182,9 @@ sources:[
 ["Medien","evangelisch.de (2014): Interview mit dem Historiker Wigbert Benz zum Hungerplan.","https://www.evangelisch.de/inhalte/108680/12-10-2014/dass-millionen-verhungerten-sah-er-als-logische-folge"],
 ["Behörde","Bundeszentrale für politische Bildung: Präventivkrieg gegen die Sowjetunion?","https://www.bpb.de/500014/praeventivkrieg-gegen-die-sowjetunion/"],
 ["Buch","Ueberschär, G. R., Bezymenskij, L. A. (Hg.) (1998): Der deutsche Angriff auf die Sowjetunion 1941. Die Kontroverse um die Präventivkriegsthese. Primus, Darmstadt.","https://d-nb.info/953515540"],
-["Behörde","Bundeszentrale für politische Bildung: Revisionismus (Dossier Rechtsextremismus).","https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/500811/revisionismus/"]
+["Behörde","Bundeszentrale für politische Bildung: Revisionismus (Dossier Rechtsextremismus).","https://www.bpb.de/themen/rechtsextremismus/dossier-rechtsextremismus/500811/revisionismus/"],
+["Primärquelle","Überlegungen des Generalstabs der Roten Armee zum Plan eines strategischen Aufmarschs der Streitkräfte der UdSSR, nicht vor dem 15. Mai 1941. Deutsche Übersetzung in: Ueberschär, G. R., Bezymenskij, L. A. (Hg.): Der deutsche Angriff auf die Sowjetunion 1941. 2. Auflage, Primus, Darmstadt 2011, S. 186 bis 193.",""],
+["Medien","DER SPIEGEL: Zeitgeschichte: Schlafende Aggressoren (zum Generalstabspapier vom Mai 1941).","https://www.spiegel.de/spiegel/print/d-13500861.html"]
 ],
 quiz:[
 ["Was geschah am 31. August 1939 am Sender Gleiwitz?",["Ein als Polen getarntes SS-Kommando täuschte einen polnischen Angriff vor","Polnische Truppen griffen Deutschland an","Ein Waffenstillstand wurde verkündet","Der Hitler-Stalin-Pakt wurde unterzeichnet"],"Der fingierte Überfall war Teil einer Serie inszenierter Zwischenfälle, die den deutschen Angriff rechtfertigen sollten."],

@@ -17,7 +17,7 @@ facts:[
 ["Der Weltklimarat ist eindeutig","„Es ist eindeutig, dass der Einfluss des Menschen die Atmosphäre, den Ozean und die Landflächen erwärmt hat“, heißt es im Sechsten Sachstandsbericht des IPCC (2021). Die beste Schätzung für den menschengemachten Anteil an der Erwärmung von 1850 bis 1900 bis zum Zeitraum 2010 bis 2019 lautet 1,07 °C (wahrscheinliche Spanne 0,8 bis 1,3 °C). Natürliche Einflüsse wie Sonne und Vulkane trugen nur zwischen minus 0,1 und plus 0,1 °C bei."],
 ["Über 99 Prozent Konsens","Eine Auswertung von 88.125 klimabezogenen Fachartikeln, die seit 2012 erschienen sind, ergab: Der Konsens über den menschengemachten Klimawandel liegt in der begutachteten Fachliteratur bei über 99 Prozent (Lynas et al. 2021)."],
 ["Die Sonne scheidet als Ursache aus","Die Sonnenaktivität zeigt seit Jahrzehnten einen leicht fallenden Trend, während die Temperaturen stark gestiegen sind. Zudem kühlt die Stratosphäre ab, während sich die untere Atmosphäre erwärmt. Genau dieses Muster erzeugen Treibhausgase; eine stärkere Sonne würde beide Schichten erwärmen."],
-["Wenig Gas, große Wirkung","CO₂ macht nur rund 0,04 Prozent der Luft aus, absorbiert aber Wärmestrahlung sehr wirksam. Diesen Effekt beschrieben schon John Tyndall (1859) und Svante Arrhenius (1896). Die Konzentration stieg von etwa 280 ppm vor der Industrialisierung auf rund 430 ppm im Jahr 2025 (Messstation Mauna Loa), also um mehr als die Hälfte. Die Isotopenzusammensetzung des zusätzlichen CO₂ verrät seine Herkunft aus fossilen Brennstoffen."],
+["Wenig Gas, große Wirkung","CO₂ macht nur rund 0,04 Prozent der Luft aus, absorbiert aber Wärmestrahlung sehr wirksam. Diesen Effekt beschrieben schon John Tyndall (1859) und Svante Arrhenius (1896). Die Konzentration stieg von etwa 280 ppm vor der Industrialisierung auf rund 430 ppm im Mai 2025 (Monatsmittel der Messstation Mauna Loa), also um mehr als die Hälfte. Die Isotopenzusammensetzung des zusätzlichen CO₂ verrät seine Herkunft aus fossilen Brennstoffen."],
 ["Früher wärmer? Nicht überall zugleich","Mittelalterliche Warmzeit und Kleine Eiszeit verliefen regional und zeitlich versetzt. Die heutige Erwärmung erfasst dagegen fast den ganzen Globus: Für mehr als 98 Prozent der Erdoberfläche war das 20. Jahrhundert die wärmste Periode der letzten 2000 Jahre (Neukom et al. 2019)."],
 ["Neue Rekorde","2024 war mit 1,60 °C über dem vorindustriellen Niveau das bisher wärmste Jahr der Messgeschichte. Im Dreijahresmittel 2023 bis 2025 lag die globale Temperatur erstmals über der 1,5-Grad-Marke (Copernicus-Klimadienst)."]
 ],
@@ -30,7 +30,9 @@ sources:[
 ["Buch","Rahmstorf, S., Schellnhuber, H. J. (2019): Der Klimawandel. Diagnose, Prognose, Therapie. 9. Auflage. C. H. Beck, München.","https://d-nb.info/1189939045"],
 ["Buch","Oreskes, N., Conway, E. M. (2010): Merchants of Doubt. Bloomsbury Press. Deutsche Ausgabe: Die Machiavellis der Wissenschaft. Das Netzwerk des Leugnens. Wiley-VCH, Weinheim 2014.","https://d-nb.info/1049503333"],
 ["Medien","DER SPIEGEL: Werteunion und die Neue Rechte: Koalition der Klimawandelleugner.","https://www.spiegel.de/wissenschaft/mensch/koalition-der-klimawandelleugner-a-c1a03be4-8921-4898-a4f3-a11a1c814008"],
-["Medien","DER SPIEGEL International: AfD Hopes to Win Votes by Opposing Climate Protection.","https://www.spiegel.de/international/germany/afd-seeks-votes-by-opposing-climate-protection-a-1265494.html"]
+["Medien","DER SPIEGEL International: AfD Hopes to Win Votes by Opposing Climate Protection.","https://www.spiegel.de/international/germany/afd-seeks-votes-by-opposing-climate-protection-a-1265494.html"],
+["Primärquelle","Scripps Institution of Oceanography (2025): Annual Carbon Dioxide Peak Passes Another Milestone (Mauna Loa, Monatsmittel Mai 2025: 430,2 ppm).","https://scripps.ucsd.edu/news/annual-carbon-dioxide-peak-passes-another-milestone"],
+["Wissenschaft","Royal Institution: Who discovered the greenhouse effect? (zu John Tyndalls Messungen ab 1859).","https://www.rigb.org/node/3085"]
 ],
 quiz:[
 ["Wie groß ist laut Weltklimarat die beste Schätzung des menschengemachten Anteils an der Erwärmung (Zeitraum 2010 bis 2019 gegenüber 1850 bis 1900)?",["1,07 °C","0,1 °C","0,4 °C","2,5 °C"],"Der IPCC beziffert den menschengemachten Anteil auf 1,07 °C. Das entspricht praktisch der gesamten beobachteten Erwärmung; natürliche Faktoren lagen nahe null."],
@@ -62,7 +64,9 @@ sources:[
 ["Buch","Garwood, C. (2007): Flat Earth. The History of an Infamous Idea. Pan Books. ISBN 978-1-4050-4702-9.",""],
 ["Buch","Russell, J. B. (1991): Inventing the Flat Earth. Columbus and Modern Historians.",""],
 ["Medien","Newsweek (2019): Bericht über die Experimente in der Netflix-Dokumentation „Behind the Curve“.","https://newsweek.com/behind-curve-netflix-ending-light-experiment-mark-sargent-documentary-movie-1343362"],
-["Behörde","Bundeszentrale für politische Bildung: Reichsbürger, Mondlandung, Reptiloide, Flacherde.","https://www.bpb.de/themen/medien-journalismus/wahre-welle/270429/reichsbuerger-mondlandung-reptiloide-flacherde/"]
+["Behörde","Bundeszentrale für politische Bildung: Reichsbürger, Mondlandung, Reptiloide, Flacherde.","https://www.bpb.de/themen/medien-journalismus/wahre-welle/270429/reichsbuerger-mondlandung-reptiloide-flacherde/"],
+["Behörde","NASA Goddard Space Flight Center (NSSDC): Earth Fact Sheet (Äquatorradius 6378,137 km, daraus rund 40.075 km Umfang).","https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html"],
+["Behörde","Canadian Space Agency: International Space Station FAQ (Bahnhöhe rund 400 km).","https://www.asc-csa.gc.ca/eng/iss/information-kit/faq.asp"]
 ],
 quiz:[
 ["Wer berechnete schon im 3. Jahrhundert v. Chr. den Umfang der Erde?",["Eratosthenes von Kyrene","Galileo Galilei","Isaac Newton","Nikolaus Kopernikus"],"Eratosthenes verglich den Sonnenstand in Syene und Alexandria und berechnete daraus den Erdumfang, fast 1800 Jahre vor Kopernikus."],
@@ -222,7 +226,9 @@ sources:[
 ["Studie","Friedrich, M. et al. (2004): The 12,460-year Hohenheim oak and pine tree-ring chronology from central Europe. Radiocarbon 46(3), S. 1111 bis 1122.","https://doi.org/10.1017/S003382220003304X"],
 ["Medien","Medievalists.net (2020): Why the Phantom Time Hypothesis is wrong.","https://www.medievalists.net/2020/04/why-phantom-time-hypothesis-wrong/"],
 ["Medien","Discover Magazine: What Is the Truth Behind the Controversial Phantom Time Hypothesis?","https://discovermagazine.com/the-sciences/what-is-the-truth-behind-the-controversial-phantom-time-hypothesis"],
-["Medien","Saltzwedel, J. (2012): Gestrichene Jahrhunderte. Die abstruse These vom „erfundenen Mittelalter“. SPIEGEL Geschichte 6/2012.","https://www.spiegel.de/spiegel/spiegelgeschichte/d-89662035.html"]
+["Medien","Saltzwedel, J. (2012): Gestrichene Jahrhunderte. Die abstruse These vom „erfundenen Mittelalter“. SPIEGEL Geschichte 6/2012.","https://www.spiegel.de/spiegel/spiegelgeschichte/d-89662035.html"],
+["Fachlexikon","Encyclopaedia Britannica: Hijrah (Auswanderung Mohammeds nach Medina 622).","https://www.britannica.com/event/Hijrah-Islam"],
+["Fachlexikon","Encyclopaedia Britannica: Tang dynasty (618 bis 907).","https://www.britannica.com/EBchecked/topic/582301/Tang-dynasty"]
 ],
 quiz:[
 ["Welche Zeitspanne soll laut Heribert Illig erfunden sein?",["Etwa 614 bis 911 n. Chr.","Etwa 1200 bis 1500","Die gesamte Antike","1933 bis 1945"],"Illig behauptet, rund 297 Jahre des Frühmittelalters seien nachträglich in die Geschichte eingefügt worden."],
@@ -423,7 +429,10 @@ sources:[
 ["Studie","Wrapp, D. et al. (2020): Cryo-EM structure of the 2019-nCoV spike in the prefusion conformation. Science 367, S. 1260 bis 1263.","https://pmc.ncbi.nlm.nih.gov/articles/7164637"],
 ["Studie","Enders, J. F., Peebles, T. C. (1954): Propagation in tissue cultures of cytopathogenic agents from patients with measles. Proceedings of the Society for Experimental Biology and Medicine 86(2), S. 277 bis 286.","https://pubmed.ncbi.nlm.nih.gov/13177653/"],
 ["Medien","DER SPIEGEL: Posse um Masernvirus: Impfgegner muss Arzt 100.000 Euro zahlen (Urteil des Landgerichts).","https://www.spiegel.de/gesundheit/diagnose/existenz-des-masernvirus-stefan-lanka-verliert-vor-gericht-a-1023189.html"],
-["Medien","DER SPIEGEL: Streit um Existenz von Masernviren: Impfgegner siegt vor Gericht (Berufung zu den Bedingungen der Auslobung).","https://www.spiegel.de/panorama/justiz/masern-wette-impfgegner-muss-nicht-zahlen-a-1077601.html"]
+["Medien","DER SPIEGEL: Streit um Existenz von Masernviren: Impfgegner siegt vor Gericht (Berufung zu den Bedingungen der Auslobung).","https://www.spiegel.de/panorama/justiz/masern-wette-impfgegner-muss-nicht-zahlen-a-1077601.html"],
+["Studie","Kausche, G. A., Pfankuch, E., Ruska, H. (1939): Die Sichtbarmachung von pflanzlichem Virus im Übermikroskop. Die Naturwissenschaften 27, S. 292 bis 299.","https://doi.org/10.1007/BF01493353"],
+["Primärquelle","Nobelpreis-Stiftung: Nobelpreis für Physiologie oder Medizin 1954 (Enders, Weller, Robbins: Kultivierung des Poliovirus in Gewebekultur).","https://www.nobelprize.org/prizes/medicine/1954/"],
+["Behörde","Centers for Disease Control and Prevention (CDC): History of Measles (Masernvirus 1954 isoliert, Impfstoff 1963 zugelassen).","https://www.cdc.gov/measles/about/history.html"]
 ],
 quiz:[
 ["Worüber entschied das Oberlandesgericht Stuttgart im Masern-Prozess 2016?",["Über die Bedingungen der Auslobung: Lanka hatte eine einzige Publikation als Nachweis verlangt","Dass es das Masernvirus nicht gibt","Dass Masernimpfungen verboten werden","Dass Lanka 100.000 Euro zahlen muss"],"Es ging um Vertragsrecht, nicht um Biologie. Wissenschaftliche Fragen klären Gerichte ohnehin nicht."],
