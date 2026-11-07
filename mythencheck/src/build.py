@@ -2,7 +2,7 @@ import sys, re, pathlib
 src = pathlib.Path(__file__).parent
 shell = (src/'shell.html').read_text(encoding='utf-8')
 css = (src/'app.css').read_text(encoding='utf-8')
-data = '\n'.join((src/f).read_text(encoding='utf-8') for f in ['data1.js','data2.js','data3.js'])
+data = '\n'.join((src/f).read_text(encoding='utf-8') for f in ['data1.js','data2.js','data3.js','deep1.js','deep2.js','deep3.js'])
 app = (src/'app.js').read_text(encoding='utf-8')
 page = shell.replace('/*__CSS__*/', css).replace('/*__DATA__*/', data).replace('/*__APP__*/', app)
 head, body = page.split('<!--__BODY__-->')

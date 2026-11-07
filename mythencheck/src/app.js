@@ -2,6 +2,8 @@
 'use strict';
 
 var TOPICS = [].concat(TOPICS_1, TOPICS_2, TOPICS_3);
+var DEEP = Object.assign({}, DEEP_1, DEEP_2, DEEP_3);
+TOPICS.forEach(function(t){ var d = DEEP[t.id]; if (d){ t.deep = d.deep; t.quiz = d.quiz; } });
 var CAT_ORDER = ['natur','gesundheit','geschichte','staat','maechte'];
 var CATS = {
   natur:{name:'Wissenschaft & Natur', icon:'globe'},
@@ -218,7 +220,7 @@ function sheetBar(cat, label){
     '<button class="icon-btn" type="button" data-close aria-label="Schließen">' + I.close + '</button></div>';
 }
 
-var TABS = [['ueberblick','Überblick'],['fakten','Fakten'],['quellen','Quellen'],['quiz','Quiz']];
+var TABS = [['ueberblick','Überblick'],['mechanik','Erklärung'],['fakten','Fakten'],['quellen','Quellen'],['quiz','Quiz']];
 function openTopic(id, tab){
   var t = byId[id]; if (!t) return;
   current = {type:'topic', id:id, tab:'ueberblick'};
@@ -250,6 +252,7 @@ function setTab(key, focusTab){
   var panel = $('#panel', sheet);
   panel.setAttribute('aria-labelledby', 'tab-' + key);
   if (key === 'ueberblick') panel.innerHTML = overview(t);
+  else if (key === 'mechanik') panel.innerHTML = deepView(t);
   else if (key === 'fakten') panel.innerHTML = factsView(t);
   else if (key === 'quellen') panel.innerHTML = sourcesView(t);
   else if (key === 'quiz') runQuiz(panel, t.quiz.map(function(q){ return {t:t, q:q}; }), {mode:'topic', topic:t});
@@ -259,7 +262,13 @@ function overview(t){
     '<h3>Woher der Mythos kommt</h3><div class="prose">' + t.origin.map(function(p){ return '<p>' + esc(p) + '</p>'; }).join('') + '</div>' +
     (t.kernel ? '<div class="box box-kern">' + I.bulb + '<div><b>Der wahre Kern</b><p>' + esc(t.kernel) + '</p></div></div>' : '') +
     (t.note ? '<div class="box box-note">' + I.info + '<div><b>Gut zu wissen</b><p>' + esc(t.note) + '</p></div></div>' : '') +
-    '<div><button class="btn btn-primary" type="button" data-tab="fakten">Was die Belege zeigen ' + I.chev + '</button></div>';
+    '<div><button class="btn btn-primary" type="button" data-tab="mechanik">Wie es wirklich funktioniert ' + I.chev + '</button></div>';
+}
+function deepView(t){
+  return '<h3>Wie es wirklich funktioniert</h3><div class="prose deep">' + (t.deep || []).map(function(d){
+    return '<h4>' + esc(d[0]) + '</h4><p>' + esc(d[1]) + '</p>';
+  }).join('') + '</div>' +
+    '<div class="hero-actions" style="justify-content:flex-start;margin-top:0"><button class="btn btn-primary" type="button" data-tab="fakten">Was die Belege zeigen ' + I.chev + '</button><button class="link-cta" type="button" data-tab="quiz">Verständnis testen ' + I.chev + '</button></div>';
 }
 function factsView(t){
   return '<h3>Was die Belege zeigen</h3><ul class="facts">' + t.facts.map(function(f){

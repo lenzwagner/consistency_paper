@@ -1,7 +1,10 @@
 const fs=require('fs'); const vm=require('vm');
 const ctx={}; vm.createContext(ctx);
-for (const f of ['data1.js','data2.js','data3.js']) vm.runInContext(fs.readFileSync(f,'utf8'),ctx,{filename:f});
+for (const f of ['data1.js','data2.js','data3.js','deep1.js','deep2.js','deep3.js']) vm.runInContext(fs.readFileSync(f,'utf8'),ctx,{filename:f});
 const T=[...ctx.TOPICS_1,...ctx.TOPICS_2,...ctx.TOPICS_3];
+const D=Object.assign({},ctx.DEEP_1,ctx.DEEP_2,ctx.DEEP_3);
+for(const t of T){ const d=D[t.id]; if(!d){console.log('ERR no deep',t.id);process.exitCode=1;continue;} if(!d.deep||d.deep.length<3) console.log('ERR deep len',t.id); if(d.deep.some(x=>x.length!==2||x[1].length<250)) console.log('ERR deep short',t.id); t.quiz=d.quiz; }
+for(const k of Object.keys(D)) if(!T.find(t=>t.id===k)) console.log('ERR orphan deep',k);
 const cats=new Set(['natur','gesundheit','geschichte','staat','maechte']);
 const reserved=/^(settings|sidebar|customize|upgrade|downloads|comment-.*)$/;
 let err=0; const ids=new Set(); let nq=0, ns=0, nf=0;
